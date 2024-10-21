@@ -28,7 +28,3 @@ Este repositorio contiene todos los ejercicios realizados a lo largo del módulo
 - Lectura y escritura de archivos de texto
 - Serialización de objetos
 - Acceso a bases de datos (mySQL)
-
-##  Más información
-Soy Hugo Ruiz Sánchez, estudiante de Desarrollo de Aplicaciones Web en el Instituto Virgen de la Paloma. He adjuntado todo mi historial de ejercicios en [mi página de perfil](https://hugoruizsanchez.github.io/).
-
