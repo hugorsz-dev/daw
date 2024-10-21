@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi página web</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ephesis&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script>
+    function mostrarMenu() {
+        var menu = document.getElementById("navegacion-footer");
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+
+
+</head>
+<body>
+
+    <!-- Cabecera que incluya:
+        Título y menú izquierda, a la izquierda. 
+        Menú derecha, a la derecha 
+    -->
+
+    <header class="cabecera">
+
+        <!-- Menú izquierda-->
+        <nav class ="menu-izquierda">
+            <a href="#">Animes</a> 
+            <a href="#">Novedades</a>
+            <a href="#">Noticias</a>
+        </nav>
+
+        <!-- Título central-->
+
+        <h1 class="logo">AnimeFreak</h1>
+
+        <!-- Menú a la izquierda-->
+
+        <nav class="menu-derecha">
+            <a href="#">        </a>
+            <a href="#">Contacto</a> 
+            <a href="#">Buscar</a>
+        </nav>
+    </header>
+
+    <!-- Animes: imagen y nombre. -->
+
+    <section id="productos">
+        <h2> Noticias </h2>
+        <h2>nuestros animes mas demandados</h2>
+        <ul>
+          <li><img src="img/boku.jpeg"><span>Boku no Hero Academia</span></li>
+          <li><img src="img/naruto.jpg"><span>Naruto</span></li>
+          <li><img src="img/kimetsu.jpg"><span>Kimetsu no yaiba</span></li>   
+        </ul>
+        <h2> Comunidad </h2>
+    </section>
+
+    <!-- Pie de página con los detalles de contacto. -->
+
+    <footer class="pie">
+        <p>Contacta con nosotros<a href="mailto:miempresa@ejemplo.com">miempresa@ejemplo.com</a></p>
+    </footer>
+
+    <!-- El menú ubicado justo debajo del footer -->
+    
+    <div class="menu-footer"> 
+        <nav id="navegacion-footer">  
+            <a href="#">Animes</a> 
+            <a href="#">Novedades</a>
+            <a href="#">Noticias</a>
+            <a href="#">Contacto</a> 
+            <a href="#">Buscar</a>
+        </nav>
+        <div id="icono-hamburguesa" onclick="mostrarMenu()">&#9776;</div>
+    </div>
+    
+
+
+</body>
+</html>

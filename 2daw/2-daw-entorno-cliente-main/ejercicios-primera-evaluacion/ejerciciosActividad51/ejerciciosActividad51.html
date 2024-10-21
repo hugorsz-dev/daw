@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios actividad 5 - 1 </title>
+</head>
+<body>
+
+    <h1> Ejercicios actividad 5 - 1 </h1>
+	<h2> Ejercicio propuesto en Desarrollo Entorno - Servidor </h2>
+
+	<p> <b> Alumno: </b> Hugo Ruiz Sánchez</p>
+	<p> <b> Docente: </b> Enrique Diego Alfonso  </p>	
+
+    <p>  A fin de mejorar la legibilidad de los resultados, usaré la función enDocumento () en lugar de las alert () o los console.log (). </p>
+		
+	<hr/> 
+
+<body>
+
+    <script> 
+
+        // FUNCIONES VARIADAS. 
+
+        /**
+        * Imprime en el documento el texto introducido, con estilo a preferencia. 
+        * Si no se especifica tipo, el tipo es 0 o el tipo es erróneo, es un párrafo. 
+        * Caso contrario, cada número corresponde hasta el límite de los 6 títulos 
+        **/  
+       
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "0"; 
+    
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+    
+        }
+
+        /**
+         * Despliega un botón en pantalla y ejecuta la función indicada. Genera una nueva página. 
+        **/ 
+
+        function crearBotonFuncion (id, texto="default", funcion) {
+
+            document.write (`<button id=${id}> ${texto} </button> `);
+
+            let boton = document.getElementById(id);
+
+            boton.addEventListener("click", funcion); 
+
+        }
+        
+        // EJERCICIO 1
+
+        enDocumento ("Ejercicio 1", "h2");
+
+        // Declaración de objeto. 
+
+        usuario = {
+            nombre:"hugo",
+            contrasenia:"1234"
+        }
+
+        /**
+         * Función de inicio de sesión que despliega un prompt que compara las variables almacenadas en el objeto "usuario"
+        **/
+
+        function iniciarSesion () {
+
+            let nombre = prompt ("Introduzca usuario", "Usuario"); 
+            let contrasenia = prompt (`Contraseña para "${usuario}":`, "Contraseña"); 
+
+            if (usuario.nombre == nombre && usuario.contrasenia == contrasenia) {
+                enDocumento (`Ha iniciado sesión con el usuario ${nombre}`); 
+            }
+            else {
+                enDocumento (`Error en el inicio de sesión: usuario y contraseña incorrectos`);
+            }
+
+        }
+
+        // El botón despliega la función de "iniciarSesion()". 
+
+        crearBotonFuncion ("botonInicioSesion","Iniciar Sesión", function () {
+           iniciarSesion (); 
+        })
+
+        // EJERCICIO 2 
+
+        enDocumento ("Ejercicio 2", "h2"); 
+
+        // Declaración de objeto.
+
+        function telMovil (nombre,cpu, ram, almacenamiento, ancho, alto, numCamaras) {
+            this.nombre = nombre,
+            this.cpu = cpu, 
+            this.ram = ram,
+            this.almacenamiento = almacenamiento,
+            this.ancho = ancho, 
+            this.alto = alto,
+            this.numCamaras = numCamaras
+        }
+
+        // Modificación del prototipo interno del objeto "telefonoMovil" para su cuya función interna toString responda a las especificaciones indicadas. 
+
+        telMovil.prototype.toString = function() {
+            return (`<h3> Especificaciones del modelo: ${this.nombre}: </h3>
+                     CPU: ${this.cpu} ghz.<br>
+                     RAM: ${this.ram} gb. <br> 
+                     Almacenamiento: ${this.almacenamiento}  gb.<br>
+                     Ancho ${this.ancho} cm.<br>
+                     Alto ${this.alto}  cm.<br>
+                     Número de cámaras ${this.numCamaras} cámaras.`
+                    );
+        };
+
+        // Creación de los objetos. 
+
+        telefono1 = new telMovil ("Iphone 12", 2,1,50,12,3, 2); 
+        telefono2 = new telMovil ("Iphone 13", 3,1,60,13,31, 4); 
+        telefono3= new telMovil ("Iphone 14", 4,1,70,23,13, 6); 
+        telefono4= new telMovil ("Iphone 15", 5,2,80,40,12, 8);
+
+        // Impresión de los objetos. 
+
+        enDocumento (telefono1); 
+        enDocumento (telefono2); 
+        enDocumento (telefono3); 
+        enDocumento (telefono4); 
+
+        // EJERCICIO 3 
+
+        enDocumento ("Ejercicio 3", "h2"); 
+
+        // Clase padre "teléfono".
+
+        class telefono {
+
+            // CONSTRUCTOR
+
+            constructor (modelo, ancho, alto) {
+                this.modelo = modelo, 
+                this.ancho = ancho, 
+                this.alto = alto
+            }
+
+            // Métodos. 
+
+            toString () {
+                return (`Modelo ${this.modelo}, ancho ${this.ancho} cm, ${this.alto} cm.`);
+            }
+
+        }
+
+        // Clase hijo "telefonoMovil"
+
+        class telefonoMovil extends telefono {
+
+            // CONSTRUCTOR 
+
+            constructor (modelo, ancho, alto, numCamaras) {
+                super (modelo, ancho, alto); // Hereda las propiedades de modelo, ancho y alto de su padre. 
+                this.numCamaras = numCamaras;
+            }
+
+            // MÉTODOS
+
+            // Con super.toString tomamos el método toString de la clase padre.
+            toString () {
+                return `${super.toString()}, ${this.numCamaras} cámaras.`; // Heroda el toString de su padre y le agrega las cámaras. 
+            }
+        }
+
+        class telefonoFijo extends telefono {
+
+            // CONSTRUCTOR 
+
+            constructor (modelo, ancho, alto, extension) {
+                super (modelo, ancho, alto); // Hereda las propiedades de modelo, ancho y alto de su padre. 
+                this.extension = extension;
+            }
+
+            // MÉTODOS 
+
+            // Con super.toString tomamos el método toString de la clase padre.
+            toString () {
+                return `${super.toString()}, con extensión ${this.extension}.`;  // Heroda el toString de su padre y le agrega la extensión. 
+            }
+
+        }
+
+        let telefonoOficina = new telefonoFijo ("Nokia 7328", 30,30,48040); 
+        let telefonoHugo = new telefonoMovil ("Huawei P10",30,40,2)
+
+        enDocumento (telefonoOficina); 
+        enDocumento (telefonoHugo);
+
+        // EJERCICIO 4
+
+        enDocumento ("Ejercicio 4","h2"); 
+        
+        class Musica {
+            constructor () {
+                this.nombreAula = "Música"; 
+            }
+            
+            // MÉTODOS
+
+            impartir () {
+                enDocumento (`En el aula ${this.nombreAula} están dando clase.`)
+            }
+        }
+
+        class Tecnologia {
+
+            constructor () {
+                this.nombreAula = "Tecnología"; 
+            }
+            
+            // MÉTODOS
+
+            impartir () {
+                enDocumento (`En el aula ${this.nombreAula} están dando clase.`)
+            }
+        }
+
+        function impartirClase (aula) {
+            aula.impartir (); 
+        }
+
+        let aulaTecnologia = new Tecnologia (); 
+        let aulaMusica = new Musica (); 
+
+        impartirClase (aulaTecnologia); 
+        impartirClase (aulaMusica); 
+
+        // EJERCICIO 5 MÉTODO FETCH 
+
+        enDocumento ("Ejercicio 5", "h2"); 
+
+        enDocumento ("Extraido de la API de una web para leer la Biblia:")
+        
+        crearBotonFuncion ("abrirjson", "Leer el evangelio de Lucas - JSON", function () {
+
+            enDocumento ("Evangelio según San Lucas", "h1"); 
+            
+            fetch ("lucas.json").then (respuesta => { //  Según la respuesta que de la funcion...
+
+                // Si no tiene respuesta (no está el archivo), interrumpimos el flujo.
+                
+                if (!respuesta.ok) {
+                    throw new Error ("¡El archivo JSON de lucas.json no está en la carpeta!")
+                }
+
+                // De lo contrario, devolver el objeto JSON
+
+                return respuesta.json();  // Esto devuelve el objeto JSON correspondiente a javascript a partir de la respuesta del fetch, para poder trabajar con él. 
+            }).then (datos => {   // CON FETCH TAMBIÉN PUEDE ACCEDERSE A LAS PROPIEDADES DE UN OBJETO USANDO "datos.propiedad"
+
+                // En los datos se encuentra contenida la información
+
+                for (let i=0; i<datos.length; i++) {
+                    
+                    for (let j=0; j<datos[i].length; j++) {
+                        enDocumento (datos[i][j]);
+                    }
+
+                }
+
+            }).catch(error => {
+                console.error("Error al cargar el archivo JSON:", error);
+            });
+        })
+
+        // EJERCICIO 6 -> MÉTODO OBJETO-JSON JSON-OBJETO
+
+        enDocumento ("Ejercicio 6", "h2"); 
+
+        // Constructor para generar un objeto con las especificaciones
+
+        function fichaPelicula (arrayActores, director, url ) {
+            this.arrayActores = arrayActores; 
+            this.director = director; 
+            this.url = url;
+        }
+
+        // La ficha contiene las variables correspondientes
+
+        let ficha = new fichaPelicula (["Hugo Ruiz", "Juan Maldonado", "Cristiano Ronaldo", "Fernando Sabater", "Hastaluego Lucas", "Michael Jackson"], "Santiago Segura", "http://que-esta-pasando-aqui-la-pelicula.es");
+
+        // El objeto se convierte en un archivo JSON
+        
+        var fichaJson = JSON.stringify(ficha);
+
+        /**
+         * El archivo JSON resultante sería el siguiente: 
+
+            "arrayActores": [
+            "Hugo Ruiz",
+            "Juan Maldonado",
+            "Cristiano Ronaldo",
+            "Fernando Sabater",
+            "Hastaluego Lucas",
+            "Michael Jackson"
+            ],
+            "director": "Santiago Segura",
+            "url": "http://que-esta-pasando-aqui-la-pelicula.es"
+            }
+        *
+        **/
+
+        // Clase película
+
+        class Pelicula {
+
+            // El constructor registra el archivo JSON, lo convierte en un objeto, y opera con sus propiedades. 
+            
+            constructor (json) {
+
+                var ficha = JSON.parse(json); 
+
+                this.actores = ficha.arrayActores; 
+                this.director = ficha.director; 
+                this.url = ficha.url; 
+
+            }
+
+            // Muestreo del documento., 
+
+            mostrar () {
+                enDocumento (`URL de la película: ${this.url}`);
+                enDocumento (`Director: ${this.director}`);
+                enDocumento (`Plantel: ${this.actores}`); 
+            }
+
+
+        }
+        
+        miPelicula = new Pelicula (fichaJson); 
+
+        miPelicula.mostrar ();
+
+        // EJERCICIO 7 Trabajando con fechas
+
+        enDocumento ("Ejercicio 7", "h2"); 
+
+        let fechador = {
+
+            difFechas: function (fechaMenor, fechaMayor) {
+
+                // FORMATO: '2023-11-16' 8.64e7
+                // Objetos respectivos para cada una de las fechas introducidas
+
+                datefechaMenor= new Date(fechaMenor);
+                datefechaMayor= new Date(fechaMayor);
+
+                // Resta de las fechas
+
+                diferencia = datefechaMayor-datefechaMenor;
+
+                // Diferencia en milisegundos. Para hallar la diferencia en días, debe dividirse la cantidad entre los milisegundos que contiene un día.
+
+                return diferencia/8.64e7; 
+
+            },
+
+            maxFecha: function (fecha1, fecha2) {
+
+                // Objetos respectivos para cada una de las fechas introducidas
+
+                datefecha1= new Date(fecha1);
+                datefecha2= new Date(fecha2);
+
+                // Condicional que arroja la fecha mayor
+
+                if (datefecha1> datefecha2) {
+                    return fecha1; 
+                }
+                else {
+                    return fecha2; 
+                }
+
+            },
+
+            testFecha: function (fecha) {
+
+                let regexFecha = /^\d{4}-\d{2}-\d{2}$/;
+                return regexFecha.test (fecha);
+
+            },
+
+            ayerFecha: function (fecha) {
+
+                // Obtener la fecha a partir del parámetro. 
+
+                dateFecha = new Date(fecha);
+
+                // Realizar la resta con setDate, que realiza la resta en base a días, no a milisegundos 
+
+                dateFecha.setDate (dateFecha.getDate()-1)
+
+                // Retorno
+
+                return  dateFecha; 
+            },
+
+            mananaFecha: function (fecha) {
+
+                // Obtener la fecha a partir del parámetro. 
+
+                dateFecha = new Date(fecha);
+
+                // Realizar la resta con setDate, que realiza la suma en base a días, no a milisegundos 
+
+                dateFecha.setDate (dateFecha.getDate()+1)
+
+                // Retorno
+
+                return  dateFecha; 
+            }
+
+        }
+
+        enDocumento (fechador.difFechas ("2023-11-16", "2023-11-20")); 
+        enDocumento (fechador.maxFecha ("2023-11-16", "2023-11-20")); 
+        enDocumento (fechador.testFecha ("2023-11-16"));
+        enDocumento (fechador.ayerFecha ("2023-11-16"));
+        enDocumento (fechador.mananaFecha ("2023-11-16"));
+
+        // EJERCICIO 8 
+
+        enDocumento ("Ejercicio 8","h2");
+
+        class Trigonometria {
+
+            // CONSTRUCTOR
+
+            constructor () {
+
+            }
+
+            // MÉTODOS
+
+            seno (num) {
+                return Math.sin (num)
+            }
+
+            coseno (num) {
+                return Math.cos (num);
+            }    
+            
+            tangente (num) {
+                return Math.tan (num);
+            }
+
+            arcoseno (num) {
+                return Math.asin (num);
+            }
+
+            arcotangente (num) {
+                return Math.atan (num); 
+            }
+
+        }   
+
+        calculadora = new Trigonometria (); 
+
+        enDocumento (calculadora.seno(5));
+        enDocumento (calculadora.coseno(5));
+        enDocumento (calculadora.tangente(5));
+        enDocumento (calculadora.arcoseno(5));
+        enDocumento (calculadora.arcotangente(5));
+
+        // EJERCICIO 9 
+
+        enDocumento ("Ejercicio 9","h2");
+
+        let regexURL = /^https:\/\/(?:[^ñ]+)\.es$/; 
+
+        enDocumento (regexURL.test ("https://hugoruizsanchez.es"));
+
+
+        // EJERCICIO 10 
+
+        enDocumento ("Ejercicio 10","h2");
+
+        class Etiqueta {
+
+            constructor (etiqueta, articulo) {
+                this.etiqueta = etiqueta;
+                this.articulo = articulo; 
+            }
+
+            mostrarArticulo () {
+                enDocumento (`${this.articulo}`, "h3"); 
+                enDocumento (`Etiqueta -> ${this.etiqueta}`); 
+            }
+
+            validarEtiqueta () {
+                let regexURL = /^[0-9]{4}-[A-Za-z]{5}\/[0-9]{2}_[0-9]$/;
+                return regexURL.test (this.etiqueta); 
+            }
+
+        }
+
+        let etiqueta = new Etiqueta ("2022-xrFdS/25_9","Patatas"); 
+
+        enDocumento (etiqueta.validarEtiqueta());
+        
+
+
+
+
+        
+
+    </script> 
+
+    
+</body>
+</html>

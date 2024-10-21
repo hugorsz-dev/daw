@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<>, initial-scale=1.0">
+    <title>Variables</title>
+</head>
+<body>
+
+    <h1> Trabajando con variables </h1>
+    
+    <script> 
+
+    function enParrafo (texto) {
+        document.write ("<p>");
+            document.write (texto);
+        document.write ("</p>");
+    }
+
+    /**
+     * Las variables de javascript tienen las mismas peculiaridades que en otros lenguajes de programación, salvo:
+     * - Se permiten letras latinas, como la "ñ" (no se recomienda)
+     * - Pueden ser $ o "_"
+     * - NO se permite el guión "-" en los nombres de las variables.
+     * - NO debe empezar por números. 
+    **/
+
+    // -> Antiguamente se usaba "var", pero en la actualidad usamos "let"
+    // -> Muy antiguamente, no se usaba ni var ni get, las variables se definían directamente (num=6). Esto sigue siendo posible ammenos que escribamos "use strict";
+
+    let cadena = "Hey, soy una variable";
+
+    // Para crear valores inmutables, se usan las constantes
+
+    const miCumpleaños= "05.05.2003";
+
+    // -> Un uso de las constantes es relacionarlas con valores difíciles de recordar, como los códigos de color. 
+
+    const COLOR_RED = "#F00";
+    const COLOR_GREEN = "#0F0";
+    const COLOR_BLUE = "#00F";
+    const COLOR_ORANGE = "#FF7F00";
+
+    // La antigua "var"
+    /**
+     * - Está afectada por el hoisting levantamiento), es decir, cuando se declara, es como si se izara hasta el principio del codigo.
+     * - Esto solo afecta a las declaraciones, no a las asignaciones. 
+     * - Por lo cual, no tiene alcance de bloque, es decir, que funciona como VARIABLE GLOBAL. 
+     * - Tolera redeclaraciones. 
+     * - Bajo nigún concepto es recomendable emplearla
+    */
+
+    // Ejemplo de hoisting en var: 
+
+    miVariable = 7
+    console.log ("Valor de miVariable: "+miVariable);
+    var miVariable;  // En realidad, ya fue inicializada desde el principio.  
+
+    // TIPOS DE DATOS PRIMITIVOS
+   
+    /**
+    * Los datos primitivos son la forma más básica de guardar la información
+    */
+    
+    // BOOLEANO 
+
+    bool = false; 
+
+    // NÚMERO 
+    // -> Aunque javascript no hacce esta distinción: todas son de tipo "número"
+
+    entero = 1; // Número entero (NUMBER)
+    flotante = 1.5 // Número decimal (NUMBER) 
+    
+    // BIG INT
+    // -> Numeros mayores a 2 elevado a 53 menos uno. 
+
+    granEntero = 5n; // Numero entero largo (BIGINT)
+
+    // CADENA 
+
+    // -> Las cadenas pueden escribirse entre ""
+
+    cadena ="Hola"; 
+
+    // -> Entre ''
+
+    cadena2='Adios';
+
+    // -> Y entre `` ,  que permite embeber variables y expresiones más fácilmente. 
+    // -> Esto también aplica, por ejemplo, a las alert o al console.log
+
+    cadena3 = `Unión entre cadena: ${cadena} y cadena2 ${cadena2} junto con bool: ${bool}`;
+
+    console.log (cadena3);
+
+    cadena[0] // "H"
+    cadena [3] // "l"
+    cadena.length; // ¿Por qué usa una función si es primitivo? Porque Javascript hace autoboxing: crea un objeto, ejecuta la función, y lo borra. 
+
+    // SÍMBOLO
+
+    simbolo = Symbol("manzana"); // Símbolo , su uso es especial para las propiedades de los objetos
+
+    // INDEFINIDO
+    // > Literalmente, no declarado o definido. Si creamos una variable y no le asignamos valor, es undefined. 
+    
+    undefined; 
+
+    // NULOS
+    // -> En javascript significa "vacío".
+    // -> por un bug, el typefile dice que es un objeto.
+
+    null; 
+
+    // CONVERSIONES (CASTEAR) DE VALORES 
+
+    // Conversiones a String
+
+    enParrafo (`La variable bool es: ${bool} y de tipo ${typeof(bool)}, vamos a castearla.`);
+
+    bool = String (bool); 
+
+    enParrafo (`La variable bool ahora es de tipo ${typeof(bool)}`);
+
+    // Conversiones a number
+
+    // -> Si el string NO es un número, arroja error (como es natural). 
+
+    let cadena4 = "123";
+
+    cadena4 = Number (cadena4); 
+
+    enParrafo ("Ha de notarse que los string tambiéns se convierten a número cuando se dividen entre sí: ");
+    enParrafo ("6"/"3"+"</p>");
+
+    // -> Si es un boolenao, el resultado pasa a ser 0 o 1 en vez de true o false.
+    // -> Si es un nulo, lo convierte a 0.
+
+    // Conversiones a boolean
+    // -> Si un valor está vacío o. es null o es igual a cero, falso. Si contiene algo, true. 
+
+    cadena4 = Boolean (cadena4); 
+
+    // OPERACIONES: 
+
+    /**
+     SUMA +
+     RESTA - 
+     POTENCIA **
+     MULTIPLICACION *
+     DIVISIÓN / 
+     RESTO % 
+    **/
+
+    // -> Las operaciones numéricas arrojan resultados evidentes. 
+    // -> Se tiene en cuenta el orden de operaciones matemáticas. 
+
+    // EN LAS ADICIONES CON STRINGS 
+    // -> A partir de que se encuentra un valor STRING, la cadena tiene por resultado un string y pasa a concatenar valores en vez de sumarlos. 
+    enParrafo ('1'+2); // Esto es "12"
+    enParrafo (2 + 2 + '1' ); // Esto es "41" y no "221"
+
+    // OTRAS OPERACIONES CON STRINGS 
+    // -> Con resta, multiplicacion, division ... los operadores son considerados todos como números. 
+    enParrafo ( 6 - '2' ); 
+    enParrafo ('2' - 6 ); 
+
+    // SIGNOS
+
+    let x = 5; 
+    let y = -3; 
+
+    enParrafo (-x); // "-5"
+    enParrafo (+y) // "-3" no se cambia, +- es - 
+
+    // ASIGNACIONES ENTRE OPERACIONES
+
+    let z = ( 12 + (x=x-7) ) * (y/9);
+
+    enParrafo (z);
+
+    z = y = x; 
+
+    enParrafo (""+x+" "+y+" "+z);
+
+    // ABREVIATURAS
+
+    x+=2; // Es decir: x = x+2;
+    x-=2; // Es decir: x = x-2;
+    x*=2; // Es decir: x = x*2;
+    x++; // Es decir: x = x+1; Muestra el resultado anterior y luego lo suma
+    x--; // Es decir: x = x-1; Muestra el resultado anterior y luego lo resta
+    ++x; // Es decir: x = x+1; Lo suma y luego muestra el resultado
+    --x // Es decir: x = x-1; Lo resta y luego muestra el resultado
+
+    // -> Esto se puede operar también
+    x= 1;
+    enParrafo (2 * ++x ) // Da  "4" 
+
+    // LA COMA
+    // -> Su uso es muy raro, es necesario hacerlo entre paréntesis
+    z = (1+2, 3+4);  // 7 , se queda con la última coma, pero efectúa las operaciones anteriores
+    z = 1+2, 3+4; // 3 (es como si z=(1+2), 3+4) por eso debe usarse el paréntesis
+    
+    // -> Si mejor uso es asignar variables entre operaciones 
+
+    z = (x=3, z=1, x+z); 
+
+    enParrafo (z);
+
+    // COMPARACIONES 
+
+    /**
+     * Las comparaciones entre operandos se realizan:
+     * == Igual
+     * != No igual
+     * === Iguales tanto en valor como en tipo 
+     * > Mayor
+     * < Menor
+     * >= Mayor o igual
+     * < Menor o igual 
+     * El resultado es un booleano. 
+    **/
+     
+    //* Si se comparan cadenas, el orden que usa es ortográfico: z > a (true)
+
+    enParrafo ("Anastasio" > "Javier");
+
+    // * Si se comparan cadenas con números, la cadena pasa a ser número.
+  
+    enParrafo ("8" > 3);
+    
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+    </script>
+    
+
+
+
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Trabajando con objetos </h1>
+
+    <script> 
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "false"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+
+        }
+
+        enDocumento ("Creando objetos", "h2");
+
+        // Un objeto es un gabinete que cuenta con atributos y métodos
+        
+        // Un objeto vacío se crea llamando a la clase object, aunque puede crearse directamente entre  {}
+
+        let usuario = new Object (); 
+        
+        usuario = {
+            nombre: "Hugo", // La clave siempre es una string, aunque no lo parezca!
+            edad : 23,
+            esAdministrador: true,
+            "es retrasado": false
+        }
+
+        // Debido a la naturaleza "String" de las claves, puede elegirse cualquier variable para una clave, incluso numeros o booleanos, teniendo en cuenta que será string; y que al llamarlo, podrá ser llamado como dicha variable o en forma de tring
+
+        enDocumento ("Manipulando objetos", "h2");
+
+        enDocumento (`El nombre es ${usuario.nombre}`);
+
+        // Eliminar propiedad
+
+        delete usuario.nombre;
+
+        enDocumento (`El nombre es ${usuario.nombre}`);
+
+        // Reformular propiedad
+
+        usuario.nombre = "Javier";
+
+        enDocumento (`El nombre es ${usuario.nombre}`);
+
+        // Usar propiedades " "
+
+        enDocumento ("Objetos con propiedades entre comillas  ", "h2");
+
+        enDocumento (`${usuario.nombre} ¿es retrasado? ${usuario["es retrasado"]}`);
+
+        delete usuario["es retrasado"]; 
+
+        enDocumento ("------------");
+
+        // Mostrar en base a una key, solo se puede usar con la notación de [""]
+
+        let clave = prompt ("Qué valor quiere saber", "name");
+
+        enDocumento (`La clave elegida es ${clave} y corresponde a: ${usuario[clave]}`);
+
+        // Propiedades precalculadas, esto es, determinadas por variable. 
+        // El nombre de una variable puede correspodner al nombre de un atributo
+
+        enDocumento ("Propiedades calculadas  ", "h2");
+
+        let fruta = "Manzana"; 
+
+        let bolsa = {
+            [fruta] : 5
+        }
+
+        enDocumento (`La clave ${fruta} corresponde a ${bolsa.Manzana}`); 
+
+        enDocumento ("Funciones que retornan objetos ", "h2");
+        
+        // Objetos como retorno para las funciones
+
+        function crearUsuario (nombre, edad) {
+            return {
+                nombre: nombre, 
+                edad : edad
+            }
+        }
+
+        // Igual resultado que la anterior, pero simplificada
+
+        function crearUsuario (nombre, edad) {
+            return {
+                nombre,
+                edad 
+            }
+        }
+
+        function crearUsuarioRaro (nomnre, edad) {
+            return {
+                nombre,
+                edad : 59 // Edad y nombre serán iguales
+            }
+        }
+
+        nuevoUsuario = crearUsuario ("Eugenio", 67); 
+
+        enDocumento (`Nombre ${nuevoUsuario.nombre} Edad: ${nuevoUsuario.edad}`);
+
+        enDocumento ("Operador in", "h2");
+
+        // Operador in 
+
+        // Sirve para comprobar la presencia de una determinada propiedad
+        // -> podría usarse un === undefined en su lugar, pero si la propiedad es directamente equivalente a este valor arrojará un true; por eso es recomendable este operador
+
+        enDocumento ("nombre" in nuevoUsuario); 
+
+        enDocumento ("Iterar objetos con el for in", "h2");
+
+        // Bucle for in 
+
+        for (let clave in nuevoUsuario) {
+            enDocumento (`La clave ${clave} es ${nuevoUsuario[clave]}`); 
+        }
+
+        // El orden de aparición de las propiedades es, en orden de mayor o menor si son números enteros ("1", "2", "3") o en orden de creación si son cualquier otro tipo de variable. 
+
+        // COPIADO DE OBJETOS
+
+        enDocumento ("Copiado de objetos","h2"); 
+
+        // -> Los objetos no son "contenedores de propiedades" al uso, ni las "propiedades" son tales. Los objetos guardan un conjunto de referencias que remiten a unas variables.
+        // Si copiamos un objeto, copiamos las referencias de las variables y por tanto, si lo hacemos directamente ("=") entonces las referencias serán las mismas por lo que solo cambiará la forma de llamar el objeto, nada más. 
+
+        // -> Hemos usado una constante para declarar el objeto ¡y hemos modificado una de sus propiedades! Los objetos constantes tienen propiedades modificables. 
+
+        const usuarioCopiado = usuario;
+        usuarioCopiado.nombre = "Patata";  // El nombre "Patata" se asigna a usuarioCopiado, pero esta es solo la referencia; por lo que el ojeto usuario se verá repercutido por este cambio. 
+
+        enDocumento (usuario.nombre);  // "Patata"
+
+        // Verificar si un objeto es una copia exacta de otro, con las mismas referencias para las variables. 
+
+        enDocumento (` ¿Es igual? ${usuarioCopiado == usuario} - ${usuarioCopiado === usuario}`); // "true", ¡ambos objetos son iguales!
+
+        administrador = {}; 
+
+        enDocumento (`¿Es igual? ${usuarioCopiado == administrador} - ${usuarioCopiado === administrador}`); // "false", los objetos no son iguales!
+
+        // ¿Cómo duplicar verdaderamente un objeto?
+
+        enDocumento ("Clonado de objetos", "h2"); 
+
+        // Podemos hacerlo con la función Object.assign 
+        // Object.assign (OBJETODESTINATARIO, ... fuentes)
+        // Al objeto inicial se le incorporarán las propiedades indicadas de cada fuente. Si la propiedad ya existe, se sobreescribe
+
+        let usuarioClonado = Object.assign ({}, usuario); 
+
+        for (let clave in usuarioClonado) {
+            enDocumento (`Usuario clonado es ${clave}: ${usuarioClonado[clave]}`); 
+        }
+
+        enDocumento (` ¿Es igual? ${usuarioClonado == administrador} - ${usuarioClonado === administrador}`);
+
+        // Puede darse el caso de que cada objeto contenga, en su interior, más objetos. Esto implicaría que, aunque el clonado fuera correcto, los elementos de su interior tendrían las referencias duplicadas. 
+
+        enDocumento ("Duplicado de objetos que contienen objetos", "h2"); 
+
+        // En este objeto, el objeto "credenciales" no se clonaría, sino que duplicaría sus referencias 
+
+        presidente = {
+            altura : 180, 
+            credenciales : {
+                nombre : "Pedro",
+                apellido : "Sánchez"
+            },
+            corrupto: true
+        };
+
+        // Usamos structuredClone 
+        // -> ¡Advertencia! No soporta funciones. 
+
+        let nuevoPresidente = structuredClone  (presidente);
+
+        nuevoPresidente.credenciales.nombre ="Rajoy"; 
+
+        enDocumento (presidente.credenciales.nombre); 
+        enDocumento (nuevoPresidente.credenciales.nombre); 
+
+        enDocumento (`¿Es igual? ${presidente.credenciales.nombre == nuevoPresidente.credenciales.nombre} - ${presidente.credenciales.nombre === nuevoPresidente.credenciales.nombre}`);
+
+        // Recolección de basura 
+
+        // Javascript tiene un recolector de basura automático.
+        // Hay valores en javascript que no se pueden borrar: funciones, datos guardados en las variables globales, y los objetos guardados globalmente junto con sus referencias accesibles, aunque no sean globales. 
+
+        administrador.nombre = null; 
+
+        enDocumento (usuario.nombre); // Aunque ambos tenían la misma referencia, el global "usuario" seguía existiendo, por lo que la variable nombre asociado a el sigue presente y accesible.
+
+        // Esta ley se aplica a todos los objetos, por complejos que sean. 
+
+        
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+    </script> 
+    
+</body>
+</html>

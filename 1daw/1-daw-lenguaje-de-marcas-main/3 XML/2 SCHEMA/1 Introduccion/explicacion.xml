@@ -1,0 +1,41 @@
+<!-- | ANOTACIONES AL MARGEN | 
+
+Un documento XML necesita de un documento XMS para ser validado. Este documento XSD intruduce un "schema" que introduce la forma esencial del documento. 
+
+Véase: --> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<class> 
+<student> 
+
+<firstname> Graham</firstname>
+<lastname> Bell</lastname>
+<age>20</age>
+
+</student>
+
+</class>
+
+<!-- En un documento XML correspondientemente bien-formado, debe coplementarse con un schema XSD correcto para validarse --> 
+
+
+
+<xs:schema xmlns:xs "http://www.w3.org/2001/XMLSChema"> <!-- Primera línea, que debe encabezar -->
+	<xs:element name="class"> <!-- empezamos con el elemento "class" que creamos -->
+		<xs:complexType>  <!-- porque tiene elementos hijos, es un complexType -->  
+			<xs:sequence>  <!-- que procede con la siguiente secuencia: --> 
+				<xs:element name="student"> <!-- Elemento "student" -->
+					<xs:complexType> <!-- porque tiene elementos hijos, es un complexType -->
+						<xs:sequence>  <!-- que procede con la siguiente secuencia: --> 
+							<xs:element name="firstnime" type="xs:string"/> <!-- Elemento "nombre" tipo string --> 
+							<xs:element name="lastname" type="xs:string"/> <!-- Elemento "lastname" tipo string -->
+							<xs:element name ="age" type = "xs:int"/> <!-- Elemento "age" tipo "int" --> 
+						</xs:sequence> 
+	                </xs:complexType>
+				</xs:element> 
+			</xs:sequence> 
+		</xs:complexType> 
+	</xs:element> 
+</xs:schema> 
+

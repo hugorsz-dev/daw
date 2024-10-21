@@ -1,0 +1,15 @@
+<!-- 
+BORRAR:
+Las variables xs:int tienen las siguientes restricciones: 
+
+-  "minInclusive" y "maxInclusive": Establecen el valor mínimo y máximo permitido para el elemento o atributo.
+- "minExclusive" y "maxExclusive": Establecen el valor mínimo y máximo permitido para el elemento o atributo, pero excluyen esos valores específicos.
+- "totalDigits": Limita el número total de dígitos permitidos en el elemento o atributo.
+- "fractionDigits": Limita el número de dígitos después del punto decimal permitidos en el elemento o atributo.
+- "enumeration": Limita los valores permitidos para el elemento o atributo a una lista predefinida de valores
+
+---------------------
+
+LOS ATRIBUTOS pueden configurarse como required (requeridos), optional (opcionales) , p
+
+--> 

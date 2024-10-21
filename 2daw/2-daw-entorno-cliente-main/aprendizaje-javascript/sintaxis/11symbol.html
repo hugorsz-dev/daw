@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipo symbol</title>
+</head>
+<body>
+
+    <h1> Tipo symbol </h1>
+
+    <script>
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "false"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+
+        }
+
+        // Los símbolos son variables de identificación o clave independientes, inmutables y siempre distintos. 
+        // -> No se pueden cambiar (ideal para id)
+        // -> Al compararse entre sí, pese a ser "iguales", arrojará false
+        // ¡PUEDEN USARSE EN OBJETOS! Y es deseable, sobre todo, en propiedades que no queramos ver cambiar (por ejemplo, las id)
+        
+        enDocumento ("Comparando dos strings","h2")
+
+        let patata = "patata"
+        let tuberculo ="patata"; 
+
+        enDocumento (patata==tuberculo);
+        enDocumento (patata===tuberculo);
+
+        enDocumento ("Comparando dos symbol","h2")
+
+        patata = Symbol ("patata");
+        tuberculo = Symbol ("patata"); 
+
+        enDocumento (patata==tuberculo);
+        enDocumento (patata===tuberculo);
+
+        // -> Aunque el contenido, el valor y el tipo son iguales, ¡son symbols! Y por eso siempre serán únicos y diferentes.
+
+        enDocumento ("Cómo imprimir symbol","h2")
+
+        // ... mediante la propiedad .description
+
+        // enDocumento (patata) // arroja null
+        enDocumento (patata.toString()); //Symbol(patata) 
+        enDocumento (patata.description) // patata 
+        enDocumento ("Symbol en objetos","h2");
+
+        let id = Symbol("id");
+
+        let usuario = {
+            nombre: "Hugo",
+            apellido: "Ruin",
+            [id]: 23 // Tipo symbol que remite al Symbol anterior. 
+        }
+
+        enDocumento ("Recorrer symbol incrustados en objeto","h2");
+
+        // Al recorrer, ignora los símbolos 
+
+        for (let clave in usuario) {
+            enDocumento (`La clave es ${clave}, correspondiente a ${usuario[clave]} `)
+        }
+
+        // Aunque puede accederse directamente 
+
+        enDocumento (usuario[id]); // -> El acceso debe ser entre corchetes. 
+
+        // Object assign (que clona los objetos) copia también los símbolos contenidos en él. AUNQUE otros objetos no tendrán acceso a nuestros símbolos. 
+
+        enDocumento ("Symbol globales","h2");
+
+        // Los símbolos son únicos, pero pueden ser referenciados a diferentes variables. 
+
+        let DNI = Symbol.for("dni"); 
+        let nuevoDNI =  Symbol.for("dni"); 
+
+        // Ambas variables referencian al mismo símbolo. 
+
+        enDocumento (DNI==nuevoDNI);
+
+        
+        
+
+
+        
+
+
+
+    </script>
+    
+</body>
+</html>

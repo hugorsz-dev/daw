@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarma</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #div-reloj {
+            margin: 20px;
+            font-size: 3em;
+            color: #0066cc;
+        }
+
+        #input-hora-alarma {
+            margin: 10px;
+        }
+
+        #boton-programar-alarma {
+            padding: 10px;
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #0066cc;
+        }
+
+        #div-alarmas-programadas {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px;
+        }
+
+        .boton-alarma {
+            margin-top: 5px;
+            padding: 5px;
+            background-color: #cc0000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #audio {
+            display: none;
+        }
+        span {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Título -->
+
+    <h1> Reloj con función de alarma </h1>
+
+    <!-- Hora actual -->
+    
+    <div id="div-reloj"> </div>
+
+    <!-- Panel de programación de alarmas-->
+
+    <label for="input-hora-alarma"> Indicar hora </label>
+    <input type="time" id="input-hora-alarma" name="input-hora-alarma">
+
+    <button id="boton-programar-alarma" onclick="miReloj.anadirAlarma()"> Programar alarma </button> 
+
+    <!-- Registro con alarmas, con la posibilidad de desactivarlas-->
+    <h2> Alarmas programadas </h2>
+    <div id="div-alarmas-programadas"> Ninguna alarma programada. </div>
+
+    <!-- Pista de audio que se reproducirá al tocar la alarma-->
+    
+    <audio id="audio" style="display: none;" controls>
+        <source type="audio/mp3" src="thriller.mp3">
+    </audio>
+    
+    <script>
+
+    function enContenedor (texto, tipo, container, atributos=false) {
+
+        // Define el contenedor existente donde se introducirá la etiqueta
+
+        let contenedor = document.getElementById(container); 
+
+        // Crea un elemento con la etiqueta definida 
+
+        let nuevaEtiqueta = document.createElement(tipo); 
+
+        // Introduce el texto dentro de la etiqueta
+
+        nuevaEtiqueta.textContent = texto;
+
+        // Incrusta la etiqueta en el contenedor previamente definido.
+
+        contenedor.appendChild (nuevaEtiqueta); // Indicando así el contenido
+
+        // Asociar los atributos
+
+        if (atributos) {
+            for (let i=0; i<atributos.length; i++) {
+                nuevaEtiqueta.setAttribute (atributos[i][0], atributos [i][1] )
+            }
+        }
+    }
+
+    class Reloj {
+
+        // CONSTRUCTOR
+
+        constructor () {
+
+            // Atributos internos
+            this.horaExterna =""; 
+            this.horaInterna = [0,0];
+            this.alarmas = [];
+
+        }
+
+        // MÉTODOS
+
+        // Actualiza el atributo "hora" del objeto. 
+        actualizarHora () { 
+
+            // Guardar la información actual de la fecha y almacenar en variables horas, minutos y segundos.
+            let fechaActual = new Date (); 
+            let horas = fechaActual.getHours(); 
+            let minutos = fechaActual.getMinutes();
+            let segundos = fechaActual.getSeconds();
+
+            // Condicionales para añadir "0", mejora estética. 
+            if (segundos<10) segundos = "0"+segundos;
+            if (minutos<10) minutos = "0"+minutos;
+            if (horas<10) horas = "0"+horas;
+
+            // Asignación del string creado al atributo "hora".
+            this.horaExterna = ""+horas+":"+minutos+":"+segundos; 
+
+
+            if (this.existeAlarma ([horas,minutos])) {
+                // Borrar la alarma para que NO siga detectandola al iterar
+                this.borrarAlarma ([horas,minutos]);
+                // Actualizar la informacion que se desplega
+                this.depurarAlarmas ();
+                this.mostrarAlarmas ();
+                // Reproducir la musica de la alarna
+                let audio = document.getElementById("audio");
+                
+                audio.play();
+                // Si la pospone, crea otra alarma 2 minutos despues
+                // Si no, le dice al usuario que disfrute del descanso
+                if (confirm ("¡Suena tu alarma! ¿Quieres posponerla dos minutos?")) {
+                    audio.pause ();
+                    if (minutos<10) {
+                        intMinutos = parseInt (minutos,10);
+                        int
+                        this.alarmas.push ([horas,"0"+intMinutos]); 
+                        this.depurarAlarmas ();
+                        this.mostrarAlarmas ();
+                    }
+                    else {
+                        this.alarmas.push ([horas,minutos+2])
+                        this.depurarAlarmas ();
+                        this.mostrarAlarmas ();
+                    }
+                }
+                else {
+                    audio.pause ();
+                    alert ("Disfrute de su tiempo");
+                }
+
+                
+
+                
+                
+            }
+        }
+
+        // Introduce la hora en el documento, si se itera, mantendrá la hora actualizada
+        mostrarHora () {
+            this.actualizarHora(); 
+            document.getElementById("div-reloj").innerHTML="";
+            enContenedor (this.horaExterna,"p","div-reloj",[["id","reloj"]])
+        }
+
+        // Comprueba si una alarma determinada existe dentro del registro 
+
+        existeAlarma (alarma) {
+            let horaAlarma = alarma [0]; 
+            let minutosAlarma = alarma [1]; 
+
+            for (let i=0; i<this.alarmas.length; i++) {
+                if (horaAlarma == this.alarmas[i][0] && minutosAlarma == this.alarmas [i][1]) return true;
+            }
+            return false; 
+        }
+
+        borrarAlarma (alarma) {
+            let horaAlarma = alarma [0]; 
+            let minutosAlarma = alarma [1]; 
+
+            for (let i=0; i<this.alarmas.length; i++) {
+                if (horaAlarma == this.alarmas[i][0] && minutosAlarma == this.alarmas [i][1]) {
+                    this.alarmas.splice (i,1);
+                }
+            }
+        }
+
+        // Añade una alarma nueva en el array de alarmas
+        anadirAlarma () {
+            let inputAlarma = document.getElementById("input-hora-alarma").value
+
+            if (inputAlarma) {
+                // Si this.alarmas contiene el array generado por inputAlarma.split(":")
+                if (!this.existeAlarma (inputAlarma.split(":"))) {
+                    this.alarmas.push (inputAlarma.split(":"));
+                    this.depurarAlarmas();
+                    this.mostrarAlarmas()
+                }
+                else {
+                    alert ("Alarma repetida")
+                }
+            }
+            else {
+                alert ("No ha introducido la hora completa");
+            }
+            
+        }
+
+        // Organiza las alarmas en base a hora y minuto 
+        depurarAlarmas () {
+
+            // Ordenar por hora -> ordenación en base al primer elemento del array
+            this.alarmas.sort (function (a, b) {
+                return a[0] - b[0];
+            })
+
+            // Ordenar por minuto
+            //// Recoger cuántas horas se usan
+            let horasUsadas = []; 
+
+            for (let i=0; i<this.alarmas.length; i++) {
+                if (!horasUsadas.includes(this.alarmas[i][0])){
+                    horasUsadas.push (this.alarmas[i][0]); 
+                }
+            }
+
+            //// Ordenar cada franja de horas en base a minutos.
+            
+            let alarmasOrdenadas = [];
+
+            for (let i=0; i<horasUsadas.length; i++) {
+
+                // Por cada franja correspondiente a una hora... 
+
+                let franjaDesordenada = []
+
+                for (let j=0; j<this.alarmas.length; j++) {
+                    if (horasUsadas[i]==this.alarmas[j][0]) franjaDesordenada.push(this.alarmas[j])
+                }
+
+                // ... ordenarla por cada segundo elemento (minutos) ...
+                
+                franjaDesordenada.sort (function (a,b) {
+                    return a[1] - b[1];
+                })
+
+                // ... e introducirlo en un array de alarmasOrdendas.
+
+                alarmasOrdenadas.push (franjaDesordenada); 
+            }
+            
+            // Convertir las alarmas ordenadas en un array plano.
+
+            this.alarmas = [];
+
+            for (let i=0; i<alarmasOrdenadas.length; i++) {
+                for (let j=0; j<alarmasOrdenadas[i].length; j++) {
+                    this.alarmas.push (alarmasOrdenadas[i][j]);
+                }
+            }
+
+        }
+
+        mostrarAlarmas () {
+
+            document.getElementById ("div-alarmas-programadas").innerHTML =""; // Eliminar contenido interior para evitar repeticiones
+
+            for (let i=0; i<this.alarmas.length; i++) {
+                
+                enContenedor ("", "div", "div-alarmas-programadas",[["id",`alarma${i}`]])
+                enContenedor (`${this.alarmas[i][0]}:${this.alarmas[i][1]}`,"span", `alarma${i}`)
+                enContenedor (`Borrar`,"button", `alarma${i}`, [["num", i], ["id", `boton-alarma${i}`],["class","boton-alarma"]])
+            }
+        }
+
+    }
+
+    miReloj = new Reloj (); 
+
+    // Mostrar hora cada segundo 
+
+    setInterval (function (){
+
+        //  Muestreo de la hora y comprobación
+        miReloj.mostrarHora();
+        miReloj.depurarAlarmas ();
+
+        // Comprobar los botones 
+        
+        
+        try {
+            let botonesAlarma = document.getElementsByClassName('boton-alarma');
+
+            try { 
+                
+                for (let i=0; i<botonesAlarma.length; i++) {
+                
+                botonesAlarma[i].addEventListener('click', function() {
+                    let indice = botonesAlarma[i].getAttribute('num');
+                    console.log (indice);
+                    miReloj.alarmas.splice (indice,1);
+                    miReloj.depurarAlarmas();
+                    miReloj.mostrarAlarmas();
+                }
+            )}
+        
+        } catch (excepcion) {}
+        } catch (excepcion) {}
+
+        
+    },1000)
+
+    // Control de botones de borrar 
+
+    </script>
+
+
+    
+</body>
+</html>

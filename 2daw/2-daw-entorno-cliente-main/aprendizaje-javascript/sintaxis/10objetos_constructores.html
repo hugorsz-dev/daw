@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1> Constructores de objetos </h1> 
+
+    <script> 
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "undefined"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+
+        }
+
+        // Si bien los objetos pueden crerse directamente con {} , para la creación de muchos objetos es necesario estandarizar: para ello usamos los constructores. 
+       
+        // CONSTRUCTOR DE USUARIO
+        // Esta función retorna un objeto Usuario con los parámetros introducidos, para cada propiedad (this) se le asigna un parámetro ()
+
+        function Usuario (nombre, edad, calle, postal) {
+            this.nombre = nombre; 
+            this.edad = edad;
+            this.direccion = {
+                calle: calle, 
+                postal: postal
+            }
+            this.decirHola = function () {
+                return `Saludos amigo, soy ${nombre} y tengo ${edad} años. Vivo en ${this.direccion.calle}, del número postal ${this.direccion.postal} `;
+            }
+        }
+
+        let usuario = new Usuario ("Hugo",20, "Guzman el malo");
+
+        let usuarioRoto = {};
+
+        // Si no existe el atributo, ARROJARÁ NULL. Cuando arroja null, se interrumpe el programa
+        // Hay que hallar la forma de convertir el null en undefined:
+        // Ello se puede solventar con el operador "?"  
+
+        enDocumento ( usuarioRoto?.algo?.leer() ); 
+
+        // ¿Existe usuario? Si es así, sigue. ¿Existe algo? Si es así, sigue. Ejecuta "leer"
+        // Si no existe "algo", entonces detiene la ejecución y pasa a undefined
+        // Normalmente arrojaría un error. 
+        
+    </script>
+
+</body>
+</html>     

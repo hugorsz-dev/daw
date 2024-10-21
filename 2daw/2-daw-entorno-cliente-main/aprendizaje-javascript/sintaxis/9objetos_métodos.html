@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1> Métodos en los objetos </h1>
+
+    <script> 
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "false"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+
+        }
+
+        // MÉTODOS
+        // -> Todos los objetos tienen métodos asociados a él. 
+        // -> CUIDADO CON LAS FUNCIONES DE FLECHA, no funcionan correctamente en los objetos,
+        // Asignación de un método como propiedad
+        // -> Estamos relacionando una propiedad del objeto con una función.
+
+        let usuario = {
+            nombre: "Hugo", 
+            edad: 20,
+            decirHola: function (){
+                enDocumento ("Usuario dice ¡Hola!")
+            }
+        }
+
+        // Añadir un nuevo método. 
+        
+        usuario.decirAdios = function () {
+            enDocumento ("Usuario dice ¡Adiós!"); 
+        }
+
+        usuario.decirHola (); 
+        usuario.decirAdios (); 
+
+        // Uso del "this"
+        // -> "this", como en otros lenguajes de programación, hace referencia al propio atributo del objeto. 
+
+        // -> Note como la función "decirHola" ha sido redefinida para llamar al nombre del objeto. 
+
+        usuario.decirHola = function () {
+            enDocumento (`Hola, soy ${this.nombre} y te digo ¡Hola!`);
+        }
+
+        usuario.decirHola (); 
+
+        // El uso del "this" es dinámico según la función con la que se conjunte
+
+        let administrador = {
+            nombre: "Javier", 
+            edad: 50
+        }
+
+        function decirQueTal () {
+            enDocumento (`Hola, soy ${this.nombre} y te digo ¿Qué tal?`);
+        }
+
+        usuario.decirQueTal = decirQueTal; 
+        administrador.decirQueTal = decirQueTal; 
+
+        usuario.decirQueTal(); 
+        administrador.decirQueTal();
+
+        
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+    </script>
+
+</body>
+</html>

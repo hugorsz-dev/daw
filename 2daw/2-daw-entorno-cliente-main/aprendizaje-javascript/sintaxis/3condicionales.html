@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condicionales</title>
+</head>
+<body>
+
+    <h1> Condicionales </h1>
+
+    <script> 
+
+        function enTitulo (texto) {
+
+            document.write ("<h2>");
+                document.write (texto);
+            document.write ("</h2>");
+
+        }
+
+        function enParrafo (texto) {
+            document.write ("<p>");
+                document.write (texto);
+            document.write ("</p>");
+        }
+
+        /**
+         * OPERADORES LÓGICOS: 
+         * || -> OR Uno es true. Si se hace texto = texto || "no existe" en una función, devuelve el primer valor verdadero. 
+         * && -> AND Son iguales
+         * !  -> NOT Invierte
+         * ^ -> XOR Los dos no pueden ser iguales
+        **/
+
+
+        // CONDICIONALES EN IF
+        // -> El paréntesis solo reacciona ante booleanos (true, false), nada más. También reacciona ante 0 (false) y 1 (true).
+
+        enTitulo ("Condicionales IF");
+        let anio = prompt ("Indique qué año es", "Año");
+
+        if (anio==1983) {
+            enParrafo ("Jopetas, ¡menudo viejales! ¿Has viajado en el tiempo?");
+        }    
+        else if (anio<2023 || anio > 2023) {
+            enParrafo ("Al parecer no estás en 1983, pero has viajado en el tiempo... al pasado o al futuro"); 
+        }
+        else {
+            enParrafo ("Un cutre contemporáneo. Eso, o no has escrito un número: vaya, menudo.... ");
+        }
+
+
+        // CONDICIONALES EN ... ?
+
+        enTitulo ("Condicionales en ?");
+        
+                     // Condición (true, false)  ?    Si es true :  Si es false 
+        let meQuiere =  confirm ("¿Me quieres?") ? "¡Me quiere!" : "No me quiere";
+
+        enParrafo (meQuiere);
+
+        // MÚLTIPLES ? 
+
+        let edad = prompt("Cuál es su edad", "Edad");
+        
+        let mensaje = 
+        (edad > 3) ? "Hola, niñato" : 
+        (edad > 8) ? "Hola, potencial preadolescente" :
+        (edad > 16) ? "Delincuente juvenil" : 
+        (edad > 35) ? "La flor de la muerte" :
+        (edad > 80) ? "Toc toc ¿alguien en el ataúd?" 
+        : "Valor por defecto"; 
+       
+        enParrafo (mensaje);
+
+
+        // CONDICIONALES EN  ??
+        // -> Si algo no existe (es indefnido o nulo), entonces equivale a ....
+
+        enTitulo ("Condicionales en ??");
+
+        let a = 3; 
+        let b = null;
+        let c;
+        c = a ?? b; // Si a está definida, =a. Si a no está definida, =b. 
+        c = (a !== null && a !== undefined) ? a : b; // Equivale a esta expresión condicional
+        c = a ?? 100;  // Si a no está, equivale a 100. 
+        c = (b ?? 100)*(a ?? 5); // Se puede integrar en operaciones. 
+        enParrafo (c);
+
+        // CONDICIONALES EN SWITCH 
+        // -> Permiten valorar una variable a nivel de caso. 
+        // -> Debe ser exactamente igual, incluso en el tipo. 
+        // ->  No solo permite ints, también strings...
+        enTitulo ("Condicionales en Switch")
+        a = 3; 
+
+        switch (a) {
+            case 1:
+                enParrafo ("Has escrito un uno");
+            break;
+
+            case 2: 
+                enParrafo ("Has escrito un dos");
+            break; 
+
+            case 3: 
+                enParrafo ("Has escrito un tres"); 
+            break; 
+
+            case 4: 
+            case 5:
+            case 6:
+                enParrafo ("Has escrito un cuatro, un cinco o un seis");
+            break;
+
+            default: 
+                enParrafo ("No has introducido ningún valor registrado"); 
+            break; 
+        }
+        
+    
+
+
+
+
+
+
+
+
+
+
+    
+    </script>
+    
+</body>
+</html>

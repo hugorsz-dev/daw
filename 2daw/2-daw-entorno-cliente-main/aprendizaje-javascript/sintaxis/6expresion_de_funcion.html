@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expresiones de función</title>
+</head>
+<body>
+
+    <h1> Estudio de las expresiones de función </h1>
+    <script> 
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "false"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+
+        }
+
+        // Las expresiones de función facilitan la creación de funciones dentro de cualquier expresión, por ejemplo, con la creación de una función. 
+
+        let decirHola = function () {
+            enDocumento ("Hola"); 
+        }; // en este caso, hay que poner coma, porque es una asignación de variable. 
+
+        decirHola (); // llamando a la función creada. 
+
+        let decirHolaOtraVez = decirHola; // Podemos cargar la función creada en la variable decirHola en la nueva variable decirHolaOtraVez
+
+        decirHolaOtraVez ();
+
+        // También compatible con return
+
+        let sum = function (a,b) {
+            return a+b; 
+        }
+
+        enDocumento (sum(2,2)); 
+
+        // Funciones CALLBACK 
+        // -> Permite el uso de funciones como salida y entrada, si se especifican
+        // "si" y "no" pasados como parámetros son, en realidad, funciones. 
+
+        function preguntar (cuestion,si,no) {
+            if (confirm(cuestion))  si() ;
+            else no();  
+
+        }
+
+        preguntar ("Dí hola", decirHola, decirHolaOtraVez); 
+
+        //Incluso podemos crearlas dentro del mismo bloque. Estas funciones se denominan "anónimas" porque acceder a ellas es imposible fuera de su bloque - no tienen nombre -. 
+
+        preguntar (
+            "¿Te gustan las galletas?",
+            function () {
+                enDocumento ("Por supuesto, claro que te gustan las galletas campeón...");
+            }, 
+            function () {
+                enDocumento ("¿Cómo que no te gustan las galletas?"); 
+            }
+        ); 
+
+        /**
+         * Diferencias entre declaración de función y expresión de función. 
+         * 1. La manera de declararse. 
+         * 2. La declaración de función ser llamada antes de declararse. 
+         * 3. La declaración de función se puede acceder desde fuera del bloque en que se crea. 
+         * 4. En el modo estricto, si una declaración de función se encuentra dentro de un bloque de código, solo es visible en todas las partes de este pero no fuera de él. 
+         * 5. Por eso, las expresiones de función son útiles para guardar funciones e irlas modificando, incapaces de desaparecer entre los bloques. 
+     **/ 
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+    
+</body>
+</html>

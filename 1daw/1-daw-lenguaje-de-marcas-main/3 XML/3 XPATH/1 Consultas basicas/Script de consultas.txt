@@ -1,0 +1,44 @@
+
+<!-- 
+
+Las consultas XPATH permiten realizar búsquedas dentro de un documento XML. 
+
+Para ello, debe utilizarse un código organizado. Estos son algunos ejemplos: 
+
+1. Nombre del propietario de la agenda:
+
+/agenda/propietario/identificadores/nombre
+
+2. Teléfono de la casa del propietario: 
+
+/agenda/propietario/telefonos/casa
+
+3.  Nombres y apellidos de los contactos de la agenda:
+
+/agenda/contactos/persona/identificadores/nombre/text() | /agenda/contactos/persona/identificadores/apellidos/text()
+
+(Véase: operador de separación entre consultas "|" y la función /text() al final, para mostrar solo el texto de las etiquetas seleccionadas. 
+
+4. Nombre e identificador de cada contacto:
+
+/agenda/contactos/persona/identificadores/nombre/text() | /agenda/contactos/persona/@id
+
+Muestra el nombre y el identificador de cada contacto usando el referenciador @id
+
+5. Datos del contacto con identificador "p02":
+
+/agenda/contactos/persona[@id="p02"]
+
+Muestra el XML de los datos correspondientes a la id p02
+
+6. Identificadores de los contactos que tienen móvil:
+
+/agenda/contactos/persona/telefonos/movil/ancestor::persona/@id
+
+Muestra el ID de los ancestros (elementos) que constan en /agenda/contactos/persona/telefonos/movil/ 
+
+
+
+
+
+

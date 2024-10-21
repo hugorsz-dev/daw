@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1> Métodos asociados a tipo number</h1>
+
+    <script> 
+    
+        function enDocumento (texto, estilo) {
+            // VARIABLES POR DEFECTO 
+            texto = texto || "false"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+        }
+
+        // Los números se pueden escribir usando "_" para ilustrar las separaciones
+       
+        enDocumento ("Trabajando con grandes números", "h2")
+
+        let milmillones = 1_000_000_000;
+        milmillones = 1e9; // Notación científica.
+        milmillones = 7.3e9 // 7.3 mil millones (7300000000)
+
+        enDocumento (milmillones); 
+
+        // Puede hacerse a la inversa 
+
+        enDocumento ("Trabajando con grandes números ...  en negativo", "h2")
+
+        let menosmilmillones = 1e-6; 
+
+        enDocumento(menosmilmillones); 
+
+        // Hexadecimal
+
+        enDocumento ("Hexadecimal,  binario y octal", "h2"); 
+
+        enDocumento (0xff); // 255 
+
+        enDocumento (0b11111111);
+
+        enDocumento (0o377);
+        
+        // toString
+        // -> Usar el método toString con los números solo hace un traspaso al sistema numero con la base pedida: 
+        // 2 - binario 
+        // 8 - octal...
+        // 10 - decimal...
+
+        enDocumento ("Método toString en los números", "h2"); 
+
+        numero = 123
+       
+        enDocumento ( numero.toString (2)); 
+        enDocumento ( numero.toString (6));      
+        enDocumento ( numero.toString (10));
+        enDocumento (typeof(numero.toString(10))); 
+
+        // Redondeo 
+
+        enDocumento ("Redondeo", "h2"); 
+
+        decimal = 12.46395
+
+        // Redondea hacia abajo: 
+
+        enDocumento (Math.floor(decimal)); 
+
+        // Redondea hacia arriba 
+
+        enDocumento (Math.ceil (decimal)); 
+
+        // Aproxima a lo más cercano 
+
+        enDocumento (Math.round(decimal)); 
+
+        // Aproximar a partir del decimal indicado 
+
+        enDocumento (decimal.toFixed (1)); 
+
+        // -> Esto ultimo resulta util, porque las divisiones que realiza javascript, al tratarse de fracciones, siempre se alargarán, por defecto, a la máxima longitud permitida.
+
+        // Isfinite 
+        // -> Si un numero es dinito
+
+        enDocumento ("isFinite ¿es finito? isNaN ¿no es un numero?", "h2"); 
+        
+        enDocumento (isFinite (Infinity)); 
+        enDocumento (isFinite (23)); 
+        enDocumento (isNaN ("asies")); 
+        enDocumento (isNaN (12)); 
+
+        // Número aleatorio
+
+        // Entre cero y uno, siendo decimal: 
+
+        enDocumento (Math.random ()); 
+
+        // Entre 0 y n  ( 0 y 100)
+
+        enDocumento (Math.floor(Math.random()*100));
+
+        // Entre 1 y n (1 y 100)
+
+        enDocumento (Math.floor(Math.random()*100+1));
+       
+        // Entre n y m (5 y 20)
+        
+        enDocumento (Math.floor(Math.random() * (20 - 5)) + 5);
+
+        
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+Nombre del Instituto:
+/ies/nombre/
+Página web del Instituto:
+/ies/web
+Nombre de los Ciclos Formativos:
+/ies/ciclos/ciclo/@id
+Años en los que se publicaron los decretos de título de los Ciclos Formativos:
+/ies/ciclos/ciclo/decretoTitulo/@ano
+Ciclos Formativos de Grado Medio (se trata de obtener el elemento <ciclo> completo):
+ies/ciclos/ciclo[grado="Medio"]
+Nombre de los Ciclos Formativos de Grado Superior:
+ies/ciclos/ciclo[grado="Superior"]
+Nombre de los Ciclos Formativos anteriores a 2010:
+ies/ciclos/ciclo/decretoTitulo[@ano<"2010"]
+Nombre de los Ciclos Formativos de 2008 o 2010:
+ies/ciclos/ciclo/de7cretoTitulo[@ano="2008"] | ies/ciclos/ciclo/decretoTitulo[@ano="2009"]

@@ -1,0 +1,420 @@
+* {
+    margin: 0;
+    padding: 0;
+    transition: font-size 0.3s;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    margin: 25px;
+    border-top: 1px dotted rgb(119, 119, 119);
+    background: rgb(197, 196, 196)
+}
+
+/* ---------------------- HEADER ---------------------- */ 
+
+#logo-titulo #logo {
+    width: 250px;
+    margin-left: 5%;
+    margin-right: 2%;
+    
+}
+
+#logo-titulo  {
+    /* Márgenes */
+    margin-top: 50px;
+    margin-left: 100px; 
+    margin-right: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /* Propiedades del borde */
+    border-top: solid rgb(197, 196, 196) 5px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    /* Propiedades del fondo */
+    background-color: rgb(240, 240, 240);
+    /* Propiedades de alineamiento */
+    display: flex;
+    flex-direction: row;
+}
+
+#logo-titulo #titulo {
+    /* Propiedades de margen*/
+    margin-right: 5%;
+    /*Propiedades de texto*/
+    text-align: center; 
+    /*Propiedades de alineamiento*/
+    width: 100%; /* Ocupar la totalidad del bloque restante */ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column
+}
+
+#logo-titulo #titulo h1 {
+    /*Propiedades de texto*/
+    font-size: 60px;
+    color: rgb(212, 7, 7);
+    font-family: 'Open Sans';
+    text-decoration-line: underline overline;
+}
+
+#logo-titulo #titulo h2 {
+    /*Propiedades de texto*/
+    font-size: 25px;
+    font-style: oblique;
+    color: rgb(0, 0, 0);
+    font-family: 'Open Sans';
+}
+
+/* ---------------------- NAV ---------------------- */ 
+
+#menu-navegacion {
+    /* Propiedades del margen **/ 
+    padding-top: 20px;  
+    padding-bottom: 20px;  
+    margin-left: 100px; 
+    margin-right: 100px;
+    /* Propeidades del fondo */
+    background-color: rgba(255, 0, 0, 0); /* Transparente */
+    /*Propiedades del borde */ 
+    border-bottom: solid rgb(197, 196, 196) 5px;
+    border-left: solid rgb(240, 240, 240) 5px;
+    border-right: solid rgb(240, 240, 240) 5px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    /* Propiedades del texto*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:row;
+}
+
+#menu-navegacion a {
+    /* Propiedades de margen */
+    padding-left: 30px;
+    padding-right: 30px;
+    /* Propiedades del texto*/
+    font-family: 'Open Sans';
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    color: rgb(212, 7, 7);
+    /* Efectos para el hover */ 
+    transition: font-size 0.3s;
+}
+
+#menu-navegacion a:hover {
+    /* Propiedades de texto */
+    color: rgb(189, 5, 5);
+    font-weight: bold;
+    text-decoration:underline;
+    font-size:19px
+}
+
+/* ---------------------- MAIN ---------------------- */ 
+
+main {
+    /* Propiedades de margen: */
+    margin-top: 25px;
+    margin-left: 100px; 
+    padding-left: 30px;
+    margin-right: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /*Propiedades del borde */ 
+    border-top: solid rgb(197, 196, 196) 5px;
+    border-bottom: solid rgb(197, 196, 196) 5px;
+    border-left: solid rgb(240, 240, 240) 5px;
+    border-right: solid rgb(240, 240, 240) 5px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+/* ---------------------- ARTÍCULO DESTACADO ---------------------- */ 
+
+.articulo {
+    /* Propiedades de margen: */
+    margin-right: 10%;
+    /*Propiedades de alineamiento*/
+    display: flex;
+    flex-direction:column;
+    justify-content: left;
+}
+
+h4, h3 {
+    /*Propiedades de texto*/
+    font-size: 20px;
+    padding: 20px;
+    margin-bottom: 5px;
+    font-family: 'Open Sans';
+    color: rgb(212, 7, 7);
+
+}
+
+.contenido-articulo {
+    /*Propiedades de alineamiento*/
+    display: flex;
+    justify-content: center;
+    flex-direction:row;
+    margin-left: 100px
+}
+
+.contenido-texto-articulo{
+    /*Propiedades de alineamiento*/
+    display: flex;
+    flex-direction:column;
+    /*Propiedades de marge*/
+    margin-left: 50px;
+}
+
+.contenido-texto-articulo p {
+    /*Propiedades de alineamiento*/
+    padding-top: 20px;
+    font-family: 'Open Sans';
+    text-align: justify;
+    color:rgb(94, 94, 94)
+}
+
+.contenido-texto-articulo a {
+    /*Propiedades de alineamiento*/
+    padding-top: 20px;
+    font-family: 'Open Sans';
+    color:rgb(212, 7, 7);
+}
+
+.articulo img {
+    width: auto;
+    height: 300px;
+}
+
+/* ---------------------- CATEGORíA ---------------------- */ 
+.categoria {
+  margin-right: 10px;
+}
+.categoria .contenido-categoria {
+    /* Propiedades del margen */
+    margin-right: 5%;
+    margin-left: 5%;
+    /*Propiedades de alineamiento*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:row;
+}
+
+.categoria .juego {
+    /* Propiedades del margen */
+    padding-left: 50px;
+    padding-right: 50px;
+    
+    width: 350px;
+    height: 439px;
+
+}
+
+.categoria .juego:hover img {
+    transform: translateY(-20px); /* Ajusta la distancia de levitación según tus preferencias */
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2); /* Ajusta la sombra según tus preferencias */
+    
+}
+
+.categoria .juego:hover {
+    cursor: pointer;
+}
+
+.categoria .descripcion {
+    /* Propiedades del margen */
+    width: 250px;
+    height: auto;
+    margin-top: 10px;
+    /* Propiedades de texto */
+    text-align: center;
+    font-family: 'Open Sans';
+    color:rgb(94, 94, 94)
+}
+
+.categoria .imagen-juego {
+    /* Propiedades del margen */
+    width: 250px;
+    height: 322px;
+    /* Propiedades de transición */
+    transition: transform 0.5s, box-shadow 0.5s;
+}
+
+
+/* ---------------------- FOOTER ---------------------- */ 
+
+footer {
+    /* Propiedades de margen: */
+    margin-top: 50px;
+    margin-left: 100px; 
+    padding-left: 30px;
+    margin-right: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+footer p {
+    /* Propiedades del texto */ 
+    font-family: 'Open Sans';
+    text-align: justify;
+    color:rgb(94, 94, 94);
+    text-align: center;
+}
+
+/* ---------------------- MEDIA ---------------------- */ 
+
+@media (max-width: 1350px) {
+    #logo-titulo #logo {
+        width: 230px;
+    }
+    #logo-titulo #titulo h1 {
+      font-size: 50px;
+    }
+    #logo-titulo #titulo h2 {
+        font-size: 20px;
+    }
+    #menu-navegacion a {
+        font-size: 15px;
+    }
+    #menu-navegacion a:hover {
+        font-size:15px
+    }
+    footer {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 1212px) {
+
+    #logo-titulo #titulo h1 {
+        font-size: 44px;
+    }
+    #logo-titulo #titulo h2 {
+        font-size: 17px;
+    }
+    #menu-navegacion a {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    p {
+        font-size: 13px;
+    }
+
+   .articulo img {
+        width: auto;
+        height: 200px;
+    }
+    .categoria .imagen-juego {
+        width: 200px;
+        height: 258px;
+    }
+
+    .categoria .juego {
+        width: 200px;
+        height: 350px;
+    }
+
+    .categoria .descripcion {
+        /* Propiedades del margen */
+        width: 200px;
+    }
+    
+}
+
+@media (max-width: 1110px) {
+    #logo-titulo #titulo h1 {
+        font-size: 35px;
+    }
+    #logo-titulo #titulo h2 {
+        font-size: 12px;
+    }
+    #logo-titulo #logo {
+        width: 150px;
+    }
+    #menu-navegacion a {
+        font-size: 12px;
+    }
+    #menu-navegacion a:hover {
+        font-size:13px
+    }
+    .articulo img {
+        width: auto;
+        height: 200px;
+    }
+    .contenido-articulo {
+        margin-left:0px;
+        justify-content: center;
+        flex-direction:column;
+    }
+    .juego {
+        margin-bottom: 40px;
+    }
+    .articulo img {
+        margin: 0 auto;
+        width: 300px;
+        height: auto;
+    }
+    .categoria .contenido-categoria {
+        flex-direction: column;
+        margin-right: 0;
+    }
+
+    footer p {
+        font-size: 10px;
+    }
+    
+}
+
+/* ---------------------- MENÚ HAMBURGUESA ---------------------- */ 
+
+@media (max-width: 880px) {
+
+
+    #logo-titulo {
+        margin: 0;
+    }
+    #menu-navegacion {
+        margin: 0;
+
+        flex-direction:column;
+    }
+    #menu-navegacion a {
+        font-size: 17px;
+        padding: 5px;
+    }
+    #menu-navegacion a:hover {
+        font-size:18px
+    }
+    #menu-navegacion #menu-icon {
+        font-size: 25px;
+    }
+    .contenido-texto-articulo {
+        margin: 0;
+    }
+ 
+    main {
+        margin: 0;
+    }
+    #logo-titulo #titulo {
+        display:none;
+    }
+    #logo-titulo #logo  {
+        margin: 0 auto;
+        width: 200px;
+    }
+
+    footer {
+        margin: 0;
+        padding: 20px;
+    }
+    h4, h3 {
+        font-size: 16px;
+    }
+}

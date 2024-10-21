@@ -1,0 +1,41 @@
+/* Primer ejercicio
+-> Fondo de la cabecera en gris claro*/ 
+
+.cabecera {
+    background-color: gainsboro;
+}
+
+
+/* Segundo ejercicio 
+-> Contarán con un borde */
+
+.widget {
+    border:2px solid  #333;
+}
+
+/* Tercer ejercicio 
+-> El título de los artículos en azul*/
+
+.contenido h2 {
+    color: blue;
+    
+}
+
+/* Cuarto ejercicio 
+-> Alineamiento del pie de página al centro*/ 
+
+.pie {
+    text-align: center;
+}
+
+/* Quinto ejercicio 
+-> Fondo del párrafo para el artículo destacado en amarillo claro. */ 
+
+.contenido-destacado p {
+    background-color: rgb(255, 255, 145);
+    
+}
+
+
+
+

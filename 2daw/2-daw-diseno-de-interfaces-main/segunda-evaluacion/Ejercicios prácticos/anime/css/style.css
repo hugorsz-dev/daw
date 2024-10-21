@@ -1,0 +1,197 @@
+/* Definición de las fuentes */
+@font-face {
+    font-family: 'japones';
+    src: url('../fonts/sharkmadeinjapan.ttf');
+}
+
+@font-face {
+    font-family: 'japones2'; 
+    src: url('../fonts/SERIO___.TTF');
+}
+
+/* Estilizado general */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Ephesis';
+    font-weight: bolder;
+    background-color: var(--background);
+    color: var(--colorTexto); 
+    width: 100%;
+}
+
+/* Estilo del header */
+
+.cabecera {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: var(--colorCabecera);
+    color: var(--colorBlanco)
+}
+
+/* Cuando la media está en modo escritorio, el icono de la hamburguesa se oculta */
+
+.menu-footer {
+    visibility: hidden;
+}
+
+h1 {
+    font-size: 60px;
+    justify-content: center;
+    font-family: 'japones';
+}
+
+/* Estilo de las barras de navegación */
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    font-size: 25px;
+    color: var(--colorBlanco);
+    font-family: 'japones2'; 
+}
+
+.titulo-y-menu {
+    display: flex;
+}
+
+.menu-izquierda {
+    margin-right: 2px;
+    padding: 0px;
+
+}
+
+.menu-derecha {
+    margin-left: 10px;
+    padding: 0px;
+
+}
+
+/*Contenido principal*/
+h2 {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 45px;
+    font-family: 'japones2';
+    font-style: inherit;
+}
+
+a {
+    text-decoration: none;
+    padding: 8px;
+}
+
+a:hover {
+    color: var(--background);    
+    transform: scale(1.2);
+    transition: transform 0.5s ease-out;
+}
+
+ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+
+/* Imágenes */
+img {
+    width: 400px; 
+    height: 400px;
+    object-fit: cover;
+    border-radius: 10px; 
+}
+
+span {
+    display: flex; 
+    justify-content: space-around;
+    margin-top: 20px;
+    align-items: center;
+    font-family: 'japones2';
+    font-size: 25px;
+}
+
+/* Footer */
+.pie {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--colorCabecera);
+    color: white;
+}
+
+.pie p {
+    font-family: 'japones2';
+    font-weight: 50;
+}
+
+.pie a {
+    font-size: 20px; 
+    font-family: arial; 
+    color: var(--colorBlanco)
+}
+
+/* Definición de colores */
+:root {
+    --colorCabecera: #613E97; 
+    --background: rgb(228, 228, 60);
+    --colorTexto: #613E97; 
+    --colorBlanco: white;
+}
+
+/* Limite al que header revienta: 1084 */ 
+
+@media only screen and (max-width: 1100px) {
+
+    img {
+        height: 250px;
+        width: 250px;
+    }
+
+    .cabecera {
+        display: none; 
+    }
+
+    .menu-footer {
+        visibility: visible;
+        position: fixed; 
+        bottom: 0; 
+        width: 100%; 
+        background-color: #613E97;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .menu-footer #icono-hamburguesa {
+        color: white;
+        font-size: 50px;
+    }
+
+  
+    .menu-footer #navegacion-footer {
+        display: none;
+        font-size: 50px;
+        flex-direction: column;
+        text-align: center;
+        
+
+    }
+
+    .menu-footer #navegacion-footer a {
+        display: block; 
+        margin-bottom: 10px; /* Agregar espacio entre enlaces */
+    }
+
+    /* Agregar un margen adicional para evitar que el ícono hamburguesa esté demasiado pegado al borde inferior */
+    .menu-footer #icono-hamburguesa {
+        margin-bottom: 10px;
+    }
+
+}

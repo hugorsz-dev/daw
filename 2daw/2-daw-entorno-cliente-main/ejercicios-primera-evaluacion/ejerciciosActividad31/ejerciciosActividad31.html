@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios actividad 3 -1  </title>
+</head>
+<body>
+
+    <h1> Ejercicios actividad 3 - 1 </h1>
+	<h2> Ejercicio propuesto en Desarrollo Entorno - Servidor </h2
+
+	<p> <b> Alumno: </b> Hugo Ruiz Sánchez</p>
+	<p> <b> Docente: </b> Enrique Diego Alfonso  </p>	
+
+    <p>  A fin de mejorar la legibilidad de los resultados, usaré la función enDocumento () en lugar de las alert (). </p>
+		
+	<hr/> 
+
+    <script> 
+
+    /**
+    * Imprime en el documento el texto introducido, con estilo a preferencia. 
+    * Si no se especifica tipo, el tipo es 0 o el tipo es erróneo, es un párrafo. 
+    * Caso contrario, cada número corresponde hasta el límite de los 6 títulos 
+    **/     
+
+    function enDocumento (texto, estilo) {
+            
+        // VARIABLES POR DEFECTO 
+        texto = texto || "false"; 
+
+        // EJECUCIÓN
+        if (!estilo) {
+            document.write (`<p>  ${texto} </p>`);
+        }
+        else {
+            document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+        }
+
+    }
+
+    // EJERCICIO 2 
+       
+    enDocumento  ("Ejercicio 2", "h2"); 
+	
+	let numerosEnteros = new Array (50); // Creación del array. 
+	let numeroAleatorio =0; // Variable donde se cargarán los números aleatorios. 
+	
+	// Introducir los números aleatorios.
+	
+	for (let i=0; i<50; i++) {
+		
+        do {
+            numeroAleatorio = Math.floor(Math.random()*500);
+        }
+        while (numeroAleatorio%2!=0)
+		
+		numerosEnteros [i] = numeroAleatorio;
+	}
+	
+    // Mostrar en el documento.
+
+	enDocumento (numerosEnteros);
+	enDocumento (numerosEnteros.length);
+
+    // EJERCICIO 3
+	
+	enDocumento ("Ejercicio 3", "h2"); 
+		
+	// Los índices corresponden a cada puesto, luego no se precisaría dicha categoría en la tabla. 
+	
+	equipoFutbol = [["Equipo", "Puntos", "Partidos ganados", "Partidos empatados", "Partidos perdidos", "Goles a favor", "Goles en contra"],
+    ["Real Madrid", 28, 11, 9, 1, 23, 8], 
+    ["Girona", 28, 11, 9, 1, 25, 13], 
+    ["Atlético", 25, 10, 8, 1, 25, 9], 
+    ["Barcelona", 24, 11, 7, 3, 23, 12],
+    ["R. Sociedad", 19, 11, 5, 4, 20, 14],
+    ["Athletic", 18, 11, 5, 3, 18, 12],
+    ["Betis", 17, 11, 4, 5, 14, 15],
+    ["Rayo", 17, 11, 4, 5, 14, 15],
+    ["Valencia", 15, 11, 4, 3, 14, 13],
+    ["Las Palmas", 14, 11, 4, 2, 8, 10],
+    ["Osasuna", 13, 11, 4, 1, 12, 16],
+    ["Getafe", 12, 11, 2, 6, 13, 16],
+    ["Sevilla", 10, 10, 2, 4, 16, 15],
+    ["Cádiz", 10, 11, 2, 4, 10, 16],
+    ["Mallorca", 9, 11, 1, 6, 12, 16],
+    ["Villarreal", 9, 10, 2, 3, 12, 16],
+    ["Alavés", 9, 11, 2, 3, 9, 16],
+    ["Celta", 6, 11, 1, 3, 10, 19],
+    ["Granada", 6, 10, 1, 3, 15, 25],
+    ["Almería", 3, 11, 0, 3, 14, 3]]; 
+
+    /**
+     * Función que toma el puesto como parámetro, e itera sobre la fila, que muestra en forma de tabla
+    **/
+
+    function mostrarEquipo (puesto) {
+        for (let i=0; i<equipoFutbol[puesto].length; i++) {
+            enDocumento (equipoFutbol[puesto][i], "td"); 
+        }
+    }
+
+    mostrarEquipo (3); 
+
+    // EJERCICIO 4 
+
+    enDocumento ("Ejercicio 4", "h2");
+
+    /**
+     *  Esta función genera un múltiplo de cinco aleatorio. 
+    */ 
+
+    function multiploCincoAleatorio () {
+        let aleatorio = Math.floor(Math.random()*100);
+        while (aleatorio%5!=0 || aleatorio ==0) {
+            aleatorio = Math.floor(Math.random()*100);
+        }
+        return aleatorio;
+    }
+
+    // Crea un array de 10 elementos, conteniendo multiplos aleatorios de 5
+
+    multiplosCinco= new Array (10);
+
+    for (let i=0; i<multiplosCinco.length; i++) {
+        multiplosCinco[i]= multiploCincoAleatorio();
+    }
+
+    enDocumento (`Array inicial: ${multiplosCinco}`);
+
+    //Si el primer elemento es menor de 50, elimínalo e inserta otro múltiplo de 5 aleatorio. Repite esta operación hasta que el primer elemento sea mayor o igual que 50.
+
+    while (multiplosCinco[0]<50) multiplosCinco[0] = multiploCincoAleatorio();
+
+    // Si el último elemento es mayor de 50, elimínalo e inserta otro múltiplo de 5 aleatorio. Repite esta operación hasta que el último elemento sea menor o igual que 50.
+
+    while (multiplosCinco[multiplosCinco.length-1]>50) multiplosCinco[multiplosCinco.length-1] = multiploCincoAleatorio();
+
+    enDocumento (`Array final: ${multiplosCinco}`);
+
+    // EJERCICIO 5 
+
+    enDocumento ("Ejercicio 5", "h2");
+
+    arrayBooleano = [false, false, true, false, true, true, false, true, false, true];
+
+    let i=0;
+    while (i<arrayBooleano.length) {
+        if (arrayBooleano [i] == true) enDocumento (i,"code");
+        i++;
+    }
+
+    // EJERCICIO 6
+
+    enDocumento ("Ejercicio 6", "h2");
+
+    let miConjunto = new Set ([12,12,12,14,11, 11, 13, 15, "i","j", "k", "i", ]);
+
+    // Muestreo en pantalla por cada elemento. 
+
+    miConjunto.forEach (elemento => { 
+        enDocumento (elemento, "code");
+    })
+
+    // Explicación de lo sucedido.
+
+    enDocumento (`El conjunto tiene ${miConjunto.size} elementos, y no están ordenados de ninguna manera; su orden de aparición no responde a ninguna posición concreta.`); 
+
+    // EJERCICIO 7
+
+    enDocumento ("Ejercicio 7", "h2");
+
+    // Creación del mapa
+
+    let mapaDNI = new Map (); 
+
+    mapaDNI.set("12345678A", "Fiódor Dostoyevski"); 
+    mapaDNI.set("23456789B", "William Shakespeare");
+    mapaDNI.set("34567890C", "Miguel de Cervantes");
+    mapaDNI.set("45678901D", "Jane Austen");
+    mapaDNI.set("56789012E", "Friedrich Nietzsche");
+    mapaDNI.set("67890123F", "Charles Dickens");
+    mapaDNI.set("78901234G", "Emily Bronte");
+    mapaDNI.set("89012345H", "Herman Melville");
+    mapaDNI.set("90123456I", "Fyodor Dostoevsky");
+    mapaDNI.set("01234567J", "Leo Tolstoy");
+
+    // Muestreo del mapa
+
+    mapaDNI.forEach ((valor,clave) => {
+        enDocumento (valor+" -> "+clave, "code");
+    });
+
+    // Modificación del mapa. 
+
+    mapaDNI.set ("34567890C", "Arturo Pérez Reverte"); 
+
+    enDocumento ("Modificado el 'tercer' elemento:", "p");
+
+    mapaDNI.forEach ((valor,clave) => {
+        enDocumento (valor+" -> "+clave, "code");
+    });
+
+    // EJERCICIO 8 
+
+    enDocumento ("Ejercicio 8", "h2");
+
+    let mapaPersonas = new Map ();
+
+    mapaPersonas.set("Fiodor Dostoyevski", "Escritor");
+    mapaPersonas.set("Leonardo da Vinci", "Artista");
+    mapaPersonas.set("Albert Einstein", "Científico");
+    mapaPersonas.set("Wolfgang Amadeus Mozart", "Compositor");
+    mapaPersonas.set("William Shakespeare", "Dramaturgo");
+
+    /**
+     * Deposita los valores de un mapa en un array, y emplea el método sort de los arrays para ordenar los elementos por orden alfabético, luego imprime el resultado
+    */
+
+    function mostrarMapOrdenado (mapa) {
+
+        let arrayOrdenado = new Array ();
+        let i=0;
+        mapa.forEach ((valor,clave) => {
+        arrayOrdenado[i] = valor; 
+        i++;
+        })  
+
+        arrayOrdenado = arrayOrdenado.sort();
+
+        enDocumento(arrayOrdenado);
+
+    };
+
+    mostrarMapOrdenado (mapaPersonas);
+
+    // EJERCICIO 9 
+
+    enDocumento ("Ejercicio 9", "h2");
+
+    // Creación de un mapa consistente en un diccionario Español, Esperanto, Latín e inglés
+
+    let diccionario = new Map ();
+
+    diccionario.set("Hola", ["Saluton", "Salve", "Hello"]);
+    diccionario.set("Adiós", ["Ĝis revido", "Vale", "Goodbye"]);
+    diccionario.set("Amigo", ["Amiko", "Amicus", "Friend"]);
+    diccionario.set("Comida", ["Manĝaĵo", "Cibus", "Food"]);
+    diccionario.set("Casa", ["Domo", "Domus", "House"]);
+
+    // Muestreo del mapa
+
+    diccionario.forEach ((valor,clave) => {
+        enDocumento (clave+" -> "+valor, "p");
+    });
+
+    // Ejercicio 10 
+
+    enDocumento ("Ejercicio 10", "h2");
+
+        // Creación de array bidimensional que facilitará el manejo de los elementos del tablero
+
+    let tablero = [
+        [1,0,1],
+        [0,1,0],
+        [0,1,0]
+    ]; 
+
+    /**
+     * Esta función comprueba, teniendo en cuenta el parámetro introducido (0,1) si el jugador del tablero especificado ha ganado (true) o no (false)
+    */
+   
+    function comprobarGanador (valor) {
+
+        // DIAGONALES
+
+        if (
+            tablero [0][0] == valor && tablero [1][1] == valor && tablero [2][2] == valor ||
+            tablero [2][0] == valor && tablero [1][1] == valor && tablero [0][2] == valor
+        )
+        return true;
+
+        // HORIZONTALES
+
+        else if (
+            tablero [0][0] == valor && tablero [0][1] == valor && tablero [0][2] == valor ||
+            tablero [1][0] == valor && tablero [1][1] == valor && tablero [1][2] == valor ||
+            tablero [2][0] == valor && tablero [2][1] == valor && tablero [2][2] == valor
+        )
+        return true;
+
+        // VERTICALES 
+
+        else if (
+            tablero [0][0] == valor && tablero [1][0] == valor && tablero [2][0] == valor ||
+            tablero [0][1] == valor && tablero [1][1] == valor && tablero [2][1] == valor ||
+            tablero [0][2] == valor && tablero [1][2] == valor && tablero [2][2] == valor
+
+        )
+        return true;
+
+        else 
+        return false;
+
+    }
+
+    if (comprobarGanador (0) && comprobarGanador (1)) enDocumento ("Resultado imposible"); 
+    else if (comprobarGanador (0)) enDocumento ("Ha ganado el jugador 0");
+    else if (comprobarGanador (1)) enDocumento ("Ha ganado el jugador 1");
+    else enDocumento ("Es un empate");
+
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Eventos </h1>
+    <h2> Botón con evento onclick en un alert </h2>
+    <!-- Evento onclick, predeterminado alert dentro de un formulario -->
+    <input value="Haz click aquí para mostrar alerta con 'onclick'" onclick="alert('¡Click!')" type="button">
+
+    <!-- Eventos con mis funcionas propias:  comidas favoritas -->
+    <h2> Botón con evento onclick en una función personalizada </h2>
+    <input value="Haz click aquí" onclick="misComidasFavoritas()" type="button">
+
+    <script> 
+        function misComidasFavoritas () {
+            alert ("Hamburguesa");
+            alert ("Pizza");
+            alert ("Lasaña");
+            alert ("Burrito");
+        }
+    </script>
+
+    <!-- En el DOM podemos manipular elementos que, al darse click sobre ellos, dan lugar a eventos, separadamente-->
+    <h2> Botón con evento configurado desde el DOM mediante Javascript </h2>
+    <button id="botonEjemplo"> ¡Ejem! </button>
+
+    <script> 
+       miBoton = document.getElementById ("botonEjemplo")
+
+       function decirCositas () {
+        alert ("¡Cositas cositas!");
+       }
+       // Es una función CALLBACK, por defecto, NO se debe introducir el "()"
+       miBoton.onclick = decirCositas; 
+    </script>
+
+    <!-- Los elementos HTML tienen la propiedad this que puede ser consultada para ver las propiedades de la misma etiqueta-->
+
+    <h2> Llamar a la propia etiqueta (this) dentro de los eventos de la propia etiqueta </h2>
+
+    <button onclick="alert(this.innerHTML)"> ¡Cositas cositas! Esto es el elemento de dentro del HTML</button>
+
+    <!-- ¡ALERTA! En Javascript NO SE PUEDE hacer un SETATTRIBUTE para añadir eventos a elementos HTML-->
+
+    <!-- La forma más útil, la que siempre debemos utilizar para añadir eventos, es con addEventListener, porque quizá queremos hacer DOS COSAS PARALELAMENTE, y las formas anteriores están programadas para una sola-->
+
+    <h2> Una forma mejor para los eventos: addEventListener </h2>
+
+    <button id="botonEjemplo2"> Esto irá con addEventListener</button>
+    <script>
+        botonEjemplo2.addEventListener ("click", function () {
+            alert ("Heya")
+        });
+
+        botonEjemplo2.addEventListener ("click", function () {
+            alert ("...y hola de nuevo, esto es OTRO evento realizado gracias a las bondades de addeventlistener")
+        })
+
+        // Se pueden borrar las funciones que han sido agregadas manualmente.
+        function funcionParaBorrar () {
+            alert ("Esto no debería verse")
+        }
+    
+        botonEjemplo2.addEventListener ("click", funcionParaBorrar);
+        botonEjemplo2.removeEventListener ("click", funcionParaBorrar);
+    </script>
+
+    <!-- La ocurrencia de un evento sigue a que cuando ocurre, se informa a javascript de las propiedades, por ejemplo, de cuando el ratón se situaba, el estado de la ventana...-->
+    
+    <h2> Objetos del evento (event) </h2>
+
+    <button id="botonEjemplo3"> Para probar objetos del evento </button>
+
+    <script> 
+        botonEjemplo3.addEventListener ("click", function () {
+            alert (event.type + "en el elemento " + event.currentTarget); 
+            alert ("INFO DEL RATÓN: Corredenadas: "+event.clientX + ":" + event.clientY);
+        })
+    </script>
+
+    <h2> Objetos como respuestas (handlers) a eventos </h2>
+
+    <button id="botonEjemplo4"> Botón con respuesta en forma de objeto</button>
+
+    <script> 
+
+        // Debe hacerse con la función por defecto "handleEvent"
+        let objeto = {
+            handleEvent (event) {
+                alert (`Número de patatas del objeto: ${this.numeroDePatatas}`)
+            },
+            numeroDePatatas: 3
+        }
+
+        botonEjemplo4.addEventListener ("click", objeto); 
+    </script> 
+
+    <!-- Lo hago con una clase, pero esta solo generará objetos: trabajamos en realidad con objetos, como en el caso anterior-->
+
+    <h2> Esto ofrece grandes posibilidades  </h2>
+
+    <h3 style="color:red" id="elementoInformador"> Informador de estado de teclado</h3>
+
+    <script> 
+        
+        class informador {
+            handleEvent (event) {
+                switch (event.type) {
+                    case "mousedown": 
+                        elementoInformador.innerHTML ="Presionando botón";
+                    break; 
+                    case "mouseup": 
+                        elementoInformador.innerHTML ="¡Botón soltado!";
+                    break; 
+                }
+            }
+        }
+
+        objetoInformador = new informador (); 
+
+        elementoInformador.addEventListener ("mousedown", objetoInformador);
+        elementoInformador.addEventListener ("mouseup", objetoInformador);
+        
+    </script> 
+
+    <!-- Los onclick se hacen de adentro hacia afuera-->
+
+    <h2> Capas en los eventos: varios eventos en varias capas </h2>
+
+    <form onclick="alert('form')">FORM
+        <div onclick="alert('div')">DIV
+        <p onclick="alert('p')">P</p>
+        </div>
+    </form>
+
+    <!-- Sin embargo, si una única función está asociada exteriormente, se ejecutará para todos los elementos interiores-->
+
+    <!-- En este caso, si comprobamos el objeto event.target, siempre será "div", y el this.tagName será variable-->
+
+    <h2> Capas en los eventos: un evento para varias capas </h2>
+    <div onclick="alert('Saludos amigo ¿quieres una plancha de cocina por 19.25$?')">
+        <em>Anuncio</em>
+        <p> ¡Anuncio! </p>
+        <b> Me gustan los anuncios</b>
+    </div>
+
+    
+    
+
+
+
+</body>
+</html>

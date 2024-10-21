@@ -1,0 +1,81 @@
+<html> 
+
+<head> 
+
+<title> Formulario </title> 
+
+</head> 
+
+<body>
+
+<h2> Ejemplo de formulario: Matriculación en el ASIR </h1>
+
+<form> 
+
+<!-- NOMBRE - text --> 
+
+<label for = "nombre"> <b> Nombre: </b> </label> 
+<input type = "text" placeholder ="Nombre" size ="10" name = "nombre" id = "nombre">
+
+<!-- APELLIDOS - text --> 
+ 
+<label for = "apellidos"> <b> Apellidos: </b> </label> 
+<input type = "text" placeholder ="Apellidos" size ="10" name = "apellidos" id = "apellidos"> 
+
+<!-- SEXO - radio --> 
+
+<b> Sexo: </b> 
+<label for = "hombre"> H <label> 
+<input type= "radio" name ="sexo" id ="hombre" value = "Hombre">
+<label for = "hombre"> M <label> 
+<input type= "radio" name ="sexo" id ="mujer" value = "Mujer">
+
+<!-- FECHA - date --> 
+<br> <br>
+<label for = "fecha"> <b> Fecha de nacimiento: </b> 
+<input type ="date" name= "fecha" id ="fecha" value ="Fecha"> 
+
+<!-- MÓDULOS - checkbox --> 
+<br> <br> 
+<b> Escoge los módulos en los que te matriculas: </b> 
+
+<table>
+<tbody align= "left">
+
+<tr> <td>  <input type= "checkbox" name ="modulos" id="1"> <label for ="1"> Fundamentos del Hardware </label> <td>  <input type= "checkbox" name ="modulos" id="2"> <label for ="2"> Servicios de Red e Internet  </label> </td> <tr> 
+<tr> <td>  <input type= "checkbox" name ="modulos" id="3"> <label for ="3"> Gestión de Bases de Datos </label> <td> <input type= "checkbox" name ="modulos" id="4"> <label for ="4"> Administración de sistemas Operativos </label> </td> <tr> 
+<tr> <td> <input type= "checkbox" name ="modulos" id="5"> <label for ="5"> Implantación de Sistemas Operativos </label> <td> <input type= "checkbox" name ="modulos" id="6"> <label for ="6"> Implantación de Aplicaciones Web </label>  </td> <tr> 
+<tr> <td>  <input type= "checkbox" name ="modulos" id="7"> <label for ="7"> Planificación y Administración de Redes </label> <td>  <input type= "checkbox" name ="modulos" id="8"> <label for ="8"> Administración de Sistemas Gestores de Bases de Datos </label> </td> <tr> 
+<tr> <td>  <input type= "checkbox" name ="modulos" id="9"> <label for ="9"> Lenguaje de Marcas y Sistemas de Gestión de Información </label> <td> <input type= "checkbox" name ="modulos" id="10"> <label for ="10"> Seguridad y Alta Disponibilidad </label>  </td> <tr> 
+<tr> <td>  <input type= "checkbox" name ="modulos" id="11"> <label for ="11"> Formación y Orientación Laboral </label> <td> <input type= "checkbox" name ="modulos" id="12"> <label for ="12"> Empresa e Iniciativa Emprendedora </label>  </td> <tr> 
+<tr> <td>  <input type= "checkbox" name ="modulos" id="13"> <label for ="13"> Proyecto de Administración de Sistemas Informáticos en Red </label><td> <input type= "checkbox" name ="modulos" id="14"> <label for ="14"> Formación en Centros de Trabajo </label>  </td> <tr> 
+
+<table> 
+
+<!-- ESTUDIOS PREVIOS - textarea	 --> 
+<br> <br>
+
+<label for ="estudios"> <b> Estudios previos: <b> </label> 
+<br> 
+
+<textarea name = "estudios" id = "estudios" placeholder ="Introduzca sus estudios previos "rows="2" cols="60"></textarea>
+
+<!-- ENVIAR y REESTABLECER - submit / reset  --> 
+<br> <br>
+<input type = "submit" value ="Enviar" id ="enviar" >	
+<input type="reset"	value ="Reestablecer" id ="reestablecer"> 
+
+<!-- COMENTARIO FINAL  --> 
+<br><br>
+<b> Pulsa el botón de <label for="enviar"> "enviar" </label> para formalizar la matrícula o el botón de <label for ="reestablecer> "reestablecer" </label> para limpiar el formulario <b> 
+
+
+</form> 
+
+
+
+</body> 
+
+
+
+</html> 

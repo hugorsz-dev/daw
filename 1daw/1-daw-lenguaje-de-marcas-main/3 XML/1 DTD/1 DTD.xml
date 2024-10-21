@@ -1,0 +1,33 @@
+
+<!-- REALIZAR DOCUMENTO DTD -->
+
+<?xml version = "1.0">
+
+<!DOCTYPE alumnado [
+
+<!ELEMENT alumnado (alumno*)> <!-- Un número indefinido de alumnos; la raíz "alumnado" puede tener alumnos-->
+
+<!ELEMENT alumno (nombre, direccion)> <!-- Se especifican las entidades-->
+
+<!ELEMENT nombre (#PCDATA)>  <!-- Y finalmente se registran --> 
+<!ELEMENT direccion (#PCDATA)> 
+
+]> 
+
+<!-- IMPORTAR DOCUMENTO DTD -->
+
+<?xml version="1.0"?>
+<!DOCTYPE alumnado SYSTEM "alumnos.dtd">
+
+<alumnado> 
+
+<alumno> 
+
+<nombre> Olga </nombre> 
+
+<direccion> El Percebe 13 </direccion>
+
+</alumno> 
+
+
+</alumno>

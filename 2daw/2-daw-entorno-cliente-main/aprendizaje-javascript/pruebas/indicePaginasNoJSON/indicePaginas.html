@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Índice de páginas</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <h1> Lista de páginas de Hugo </h1>
+
+    <div id="paginas"> </div>
+
+    <h2> Edicion de páginas </h2>
+    
+    
+
+        <label for="seccion">Seccion: </label>
+        <input type="text" id="seccion" name="seccion" placeholder="Introducir la sección a la que corresponderá" />
+
+        <label for="url">URL: </label>
+        <input type="text" id="url" name="url" placeholder="Introducir la dirección URL" />
+
+        <label for="abreviatura">Abreviatura: </label>
+        <input type="text" id="abreviatura" name="abreviatura" placeholder="Introducir la abreviatura" /> 
+
+        <label for="descripcion">Decripción: </label>
+        <input type="text" id="descripcion" name="descripcion" placeholder="Introducir la descripción" /> 
+        
+        <button onclick="anadirBoton()"> Añadir </button>
+        <button onclick="eliminarBoton()"> Eliminar </button>
+
+    
+    
+    <script> 
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "false"; 
+    
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+    
+        }
+
+        /*
+            Añade una etiqueta a un contenedor existente (en base a ID), debe indicarse el texto, el estilo y el contenedor.
+            Como elemento opcional, los atributos, que deben introducirse en un array bidimensional relacionandose unos con otros. 
+        */
+        // enContenedor ("prueba","p", "info", [["id","miId"],["class","miClase"])
+
+        function enContenedor (texto, tipo, container, atributos=false) {
+
+            // Define el contenedor existente donde se introducirá la etiqueta
+
+            let contenedor = document.getElementById(container); 
+
+            // Crea un elemento con la etiqueta definida definido
+
+            let nuevaEtiqueta = document.createElement(tipo); 
+
+            // Introduce el texto dentro de la etiqueta
+
+            nuevaEtiqueta.textContent = texto;
+
+            // Incrusta la etiqueta en el contenedor previamente definido.
+
+            contenedor.appendChild (nuevaEtiqueta); // Indicando así el contenido
+
+            if (atributos) {
+                for (let i=0; i<atributos.length; i++) {
+                    nuevaEtiqueta.setAttribute (atributos[i][0], atributos [i][1] )
+                }
+            }
+
+        }
+
+        // Crea un botón.
+        
+        function crearBotonFuncion (id, texto="default", funcion) {
+
+            document.write (`<button id=${id}> ${texto} </button> `);
+
+            let boton = document.getElementById(id);
+
+            boton.addEventListener("click", funcion); 
+
+        }
+
+        /* Cada direccion contiene una url, una descripcion y una "preferencia" que indica el orden en que tiene que ser impreso en pantalla */
+
+        class Direccion {
+
+            // CONSTRUCTOR 
+
+            constructor (url, abreviatura, descripcion, pref) {
+                this.abreviatura = abreviatura; 
+                this.url = url; 
+                this.descripcion = descripcion; 
+                this.pref = pref;  // Escala de preferencia numérica 
+            }
+
+        }
+
+        /* Cada sección cuenta con un nombre de sección y un array de direcciones */
+
+        class Seccion {
+            
+            // CONSTRUCTOR 
+
+            constructor (nombre, direcciones) {
+                this.nombre = nombre; 
+                this.direcciones = direcciones; 
+            }
+
+       
+        }
+
+        function existeSeccion (nombre) {
+            for (let i=0; i<paginas.secciones.length; i++) {
+                if (secciones[i].nombre==nombre) {
+                    return true
+                }
+            }
+            return false; 
+        }
+
+        class Paginas {
+
+            // CONSTRUCTOR 
+            constructor (secciones) {
+                this.secciones = secciones; 
+            }
+
+            // Los archivos JSON NO mantienen métodos. 
+
+        }
+
+        // Cargar el objeto "paginas" de la sesión local, si existe. Si no existe, carga la información por  
+
+        if (localStorage.getItem("paginasJSON2") === null) {
+
+            console.log ("No encontrada información de sesión: usando JSON por defecto.");
+            // Array de cargaSecciones, que almacenará todas las secciones junto a sus correspondientes direcciones. 
+                    
+            let cargaSecciones = new Array (); 
+
+            cargaSecciones.push (new Seccion ("Buscadores", [
+                new Direccion ("https://whoogle.io", "Whoogle", "Alternativa front-end a Google", 1),
+                new Direccion ("https://duckduckgo.es", "DuckDuckGo", "Buscador web enfocado en la privacidad", 2),
+            ]));
+
+            cargaSecciones.push (new Seccion ("Enciclopedias", [
+                new Direccion ("https://wikipedia.es", "Wikipedia en Español", "Enciclopedia en línea poco fiable", 1),
+                new Direccion ("https://es.metapedia.org/wiki/P%C3%A1gina_principal", "Metapedia en Español", "Enciclopedia disidente")
+            ]));
+
+            // Depositar las secciones en un objeto "páginas"
+
+            paginas = new Paginas (cargaSecciones);
+
+            // Convertir el objeto "paginas" a un JSON "guardado" (pues solo puede cargarse en la sesion como archivo de texto )
+
+            guardado = JSON.stringify(paginas);
+
+            // Introduciendo "guardado" JSON en la sesión con la clave "paginasJSON"
+
+            localStorage.setItem ("paginasJSON2",guardado); 
+
+        }
+        else {
+            console.log ("Encontrado JSON en la sesión, accediendo al JSON guardado.");
+
+            // Si se detecta la clave "paginasJSON", guardarla en el objeto JSON "guardado"
+
+            guardado = localStorage.getItem("paginasJSON2");
+
+            // El objeto "paginas" recibe la informacion del JSON, convertido a objeto de javascript 
+
+            paginas = JSON.parse (guardado); 
+        }
+
+        // Mostrar la información. 
+    
+        for (let i=0; i<paginas.secciones.length; i++) {
+
+            // SECCIÓN 
+            // Creación de un div asociado al número de sección
+
+            enContenedor (" ", "div","paginas", [["class","seccion"],["id",`seccion${i}`]]);
+
+            // Nombre de la sección
+            enContenedor (paginas.secciones[i].nombre, "h2",`seccion${i}`, [["class","seccion"]]);
+
+            // DIRECCIONES 
+            
+            for (let j=0; j<paginas.secciones[i].direcciones.length; j++) {
+
+                // Creación de un div asociado a la direccion (puesto que los "j" se repiten, las id deben contener el identificador de seccion (i) junto al identificador de posicion (j))
+
+                enContenedor (" ", "div", `seccion${i}`, [["class","direccion"],["id",`direccion${i}${j}`]] )
+
+                enContenedor (paginas.secciones[i].direcciones[j].abreviatura,"a",`direccion${i}${j}`, [["href", paginas.secciones[i].direcciones[j].url],["class","url"]]);
+                enContenedor (paginas.secciones[i].direcciones[j].descripcion,"p",`direccion${i}${j}`,[["class","descripcion"]]);
+            }
+
+        }
+
+        // Ver el archivo JSON resultante.  
+
+        crearBotonFuncion ("verJSON","Ver archivo JSON", function () {
+            let paginasJSON = JSON.stringify(paginas);
+            enDocumento (paginasJSON,"code");   
+        });
+
+        // Programar pulsaciones de botones 
+
+        function anadirBoton () {
+            console.log ("Pulsado botón añadir"); 
+            let seccion = document.getElementById('seccion').value; 
+            let url = document.getElementById('url').value;
+            let abreviatura = document.getElementById('abreviatura').value;
+            let descripcion = document.getElementById('descripcion').value;
+            console.log (seccion)
+            console.log (url)
+            console.log (abreviatura)
+            console.log (descripcion)
+
+            // Crear sección
+            if (seccion && !url && !abreviatura&& !descripcion) {
+                paginas.secciones.push (new Seccion (seccion,[]));  
+            }
+            
+            // Modificar descripcion de pagina
+            else if (descripcion && abreviatura && seccion && !url) {
+
+            }
+            // Modificar URL o abreviatura de página 
+            else if (url && abreviatura && seccion && !descripcion) {
+
+            }
+            // Prevención de errores. 
+            else if (!url || !seccion) {
+                alert ("Parámetros incompletos")
+            }
+            // Introducción de direcciones. 
+            else {
+
+                if (!abreviatura) abreviatura = url; 
+                if (!descripcion) descripcion = "Sin descripcion"
+
+                // Si no existe la sección...
+
+                
+
+            }
+            
+           
+
+        
+
+
+
+    
+
+            console.log (paginas); 
+            guardado = JSON.stringify(paginas);
+            localStorage.setItem ("paginasJSON2",guardado); 
+            
+            
+        }
+
+        
+
+
+
+
+    </script> 
+
+   
+    
+    
+
+</body>
+
+</html>

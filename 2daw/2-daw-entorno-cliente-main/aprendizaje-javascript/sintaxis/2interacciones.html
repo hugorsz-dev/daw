@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interacciones</title>
+</head>
+<body>
+
+    <h1> Interacciones en javascript </h1>
+
+    <script>
+
+        // ALERTA: Muestra un mensaje emergente en pantalla.
+
+        alert ("Esto es una alerta");
+
+        // PROMPT: Un mensaje emergente con un cuadro de imput
+        // -> El segundo parámetro corresponde al campo escrito por defecto.
+        // -> Si el usuario pulsa ESC, saldrá "null"
+
+        let nombre = prompt ("¿Cómo te llamas?", "Introduce nombre");
+        document.write ("<p> Su nombre es: " +nombre+ "</p>");
+
+        // CONFIRM: Despliega un mensaje de alerta con un "confirmar" o "cancelar".
+
+        let mas18 = confirm("¿Tienes más de dieciocho años?");
+
+        document.write ("<p> El usuario tiene más de dieciocho años: " +mas18+ "</p>");
+
+
+
+    </script>
+    
+</body>
+</html>

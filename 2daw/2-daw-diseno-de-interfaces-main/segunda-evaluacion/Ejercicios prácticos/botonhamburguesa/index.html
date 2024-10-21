@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div id="logo"><img src="img/logo.png"></div>
+    <nav id="menu">
+        <a href="#">Inicio</a>
+        <a href="#">Productos</a>
+        <a href="#">Contacto</a>
+    </nav>
+    <div id="menu-icon">&#9776;</div>
+</header>
+
+<script>
+    document.getElementById("menu-icon").addEventListener("click", function() {
+        var nav = document.getElementById("menu");
+        if (nav.style.display === "block") {
+            nav.style.display = "none";
+        } else {
+            nav.style.display = "block";
+        }
+    });
+</script>
+
+</body>
+</html>

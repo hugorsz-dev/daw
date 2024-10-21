@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divirtiéndonos con el Ahorcado</title>
+</head>
+<body>
+
+    <!-- Si huvieras colgado el genial.ly en el aula virtual no te habrías que haber comido esto. -->
+    
+
+    <!-- Título -->
+
+    <h1> Juego del ahorcado </h1>
+    <h2> El revolucionario juego que inspiró a Marck Zuckenberg </h2>
+
+    <!-- Tablero de juego 500x500-->
+
+    <canvas id="tablero", width="300", height="300"> </canvas>
+
+    <!-- Formularios -->
+
+    <form id="formularioPalabra" name="formularioPalabra">
+        <label for="palabra">Ingresa una palabra:</label>
+        <input type="text" id="palabra" name="palabra">
+        <input type="submit" value="Iniciar juego">
+    </form>
+
+    <form id="formularioLetra" name="formularioLetra">
+        <label for="letra">Ingresa una letra:</label>
+        <input type="text" id="letra" name="letra">
+        <input type="submit" value="Verificar letra">
+    </form>
+
+    <!-- Campos de contexto-->
+
+    <p id="estadoPalabra"> Algo me dice que eres un incompetente, jamás lograrás ganarte ... a ti mismo. </p>
+    <p id="parrafoInfo"> ¿Listo? Introduce una palabra que quieras adivinar y a JUGAR. </p>
+    <p id="letrasInfo"></p>
+
+    <!-- Script -->
+
+    <script> 
+
+    // TRABAJANDO CON CANVAS. 
+
+    // -> Constantes fundamentales -> Vincular canvas y config inicial
+
+    const canvas = document.getElementById ("tablero"); // El método getElementByID nos facilita el elemento del HTML en base a su id.  
+    const editorCanvas = canvas.getContext ("2d");  // El objeto editorCanvas es el que nos facilitará las funciones para comenzar a dibujar. 
+
+    // -> Constantes que me gusta tener.
+
+    const alto = canvas.height; 
+    const ancho = canvas.width; 
+
+    // FUNCIONES ESENCIALES PARA DIBUJAR.
+
+    /*
+    * ¿Cómo se hace?
+    * Primero nos vamos a la coordenada (X,Y) del cuadro. 
+    * Luego nos desplazamos el radio indicado. 
+    * Y a partir de ahí, establecemos el ángulo de inicio (0)
+    * Y el ángulo de fin, 2*pi, esto es, una arco cerrado ¡una circunferencia!
+    */
+
+    function crearCirculo (x,y, radio, color) {
+        editorCanvas.beginPath (); // Empezar trazado. 
+
+        editorCanvas.arc(x, y, radio, 0, 2 * Math.PI); // Diversi
+        editorCanvas.fillStyle = color; // Establecer fondo blanco. 
+
+        editorCanvas.fill(); // Esta función efectúa los datos indicados, lo llena de color enegro y lo hace visible. 
+       
+        editorCanvas.closePath(); // Finalizamos el asunto
+    }
+
+    /* Lo mismo, pero limpiando el circulo */
+
+    function borrarCirculo(x, y, radio) {
+         editorCanvas.clearRect(x - radio, y - radio, radio * 2, radio * 2);
+    }
+
+    /*
+    ¿Cómo se hace? 
+    Vamos a una coordenada, pintamos
+    LLegamos a otra, dejamos de pintar
+    */ 
+
+    function crearLinea (x1,y1,x2,y2, color, grosor) {
+
+        editorCanvas.beginPath (); // Comenzamos a dibujar
+        editorCanvas.moveTo (x1,y1); // Primera coordenada
+        editorCanvas.lineTo(x2,y2); // Segunda coordenada. Nos dibuja la línea
+        editorCanvas.strokeStyle = color; // Establece la propiedad del color del trazo
+        editorCanvas.lineWidth = grosor; // Establece la propiedad del  grosor del trazo
+
+        editorCanvas.stroke(); // Esta función efectúa los datos indicados. 
+
+    }
+
+    /* Lo mismo, pero limpiando la línea */
+
+    function eliminarLinea(x1, y1, x2, y2) {
+        editorCanvas.clearRect(x1, y1, x2 - x1, y2 - y1);
+    }
+
+    // editorCanvas.reset para borrar todo. 
+
+    // FUNCIONES DEL DIBUJO. 
+
+    // EL CÍRCULO (Cabeza)
+    // -> Ancho / 2 (es decir, en la mitad)
+    // -> Radio de 25, adecuado para una cabeza. 
+
+    function dibujarCabeza () {  
+        crearCirculo(ancho/2,50,25, "black"); 
+    }
+
+    // LÍNEA VERTICAL (cuerpo)
+    // -> Las coordenadas de cada pto empiezan en la misma X (ancho)
+    // -> Las coordenadas de y deben distar la altura del moñeco
+
+    function dibujarCuerpo () {
+        crearLinea (ancho/2,75,ancho/2,alto/2,"black",3); // La coordenada X igual en ambas
+    }
+
+    // LÍNEA HORIZONTAL SUPERIOR DERECHA (mano derecha)
+
+    function dibujarManoDerecha () {
+        crearLinea (ancho/2,alto/2-70, 200, 150, "black",3);
+    }
+
+    // LÍNEA HORIZONTAL SUPERIOR IZQUIERDA (mano izquierda)
+
+    function dibujarManoIzquierda () {
+        crearLinea (ancho/2,alto/2-70, 100, 150, "black",3);
+    }
+
+    // LÍNEA HORIZONTAL INFERIOR DERECHA (pierna derecha)
+
+    function dibujarPiernaDerecha () {
+        crearLinea (ancho/2,alto/2, 200, 250, "black",3);
+    }
+
+    // LÍNEA HORIZONTAL INFERIOR IZQUIERDA (pierna izquierda)
+
+    function dibujarPiernaIzquierda () {
+        crearLinea (ancho/2,alto/2, 100, 250, "black",3);
+    }
+
+    function dibujarOjoIzquierdo () {
+        crearLinea (ancho/2-15,40,ancho/2-5,50,"red",3);
+        crearLinea (ancho/2-5,40,ancho/2-15,50,"red",3);
+    }
+
+    function dibujarOjoDerecho () {
+        crearLinea (ancho/2+15,40,ancho/2+5,50,"red",3);
+        crearLinea (ancho/2+5,40,ancho/2+15,50,"red",3);
+    }
+
+
+    // HORCA
+
+    function dibujarHorca () {
+
+        ////Línea horizontal superior
+        crearLinea (20,4,ancho/2,4,"brown",3);
+        //// Línea vertical que conecta con la cabeza. 
+        crearLinea (ancho/2,0,ancho/2,27, "brown"); 
+        //// Línea vertical 
+        crearLinea (20,4,20,280,"brown",3);
+        //// Línea horizontal inferior. 
+        crearLinea (20,280,250,280,"brown",3);
+
+    }
+
+    // FUNCIONES CON LOS FORMULARIOS
+
+    function modificarElementoHTML (id, contenido) {
+        document.getElementById(id).innerHTML = contenido;
+    }
+
+    // Cambia las propiedades CSS para que el display sea none (desaparece)
+
+    function ocultarElemento(id) {
+       document.getElementById(id).style.display = "none";
+    }
+
+    // Cambia las propiedades CSS para que el display sea bock (aparece)
+
+    function mostrarElemento(id) {
+        document.getElementById(id).style.display = "block";
+    }
+
+    // FUNCIONES DE PALABRAS
+
+    function arrayAString (array) {
+
+        let str =""; 
+
+        for (let i=0; i<array.length; i++) {
+            str = str+array[i]; 
+        }
+
+        return str; 
+        
+    }
+
+    function aleatorio(min, max) {
+        
+        return parseInt(Math.random() * (max - min) + min) ;
+    }
+
+
+    // TRABAJANDO CON LOS FORMULARIOS
+
+    // -> Constantes fundamentales 
+    const formularioLetra =  document.getElementById("formularioLetra");
+    const campoLetra = document.getElementById("letra");
+    const formularioPalabra = document.getElementById("formularioPalabra");
+    const campoPalabra = document.getElementById("palabra");
+
+    // -> Van a cambiar
+
+    let palabra; // La palabra que estamos estudiando
+    let letra; // La letra introducida por el usuario
+    let letrasCorrectas  = []; // Las letras correctas se guardan para evitar que el jugador vuelva a introducirlas
+    let palabraAdivinada; // La palabra en proceso de adivinación, cuyos caracteres "-" se sustutuyen por las letras encontradas
+    let posiciones = []; // Array intermedio que guarda las posiciones de las letras coincidentes
+    let frasesMotivadoras = ["Jamás lo conseguirás", "Aunque lo intentes, fracasarás", "Eres un indecente, por eso vas a perder.","Eres basura. BASURA. BASURA. BASURA.", "Veo que te diviertes. El tipo que programó esto no se divirtió mucho.", "Mal, lo haces mal. Perderás, lo estoy viendo.", "Aunque no estoy programado para saberlo, sé que tu estrategia no es la adecuada"];
+    let intento = 0; // ocho intentos -> brazo (2) mano (2) cabeza (1) tronco (1) ojos (2)
+    let letrasIncorrectas = [];
+    // AL INICIAR LA PÁGINA 
+
+    ocultarElemento ("formularioLetra"); // No conviene que el usuario introduzca una letra antes de empezar a jugar 
+    
+    // Al pulsar submit, se inicia un nuevo juego. 
+    formularioPalabra.addEventListener("submit", function(event) {
+
+        if (campoPalabra.value && !campoPalabra.value.includes(' ')) {
+
+             // Evitar que el formulario se envíe, PARA QUE NO SE REINICIE LA PÁGINA
+
+            event.preventDefault();
+
+            // Reiniciar variables
+            letrasIncorrectas = []; 
+            posiciones = [];
+            letrasCorrectas = [];
+            intento =0;
+            editorCanvas.clearRect(0, 0, ancho, alto);;// Limpiar tablero
+
+            // Empezando partida. 
+
+            alert ("Que empiece la partida ¿eing?"); 
+
+            dibujarHorca ();
+
+            // Inhabilitar el acceso al formularioPalabra, desbloqueando formularioLetra
+
+            mostrarElemento ("formularioLetra");
+            ocultarElemento("formularioPalabra");
+
+            // Obtener el valor de la palabra. 
+
+            palabra = campoPalabra.value; 
+
+            // Convertir a mayúsculas para evitar errores 
+
+            palabra = palabra.toUpperCase (); 
+            
+            // Separar la palabra por caracter en un array
+        
+            palabra = palabra.split (''); 
+        
+            // Palabra adivinada por el usuario, al principio solo compuesta por "-". 
+        
+            palabraAdivinada = "-".repeat(palabra.length); // Se repetirá tantas veces como caracteres tenga el array.
+        
+            // Convertir a array. 
+        
+            palabraAdivinada = palabraAdivinada.split (''); 
+
+            modificarElementoHTML ("estadoPalabra", arrayAString (palabraAdivinada)); // El valor "-" se repite tantas veces como letas tenga la palabra.
+            modificarElementoHTML ("parrafoInfo", ` Te queda/n ${8-intento} intento/s ${frasesMotivadoras[aleatorio (0,frasesMotivadoras.length)]}`);
+
+        }
+        else {
+            alert ("El campo está vacío o contiene caracteres no tolerados por mi exquisita programación");
+        }
+        
+        
+        formularioPalabra.reset();
+    });
+
+
+    formularioLetra.addEventListener("submit", function(event)  {
+
+        event.preventDefault(); // Evitar que el formulario se envíe, PARA QUE NO SE REINICIE LA PÁGINA
+
+        if (campoLetra.value && !campoLetra.value.includes(' ') && campoLetra.value.length==1) {
+
+            console.log(letrasCorrectas);
+            console.log(letrasIncorrectas);
+             
+            letra = campoLetra.value; // Obtener el valor de la letra 
+
+            letra = letra.toUpperCase () // Lo convertimos a mayúsculas para evitar errores 
+
+            // SI LA LETRA INTRODUCIDA ESTÁ EN LA PALABRA O FIGURA E
+
+            if (palabra.includes(letra) || letrasIncorrectas.includes(letra)) {
+
+                // ... PERO TAMBIÉN ESTÁ EN LAS LETRAS Correctas...
+
+                if (letrasCorrectas.includes(letra) || letrasIncorrectas.includes(letra)) {
+
+                    alert(`¡Ejem! La letra ${letra} es un carácter YA INTRODUCIDO o INCORRECTO`);
+
+                }
+                // ... CASO CONTRARIO, EFECTUAR EL CAMBIO
+                else {
+
+                    letrasCorrectas.push(letra);
+
+                    // Hallar las posiciones en las que se encuentra
+
+                    let j=0;
+
+                    for (let i=0; i<palabra.length; i++) {
+
+                        if (palabra[i]==letra) {
+                            posiciones.push(i);
+                        }
+
+                    }
+
+                    // Modificar esas posiciones en el array de Palabra Adivinada
+
+                    for (let i=0; i<palabraAdivinada.length; i++){
+
+                        if (posiciones.includes(i)){
+                            palabraAdivinada[i] = letra;
+                        }
+
+                    }
+
+                    posiciones = []; // Limpiar array para que las posiciones de las letras no se acumulen.
+
+                    modificarElementoHTML("estadoPalabra", arrayAString(palabraAdivinada));
+                    
+
+                }
+            }
+            else {
+                
+                intento++; 
+                letrasIncorrectas.push(letra);
+                modificarElementoHTML("letrasInfo", ` Letras incorrectas: <strike> ${letrasIncorrectas}  </strike>`);
+                switch (intento) {
+                    case 1:
+                        dibujarCabeza();
+                    break;
+
+                    case 2:
+                        dibujarCuerpo();
+                    break;
+
+                    case 3:
+                        dibujarManoDerecha ();
+                    break;
+
+                    case 4:
+                        dibujarManoIzquierda();
+                    break;
+
+                    case 5:
+                        dibujarPiernaDerecha ();
+                    break;
+                    
+                    case 6:
+                        dibujarPiernaIzquierda();
+                    break;
+                    
+                    case 7:
+                        dibujarOjoDerecho ();
+                        
+                    break;
+
+                    case 8:
+                        dibujarOjoIzquierdo (); 
+                        modificarElementoHTML ("parrafoInfo", `¡PERDISTE! La palabra era ${arrayAString (palabra)}. Puedes volver a jugar si quieres. `);
+                        ocultarElemento ("formularioLetra");
+                        mostrarElemento("formularioPalabra");
+                        alert(`¡Já! HAS PERDIDO`);
+                    break;
+                }
+
+            
+
+            }
+
+            if (!palabraAdivinada.includes("-")) {
+                modificarElementoHTML ("parrafoInfo", `ME TEMO QUE HAS GANADO... Efectivamente, la palabra era ${arrayAString (palabra)}. Puedes volver a jugar si quieres. `);
+                alert(`GANAR... aquella palabra innombrable. Ehorabuena.`);
+                ocultarElemento ("formularioLetra");
+                mostrarElemento("formularioPalabra");
+
+            }   
+            else if (intento!=8) modificarElementoHTML ("parrafoInfo", ` Te queda/n ${8-intento} intento/s ${frasesMotivadoras[aleatorio (0,frasesMotivadoras.length)]}`);
+                
+        }
+        else {
+            alert ("El campo está vacío o contiene caracteres no tolerados por mi exquisita programación");
+        }
+        
+        formularioLetra.reset();
+
+    
+
+    });
+
+       
+
+    </script> 
+
+
+
+    
+</body>
+</html>

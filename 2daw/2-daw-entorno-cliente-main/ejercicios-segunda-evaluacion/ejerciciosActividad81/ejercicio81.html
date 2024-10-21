@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	
+	<h1> Ejercicios actividad 8 - 1 </h1>
+	<h2> Ejercicio propuesto en Desarrollo Entorno - Servidor </h2>
+
+	<p> <b> Alumno: </b> Hugo Ruiz Sánchez</p>
+	<p> <b> Docente: </b> Enrique Diego Alfonso  </p>	
+		
+	<hr/> 
+
+	<h2> Ejercicio 1 </h2>
+	<p> Lea los resultados a los errores en la consola de los comandos </p>
+
+	
+
+	<script>
+
+		// Sirve para apilar unos contenedores sobre otros
+
+        function enContenedor (texto, tipo, container, atributos=false) {
+
+            // Define el contenedor existente donde se introducirá la etiqueta
+
+            let contenedor = document.getElementById(container); 
+
+            // Crea un elemento con la etiqueta definida 
+
+            let nuevaEtiqueta = document.createElement(tipo); 
+
+            // Introduce el texto dentro de la etiqueta
+
+            nuevaEtiqueta.textContent = texto;
+
+            // Incrusta la etiqueta en el contenedor previamente definido.
+
+            contenedor.appendChild (nuevaEtiqueta); // Indicando así el contenido
+
+            // Asociar los atributos
+
+            if (atributos) {
+                for (let i=0; i<atributos.length; i++) {
+                    nuevaEtiqueta.setAttribute (atributos[i][0], atributos [i][1] )
+                }
+            }
+
+        }
+
+
+		function gestionarError (error) {
+
+			switch (error.name) {
+				case "EvalError": 
+					console.log ("Hay problemas en la función en la función global eval ().");
+				break; 
+
+				case "InternalError": 
+					console.log ("El sistema está siendo sobrecargado, por bucles u otros métodos muy demandantes.");
+				break; 
+
+				case "RangeError": 
+					console.log ("El parámetro usado está fuera de su rango correspondiente.");
+				break; 
+
+				case "ReferenceError": 
+					console.log ("Referencia a una variable inexistente.")
+				break; 
+
+				case "SyntaxError": 
+					console.log ("Error de sintaxis.")
+				break; 
+
+				case "TypeError": 
+					console.log ("Tipado incorrecto detectado en una variable.")
+				break; 
+
+				case "URIError": 
+					console.log ("Parámetros no válidos en encodeURI() o decodeURI ()")
+				break; 
+
+			}
+		}
+
+		try {throw new TypeError("Este es un TypeError");} catch (error) {gestionarError(error); }
+
+		try { throw new ReferenceError("Este es un ReferenceError");} catch (error) {gestionarError(error);}
+
+		try {throw new RangeError("Este es un RangeError");} catch (error) {gestionarError(error);}
+
+		try {throw new SyntaxError("Este es un SyntaxError");} catch (error) {gestionarError(error);}
+
+		try {throw new URIError("Este es un URIError");} catch (error) {gestionarError(error);}
+
+		try {throw new EvalError("Este es un EvalError");} catch (error) {gestionarError(error);}
+
+		try {throw new Error("Este es un Error genérico");} catch (error) {gestionarError(error);}
+	
+	</script> 
+    
+	<h2> Ejercicio 2 </h2>
+	<p> Lea los resultados en la consola de los comandos </p>
+
+	<script type="module">
+
+		import * as geo from "./geo.js"
+
+		geo.getLongitude (); 
+		geo.getLatitude (); 
+		geo.getAltitude ();
+	</script>
+    
+	<h2> Ejercicio 3 </h2>
+
+	<canvas id="canvas", width="500", height="500"> </canvas>
+
+	<script> 
+
+	const canvas = document.getElementById ("canvas");   
+    const ctx = canvas.getContext ("2d");  // El objeto ctx es el que nos facilitará las funciones para comenzar a dibujar. 
+
+	var img= new Image (); //Creamos una nueva imagen. 
+
+	img.src ="https://upload.wikimedia.org/wikipedia/commons/5/5a/Mitsubishi_logo.svg" // Cargamos los vectores de mitshubisi de una imagen svg extraida de wikipedia
+
+	img.onload = function() {
+    	ctx.drawImage(img, 0, 0);
+	}
+	
+	</script> 
+
+	<h2> Ejercicio 4 </h2>
+
+	<h3> Formulario </h3>
+
+	<fieldset>
+        <legend>Datos del Vehículo</legend>
+        <label for="marca">Marca:</label>
+        <input type="text" id="marca" name="marca" required><br>
+
+        <label for="modelo">Modelo:</label>
+        <input type="text" id="modelo" name="modelo" required><br>
+
+        <label for="bastidor">Número de Bastidor:</label>
+        <input type="text" id="bastidor" name="bastidor" required><br>
+
+        <label for="cilindrada">Cilindrada:</label>
+        <input type="text" id="cilindrada" name="cilindrada" required><br>
+
+        <label for="puertas">Número de Puertas:</label>
+        <input type="number" id="puertas" name="puertas" required><br>
+
+        <label for="color">Color:</label>
+        <input type="text" id="color" name="color" required><br>
+    </fieldset>
+
+	<br>
+
+    <!-- Datos del propietario -->
+    <fieldset>
+        <legend>Datos del Propietario</legend>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" required><br>
+
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" name="direccion" required><br>
+
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" required><br>
+
+        <label for="correo">Correo Electrónico:</label>
+        <input type="email" id="correo" name="correo" required><br>
+    </fieldset>
+
+    <!-- Botón de envío -->
+    <button id="enviar" onclick="procesarFicha (new Ficha (marca.value,modelo.value, bastidor.value, cilindrada.value, puertas.value,color.value, nombre.value, apellidos.value, direccion.value, telefono.value, correo.value)); location.reload();"> Guardar </button>
+
+	<h3> Fichas guardadas</h3>
+
+	<div id="fichas"> </div>
+
+	<script> 
+
+	// Una ficha nueva se generará cada vez que el usuario clicke en "guardar"; posteriormente, esta será procesada en un objeto guardado en  memoria ("storage") 
+	class Ficha {
+		// CONSTRUCTOR 
+		constructor (marca,modelo, bastidor, cilindrada, puertas,color, nombre, apellidos, direccion, telefono, correo) {
+			// Coche
+			this.marca = marca;
+			this.modelo = modelo;
+			this.bastidor = bastidor;
+			this.cilindrada = cilindrada;
+			this.puertas = puertas;
+			this.color = color;
+			// Propietario
+			this.nombre = nombre;
+			this.apellidos = apellidos; 
+			this.direccion = direccion; 
+			this.telefono = telefono;
+			this.correo = correo; 
+		}
+	}
+
+	function procesarFicha (ficha) {
+		if (localStorage.getItem("storageFichasGuardadas") === null) { // Si no existe. 
+			let fichasGuardadas = new Array ();  // Crear un nuevo array
+			fichasGuardadas.push (ficha); // ... que contenga nuestra nueva ficha
+			localStorage.setItem ("storageFichasGuardadas",JSON.stringify(fichasGuardadas)); // Guardado con el nombre de storageFichasGuardadas
+		}
+		else {// Si existe
+			fichasGuardadas = JSON.parse (localStorage.getItem("storageFichasGuardadas")); // Convertir el string del JSON en un array accesible 
+			fichasGuardadas.push (ficha); // Añadir la nueva ficha al array
+			localStorage.setItem ("storageFichasGuardadas",JSON.stringify(fichasGuardadas));  // Y finalmente, sobreescribir el archivo existente
+		}
+	}
+
+	function mostrarFichero (fichero) {
+		if (localStorage.getItem("storageFichasGuardadas") === null) { // Si no existe. 
+			enContenedor ("Ninguna ficha registrada", "p", "fichas");
+		}
+		else {
+			fichasGuardadas = JSON.parse (localStorage.getItem("storageFichasGuardadas"));
+
+			for (let i=0; i<fichasGuardadas.length; i++) {
+				enContenedor ("", "fieldset", "fichas", [["id","fieldficha"+i]]);
+					enContenedor (`Ficha ${i}`, "legend", `fieldficha${i}`);
+					enContenedor (`Datos del Vehículo`, "h4", `fieldficha${i}`);
+						enContenedor (`Marca  :  ${fichasGuardadas[i].marca}`, "p", `fieldficha${i}`);
+						enContenedor (`Modelo  :  ${fichasGuardadas[i].modelo}`, "p", `fieldficha${i}`);
+						enContenedor (`Bastidor  :  ${fichasGuardadas[i].bastidor}`, "p", `fieldficha${i}`);
+						enContenedor (`Cilindrada  :  ${fichasGuardadas[i].cilindrada}`, "p", `fieldficha${i}`);
+						enContenedor (`Puertas  :  ${fichasGuardadas[i].puertas}`, "p", `fieldficha${i}`);
+						enContenedor (`Color  :  ${fichasGuardadas[i].color}`, "p", `fieldficha${i}`);
+						enContenedor (`Datos del Propietario`, "h4", `fieldficha${i}`);
+						enContenedor (`Nombre  :  ${fichasGuardadas[i].nombre}`, "p", `fieldficha${i}`);
+						enContenedor (`Apellidos  :  ${fichasGuardadas[i].apellidos}`, "p", `fieldficha${i}`);
+						enContenedor (`Dirección  :  ${fichasGuardadas[i].direccion}`, "p", `fieldficha${i}`);
+						enContenedor (`Teléfono  :  ${fichasGuardadas[i].telefono}`, "p", `fieldficha${i}`);
+						enContenedor (`Correo  :  ${fichasGuardadas[i].correo}`, "p", `fieldficha${i}`);			
+			}
+		}
+
+	}
+	
+	mostrarFichero ()
+
+
+	</script>
+
+	<h2> Ejercicio 5</h2>
+
+	<p> El resultado puede verse en las notificaciones emergentes cada 30 segundos</p>
+
+	<script>
+		// default (nada), granted (sí), denied (no)
+		console.log ("El estado de las notificaciones es: "+Notification.permission)
+		
+		// Si el permiso está garantizado: enviar notificación
+		if (Notification.permission === "granted") {
+			setInterval (function (){enviarNotificacion ("Saludos amigo, ¿desea ser tan feliz como yo? Pues ahora tiene la oportunidad de serlo. Aprovéchela y envíe un dólar a 'hombre feliz', calle Evergreen Terrace 742, Springfield; ¡dese prisa! La felicidad eterna está a solo un dólar de distancia. ", "https://youtu.be/Eg4vnZwPWXA",5);}, 30000)
+		}
+		// Si no, preguntarlo
+		else if (Notification.permission !== "denied") {
+			Notification.requestPermission()
+		}
+
+		function enviarNotificacion (mensaje, enlace, tiempo) {
+			// Contendrá el mensaje:
+			const notificacion = new Notification ("Nueva notificación emergente", {
+				body: mensaje
+			})
+			// Al clickar sobre la misma, redireccionar al enlace indicado
+			notificacion.onclick = function () {
+				window.location.href = enlace
+			}
+			// Cerrar notificación a los n segundos
+			setTimeout (function (){
+				notificacion.close()
+			},tiempo*1000)
+			
+		}
+
+	
+
+
+	</script>
+	
+
+
+
+
+
+    
+</body>
+</html>

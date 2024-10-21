@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- -->
+    <div id="div_elemento"> 
+        <div id="div_elemento-contenido"> ¡Hola, mundo! </div>
+    </div>    
+    <!-- -->
+
+    <ul> 
+        <li> La </li>
+        <li> prueba </li>
+    </ul>
+    <ul> 
+        <li>ha</li>
+        <li>pasado</li>
+    </ul>
+
+    <!-- -->
+
+    <a href = "http://ejemplo.com/archivo.pdf"> enlace a </a>
+    <a href = "http://example.gov"> enlace b </a>
+
+    <!---->
+
+    <div class="contenidos">
+        <ul class="libro">
+          <li class="capitulo">Capítulo 1</li>
+          <li class="capitulo">Capítulo 2</li>
+        </ul>
+    </div>
+
+    <script> 
+
+        // getElementById -> SELECCIÓN POR ID
+
+        let miElemento = document.getElementById('div_elemento'); 
+        miElemento.style.background = 'red';
+
+        //// El DOM asignara automaticamente el elemento a una variable si este nombre no es usado previamente
+        div_elemento.style.background = 'aqua';
+
+        // querySelectorAll -> SELECTOR MULTIFUNCIÓN, EL MÁS USADO: SIRVE PARA ETIQUETAS, ATRIBUTOS, CLASES...
+        console.log ("COMPROBANDO EL QUERYSELECTORALL -----------")
+        let elementos = document.querySelectorAll ('ul > li:last-child') // guarda los elementos indicados: last-child en este caso, para cada uno: pasado y prueba
+        // Podemos incluso elegirlos por clase: '.mi-clase', que es lo más común
+        // Incluso, por atriutos, por ejemplo '[data-mi-atributo="valor"]'
+        // Incluso aquellos que tengan un atributo '[atributo]'
+        // O por su etiqueta 'div'
+        // 'ul > li' , es decir, elementos "li" que desciendan de "u" 
+        
+        for (let elemento of elementos) {
+            console.log(elemento.innerHTML) // Recorrer cada elemento 
+        }
+
+        // matches COMPARAR ETIQUETAS con MATCHES (Parecido al querySelectorAll pero manualmente)
+        // -> buscamos un enlace <a> con un atributo href  que termina en zip
+        console.log ("COMPROBANDO EL MATCHES -----------")
+        for (let elemento of document.body.children) {
+            if (elemento.matches('a[href$="pdf"]')) {
+                console.log ("Hemos encontrado un: "+elemento.href)
+            }
+        }
+
+
+        // closests -> busca al padre más cercano... en función de clase 
+
+        console.log ("COMPROBANDO EL CLOSEST -----------")
+
+        // Seleccionamos la clase mediante el queryselector
+        let capitulo = document.querySelector('.capitulo')
+
+        // Ahora comprobamos: 
+
+        console.log (capitulo.closest('.libro')) // Arroja la etiqueta más cercana en función de la clase
+
+        // Hay multitud de gerElementBy*  cuyas funciones ya están cubierta por el querySelector. 
+
+        // getElementsByTagName -> busca por etiqueta 
+        // getElementsByClassName -> busca por clase  
+        // getElementsByName -> busca por el atributo "name"
+        // -> todo esto arroja un nodelist, que podremos manipular 
+        
+        // PARTICULARIDAD DEL querySelector*
+        // Una ventaja es que arroja una  lista de nodos dinámica. Lo que significa que
+        // sea donde sea que se aloje la variable, siempre se actualizará conforme el 
+        // body se actualice, incluso si el script está escrito por encima 
+
+
+        
+
+
+
+
+
+
+
+
+    </script> 
+
+
+</body>
+
+</html>

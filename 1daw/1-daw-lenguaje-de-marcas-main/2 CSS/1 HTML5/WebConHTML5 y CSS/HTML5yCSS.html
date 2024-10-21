@@ -1,0 +1,105 @@
+<!DOCTYPE html> 
+
+<html lang=es>
+
+<head>
+<meta charset="UTF-8" />  <!-- El juego de caracteres que elegiremos en esta página web, en este caso, el universal--> 
+
+<title> Las bondades del HTML5 </title> 
+
+<style type="text/css"> 
+
+ @import 'formato/estilo.css';
+
+</style> 
+<!-- NOTAS RELATIVAS AL ESTILO CSS IMPLEMENTADO. 
+body (parte del documento a la que afectará)  
+-> se ajusta la font-family con varias alternativas, si una no está disponible se cambia a la otra. 
+-> se ajusta el color: "color", en este caso "black". 
+-> se ajusta el background: "color" en este caso "#d8da3d"
+-> se ajustan los márgenes. 
+h1 (parte del documento a la que afectará) 
+-> se ajusta la font-family con varias alternativas, si una no está disponible se cambia a la otra. 
+img (parte del documento a la que afectará) 
+-> se ajusta el tamaño de la imagen, se establece el borde y se aplica un radio de borde para suavizarlo. 
+ul (parte del documento a la que afectará-> las listas) 
+	-> se pone un "square" (cuadrado) ,añadimos un pequeño margen, quitamos relleno.	
+-->
+</head>
+ 
+ <body> 
+ 
+ <h1> Esta es una página web de prueba: las bondades del HTML5. </h1>
+ 
+  Menú de navegación, cortesía de HTML5 (LOS ENLACES NO FUNCIONAN), puede editarse convenientemente en CSS. 
+ 
+ <nav class="Menu"> 
+ 
+ <ul> 
+ 
+ <li> <a href ="http://google.es/"> Inicio </a> </li> 
+ <li> <a href ="https://es.yahoo.com/"> Soporte </a> </li> 
+ <li> <a href ="https://www.amazon.es/"> Sobre el Autor </a> </li> 
+  
+ <p>
+ 
+ De entre las bondades del HTML5, podemos realizar formularios utilizando el atributo "placeholder", que sustituirá a la atávica expresión "value".
+ Observa cómo se muestra el siguiente formulario "usuario": 
+ 
+<br> </br>  
+
+ <label for = "usuario"> <b> Usuario: </b> </label> 
+ <input type = "text" placeholder ="Usuario" size ="10" name = "usuario" id = "usuario">
+ <input type="submit" value="Ingresar">
+ <br> </br>  
+ 
+ Tal y como puede apreciarse, el placeholder "Usuario" es una transparencia que desaparece después de escribir en la caja de texto. 
+ 
+  <br> </br>  
+  
+  Y para tu solaz y diversión: he aquí una imagen que te contentarás en admirar una y otra vez:
+  
+  <figure> 
+  
+  <img src="imagenes/paisaje.jpeg"> 
+  
+  <figcaption> <i> Preciosísimo paisaje localizado en el fondo predefinido del Windows XP. 
+  
+  Este texto es una "figcaption", y la imagen ha sido adjuntada dentro de un "figure", etiquetas exclusivas de HTML5 </i>  
+  
+  </figcaption>	
+   
+  </figure> 
+
+  La imagen contiene hasta una descripción ¿ves? Y además está modificada desde CSS para suavizar sus bordes y enmarcarla. 
+  
+  <br> </br> 
+  
+  A continuación veremos la función "article": 
+
+
+</p> 
+
+
+<article> 
+
+<h2> Primer artículo. </h2>
+
+<p>Este es el primer artículo que dispongo a redactar, el texto presente se encuentra en el interior de las etiquetas "p", de modo que se mostrará como un párrafo. </p>
+
+<p> A continuación escribo el párrafo siguiente; no se me ocurre qué escribir, por lo que procederé a terminar el artículo primero. </p> 
+
+</article>
+
+<h2> Segundo artículo. </h2>
+
+<p>Este es el segundo artículo que dispongo a redactar, el texto presente se encuentra en el interior de las etiquetas "p", de modo que se mostrará como un párrafo. </p>
+
+<p> A continuación escribo el párrafo siguiente; no se me ocurre qué escribir, por lo que procederé a terminar el artículo segundo. </p> 
+
+</article>
+
+<footer> <p> Esto es un "footer", es decir, el pie de la página. </p> <p> <b>Autor de la página</b>: Hugo Ruiz Sánchez. </p> </footer>
+</body>  
+</html> 
+

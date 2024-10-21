@@ -1,0 +1,36 @@
+﻿<!-- El <xs:enumeration value="valor"> restringe que, para un tipo xs:string, puedan contenerse valores que no correspondan a los valores definidos.   --> 
+
+
+<xs:element name="vehiculo">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="barco"/>
+      <xs:enumeration value="bicicleta"/>
+      <xs:enumeration value="coche"/>
+      <xs:enumeration value="tren"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>   
+
+<!-- Sin embargo, puede definirse un tipoDeVehiculo que reuna los "atributos" de esta restricción --> 
+
+<xs:simpleType name="tipoDeVehiculo">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="barco"/>
+      <xs:enumeration value="bicicleta"/>
+      <xs:enumeration value="coche"/>
+      <xs:enumeration value="tren"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+<!-- Pudiendo aplicarse en forma de extensión.  -->
+
+ <xs:element name="vehiculo">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="tipoDeVehiculo"/>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+

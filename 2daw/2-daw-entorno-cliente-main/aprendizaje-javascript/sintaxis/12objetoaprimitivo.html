@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1> Conversión de objeto a valor primitivo </h1>
+
+    <script>
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "false"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+
+        }
+
+        /**
+         * Los "hint" son valores asociados automáticamente por javascript, pueden ser "string" o "default"... segun la variable. 
+         */
+
+        let usuario = {
+            nombre: "Hugo", 
+            apellido: "Ruiz",
+            sexo:"Masculino",
+            edad: 20,
+
+            // primera forma (1º por orden de prioridad)
+
+            [Symbol.toPrimitive] (hint) { // Parámetro asociado por javascript automáticamente
+                enDocumento (`Sugerencia: ${hint}`); // La sugerencia se imprime para que podemos verla mejor
+                return hint == "string" ? `Nombre: ${this.nombre} | Edad: ${this.edad} | Sexo: ${this.sexo}` :this.edad; 
+            },
+
+            // segunda forma (2º por orden de prioridad) (solo devuelve el string)
+
+            toString() {
+                return (`Nombre: ${this.nombre} | Edad: ${this.edad} | Sexo: ${this.sexo}`);
+            },
+
+            // tercera forma (devuelve el objeto en sí)
+
+            valueOf () {
+                return this.edad;
+            }
+
+        }
+        enDocumento (usuario); // Imprime el string programado (tostring o "string" en symboltoprimitive)
+        enDocumento (usuario+12); // se comporta como default (o con valueof), suma 12 a la edad
+
+
+        
+
+
+    </script>
+
+
+
+</body>
+</html>

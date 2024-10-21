@@ -1,0 +1,89 @@
+<!-- RESTRICCIONES EN XML SCHEMA 
+Patron Significado 
+[A-Z] 
+[a-z]
+[0-9]
+
+--> 
+
+<xs:simpleType name="dni">
+<xs:restriction base="xs:string">
+<xs:pattern value="[0-9] [0-9] [0-9] [0-9] [0-9] [0-9] [0-9] [0-9] [A-Z]"/>
+</xs:restriction>
+</xs:simpleType>
+
+
+<xs:simpleType name="edad">
+<xs:restriction base="xsd:positiveInteger">
+<xs:maxExclusive value="10"/>
+</xs:restriction>
+</xs:simpleType >
+
+<xs:complexType name="alumno">
+<xs:secuence>
+<xs:element name="nombre" type="xs:string" minOccurs="1" maxOccurs="1"/>
+<xs:element name="apellidos" type="xs:string" minOccurs="1" maxOccurs="1"/>
+<xs:element name="web" type="xs:string" minOccurs="0" maxOccurs="5">
+<xs:complexType>
+<xs:attribute name="href" type="xs:string"/>
+</xs:complexType>
+</xs:element>
+<xs:secuence>
+</xs:complexType>
+
+
+
+
+
+
+
+<!-- Ejemplo de esquema correspondiente a un documento XML para estructurar la información personal sobre
+los alumnos de un centro educativo. --> 
+
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!-- elemento raíz -->
+<xs:element name="alumnos" type="datosAlum"/>
+<!-- Definicion del tipo datosAlum -->
+<xs:complexType name="datosAlum">
+<xs:sequence>
+<xs:element name="alumno" type="datos" minOccurs="1" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<!-- Definicion del tipo datos -->
+<xs:complexType name="datos">
+<xs:sequence>
+<xs:element name="nombre" type="xs:string" minOccurs="1" maxOccurs="1"/>
+<xs:element name="apellidos" type="xs:string" minOccurs="1" maxOccurs="1"/>
+<xs:element name="direccion" type="datosDireccion" minOccurs="1" maxOccurs="1"/>
+<xs:element name="contactar" type="datosContactar" minOccurs="1" maxOccurs="1"/>
+</xs:sequence>
+<!-- Atributos del elemento usuario -->
+<xs:attribute name="id" type="xs:string"/>
+</xs:complexType>
+<xs:complexType name="datosDireccion">
+<xs:sequence>
+<xs:element name="domicilio" type="xs:string" minOccurs="0" maxOccurs="1"/>
+<xs:element name="codigo_postal" minOccurs="0" maxOccurs="1" >
+<xs:complexType>
+<xs:attribute name="cp" type="xsd:string"/>
+</xs:complexType>
+</xs:element>
+<xs:element name="localidad" type="xs:string" minOccurs="0" maxOccurs="1"/>
+<xs:element name="provincia" type="xs:string" minOccurs="0" maxOccurs="1"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="datosContactar">
+<xs:sequence>
+<xs:element name="telf_casa" type="xs:string" minOccurs="0" maxOccurs="1"/>
+<xs:element name="telf_movil" type="xs:string" minOccurs="0" maxOccurs="1"/>
+<xs:element name="telf_trabajo" type="xs:string" minOccurs="0" maxOccurs="1"/>
+<xs:element name="email" minOccurs="0" maxOccurs="unbounded" >
+<xs:complexType>
+<xs:attribute name="href" type="xs:string"/>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

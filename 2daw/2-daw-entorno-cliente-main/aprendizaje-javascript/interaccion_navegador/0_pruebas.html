@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script> 
+
+        /**
+            Cuando abrimos el navegador, hay tres planos en funcionamiento:
+            1 º Se crea una ventana (WINDOW)
+            | 
+            | 
+            V
+             //------> DOM Documento HTML y CSS (Document Object Model), no tiene más complicacion que las etiquetas. Puede verse el dom dandole a inspeccionar elemento HTML 
+            //-------> BOM Propiedades virtuales de la pantalla (screen, location...) (Browser Object Model)
+           //--------> Javascript Programacion que guarda los objetos etc etc  
+        *// 
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "undefined"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+
+        }
+    
+        function decirHola() {
+            alert ("Esta funcion se llama por el objeto de pantalla (window? ¿no es raro? )");
+        }
+   
+        window.decirHola ();
+
+        // Vamos a modificar la capa de DOM, por ejemplo, asignando estilo a la pagina
+        // ... pero vamos a hacerlo solo durante 4 segundos
+        
+        document.body.style.background ="blue"
+-
+        // Pasar al cabo de cinco segundos 
+        setTimeout (function () {
+            document.body.style.background =""; 
+        },5000)
+
+        // Vamos a modificar la capa de BOM, por ejemplo, redirigiendo 
+
+        if (confirm ("Vamos a wikipedia")){
+            location.href="https://wikipedia.org"; 
+        }
+
+
+        
+        
+        
+
+
+
+    
+    </script>
+</body>
+</html>

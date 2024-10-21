@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- Documento XML normal, en base a este documento se realizará  la conversión en html -->
+<precipitaciones>
+    <registro>
+        <lugar>Sevilla</lugar>
+        <fecha>07/09/2007</fecha>
+        <litros-m2>10</litros-m2>
+    </registro>
+    <registro>
+        <lugar>Huelva</lugar>
+        <fecha>07/09/2007</fecha>
+        <litros-m2>20</litros-m2>
+    </registro>
+    <registro>
+        <lugar>Cádiz</lugar>
+        <fecha>07/09/2007</fecha>
+        <litros-m2>15</litros-m2>
+    </registro>
+    <registro>
+        <lugar>Almería</lugar>
+        <fecha>17/10/2007</fecha>
+        <litros-m2>5</litros-m2>
+    </registro>
+    <registro>
+        <lugar>Granada</lugar>
+        <fecha>18/10/2007</fecha>
+        <litros-m2>25</litros-m2>
+    </registro>
+    <registro>
+        <lugar>Sevilla</lugar>
+        <fecha>21/12/2007</fecha>
+        <litros-m2>36</litros-m2>
+    </registro>
+    <registro>
+        <lugar>Huelva</lugar>
+        <fecha>21/12/2007</fecha>
+        <litros-m2>41</litros-m2>
+    </registro>
+</precipitaciones>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los peores vidriojuegos de la historia</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
+    <!-- Script-->
+    <script> 
+
+        // Comprobación del resizing de la pantalla, para cuando <=880px eliminar todos los enlaces del nav y mostrar el icono de menú hamburguesa
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Función para verificar la condición de la media
+            function checkMediaCondition() {
+                
+                // Condición para la media
+                var mediaCondition = window.innerWidth <= 880;
+
+                // Oculta o muestra los elementos según la condición de la media
+                
+                var enlaces = document.querySelectorAll("#menu-navegacion a");
+                var menuIcon = document.getElementById("menu-icon");
+
+                if (mediaCondition) {
+                    enlaces.forEach(function (enlace) {
+                        enlace.style.display = "none";
+                    });
+                    menuIcon.style.display = "block";
+                } else {
+                    enlaces.forEach(function (enlace) {
+                        enlace.style.display = "block";
+                    });
+                    menuIcon.style.display = "none";
+                }
+            }
+
+            // Verifica la condición de la media al cargar y redimensionar la ventana
+            checkMediaCondition();  // Al ejecutar la pagina
+            window.addEventListener("resize", checkMediaCondition); // Al redimensionar
+        });
+
+        let desplegado = false; 
+        
+        // Al pulsar el botón del menú hamburguesa, mostrar los enlaces o - si el "desplegado" es true - ocultarlos
+        function showLinks() {
+            console.log (desplegado)
+            if (desplegado){
+                var enlaces = document.querySelectorAll("#menu-navegacion a");
+                var menuIcon = document.getElementById("menu-icon");
+                enlaces.forEach(function (enlace) {
+                        enlace.style.display = "none";
+                    });
+                    menuIcon.style.display = "block";
+                    desplegado = false;
+            }else {
+                var enlaces = document.querySelectorAll("#menu-navegacion a");
+                enlaces.forEach(function (enlace) {
+                    enlace.style.display = "block";
+                });
+                desplegado = true;
+            }
+        }
+    
+    </script>
+
+</head>
+<body>
+
+    <header> 
+        
+        <div id="logo-titulo">
+            <img id="logo" src="img/logo-videojuegos-malignos.svg"/>
+            <div id="titulo"> 
+                <h1> VIDEOJUEGOS MALIGNOS </h1> 
+                <h2 id="subtitulo">  No te dejes estafar por la avariciosa industria del videojuego </h2>
+            </div>
+        </div>
+
+        <nav id="menu-navegacion"> 
+            <div id="menu-icon" onclick="showLinks()">&#9776;</div>
+            <a href="#"> Freemium </a>
+            <a href="#"> FPS Multijugador </a>
+            <a href="#"> Rol masivo en línea </a>
+            <a href="#"> Videojuegos de deportes </a>
+            <a href="#"> Indies con sobreprecio  </a>
+            
+        </nav>
+        
+    </header>
+
+
+    <main> 
+
+        <div class="categoria">
+            <h3>Lo más destacado en videojuegos de deportes </h3>
+            <div class="contenido-categoria">
+                <div class="juego">
+                    <img class="imagen-juego" src="img/fifa.jpg" />
+                    <p class="descripcion"> "EA Football 2024" ha resultado ser más de lo mismo - ¡vaya sorpresa! -, una burda reintegración del FIFA 23 con los nuevos jugadores de este año.</p>
+                </div>
+                <div class="juego">
+                    <img class="imagen-juego" src="/img/pixel_football.jpg" />
+                    <p class="descripcion"> ¿Un juego indie de fútbol? "Pixel Cup Soccer Ultimate Edition". Es su primera entrega, pero ya nos vienen con lo de "Ultimate". Ultimate hez.</p>
+                </div>
+                <div class="juego">
+                    <img class="imagen-juego" src="img/nba.jpg" />
+                    <p class="descripcion"> No te dejes engañar por la espectacularidad de la carátula ¡este juego es una basura! Tal como lo fue el anterior, y el anterior, y el anterior...   </p>
+                </div>
+            </div>
+        </div> 
+
+        <hr>
+        
+        <div class="articulo">
+            <h4>Artículo destacado. Videojuegos ultradimensionados: La gran estafa. </h4>
+            <div class="contenido-articulo">
+                <img class="imagen-articulo" src="/img/imagen-articulo.jpg"> 
+                <div class="contenido-texto-articulo">
+                    <p> Hace años podías descargar <b>muchos juegos</b>, incluso tenías la posibilidad de llevarlos en un cartucho o  guardarlos en un disco óptico para portarlos a donde tú quisieras: bibliotecas públicas, aulas escolares, casas de familiares o amigos... Sí, eso existía, queridos lectores. Podías experimentar las bondades de la variedad, disfrutar de un catálogo de decenas de videojuegos, gozando de dinamicidad, porque el espacio de cada juego apenas constituía un tres o cuatro por ciento del disco, o simplemente estaba contenido en un cartucho.  </p>
+                    <p> No os engañéis, ingenuos, el aumento de la memoria requerida en la actualidad no responde al mejoramiento de los gráficos, sino al premeditado interés de los <b> pérfidos empresaurios </b> por aumentar artificialmente los gigas de los juegos, con la intención de justificar la compra de consolas con más espacio interno, memoria inútil que se paga <b>a precio de oro</b>.</p>
+                    <a href="#"> Leer más... </a>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+         
+        <div class="categoria">
+            <h3> Indies con sobreprecio </h3>
+            <div class="contenido-categoria">
+                <div class="juego">
+                    <img class="imagen-juego" src="img/pureya.jpg" />
+                    <p class="descripcion"> Bazofia dibujada con gráficos vectoriales. Un apasionante "mix" de 10 juegos a precio de 3,99€: en total, media hora efectiva de juego. </p>
+                </div>
+                <div class="juego">
+                    <img class="imagen-juego" src="img/gemdow.jpg" />
+                    <p class="descripcion"> ¿Gratis? Eso no es excusa: el tiempo es dinero, y descargando este RPG ultradimensionado de 20 gigabytes perderás mucho, mucho tiempo.  </p>
+                </div>
+            </div>
+        </div>
+    
+    </main>
+
+    <footer> 
+
+        <p> <b><i>Videojuegos Malignos</i></b> © es una marca registrada por el Gobierno de España, perteneciente a la campaña de desincentivación del juego y la ludopatía. </p>
+
+    </footer>
+    
+</body>
+</html>

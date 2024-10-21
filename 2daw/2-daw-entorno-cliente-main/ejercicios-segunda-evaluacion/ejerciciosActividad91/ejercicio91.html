@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Ejercicios actividad 9 - 1 </h1>
+	<h2> Ejercicio propuesto en Desarrollo Entorno - Cliente </h2>
+
+	<p> <b> Alumno: </b> Hugo Ruiz Sánchez</p>
+	<p> <b> Docente: </b> Enrique Diego Alfonso  </p>	
+		
+	<hr/> 
+
+    <script> 
+
+    function enContenedor (texto, tipo, container, atributos=false) {
+
+        // Define el contenedor existente donde se introducirá la etiqueta
+        let contenedor = document.getElementById(container); 
+
+        // Crea un elemento con la etiqueta definida 
+        let nuevaEtiqueta = document.createElement(tipo); 
+
+        // Introduce el texto dentro de la etiqueta
+        nuevaEtiqueta.textContent = texto;
+
+        // Incrusta la etiqueta en el contenedor previamente definido.
+        contenedor.appendChild (nuevaEtiqueta); // Indicando así el contenido
+
+        // Asociar los atributos
+        if (atributos) {
+            for (let i=0; i<atributos.length; i++) {
+                nuevaEtiqueta.setAttribute (atributos[i][0], atributos [i][1] )
+            }
+        }
+
+    }
+
+    </script>
+    <h2> Ejercicio 1 </h1>
+
+    <p> Véase en la consola del navegador. </p>
+    <script> 
+
+        // Disponemos en la carpeta "fuenteEjercicio1" un par de scripts con funciones sencillas.
+        // -> La importación e incrustación de estos en el head requiere de un tiempo, por lo que llamar seguidamente a las funciones no funcionará: necesitaremos usar la asincronía
+        // -> ... asincronía que lograremos mediante callbacks. 
+
+        // Función de cargar script. 
+
+        function cargarScript (src, funcion) {
+
+            // Creamos un elemento script e introducimos en su atributo de fuente el codigo que hemos introducido en las carpetas
+            let script = document.createElement ("script"); 
+            script.src = src; 
+
+            // Cuando se carga (evento onload), realizar la función indicada por parámetro. 
+            script.addEventListener ("load", function () {
+                funcion(script); // El parámetro "script" es opcional
+            })
+
+            document.head.append (script);
+        }
+
+        // Uso 
+
+        cargarScript ("fuenteEjercicio1/script.js", function (script) {
+            // Cargando un script secuencialmente
+            console.log (`(EJERCICIO 1) Importando y ejecutando el ${script.src}`)
+
+            decirHola ();
+
+            cargarScript ("fuenteEjercicio1/script2.js", function (script) {
+                // Cargando otro script secuencialmente... (callback hell o "pirámide infernal" lo llaman)
+                console.log (`(EJERCICIO 1) Importando y ejecutando el ${script.src}`)
+                decirAdios (); 
+
+            })
+
+            // Si continuasemos cargando scripts, llamando a una funcion por debajo de la otra sucesivamemte, conformaríamos una pirámide ilegible de código: el denominado "callback hell"
+
+        })
+
+    </script> 
+
+    <h2> Ejercicio 2 </h2>
+
+    <fieldset>
+        <legend>Datos del Usuario</legend>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" required><br>
+
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" required><br>
+
+        <label for="correo">Correo Electrónico:</label>
+        <input type="email" id="correo" name="correo" required><br>
+
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" required><br>
+    </fieldset>
+
+    <button id="enviarUsuario" onclick="procesarUsuario (new Usuario (nombre.value, apellidos.value, edad.value, correo.value, telefono.value))"> Enviar </button>
+
+    <script> 
+
+        class Usuario {
+            // CONSTRUCTOR 
+            constructor (nombre, apellidos, edad, correo, telefono) {
+                this.nombre = nombre; 
+                this.apellidos = apellidos; 
+                this.edad = edad; 
+                this.correo = correo; 
+                this.telefono = telefono; 
+		    }
+	    }
+
+
+         function procesarUsuario(usuario) {
+
+            // Verificación de los datos (comprueba que ningun campo está vacío) 
+
+            if (!usuario.nombre || !usuario.apellidos || !usuario.edad || !usuario.correo || !usuario.telefono) {
+                alert ("Hay datos que faltan en el formulario.")
+            } 
+            else {
+                console.log ("a");
+                fetch("direccion/al/servidor", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(usuario) // Pasamos por el método POST el JSON convertido a string deñ usuario
+                }).then(function(resultado) {
+                    return resultado;
+                }).then(function(datos) {  // Promesa entre el resultado y el envío
+                    console.log("(EJERCICIO 2) "+usuario); 
+                    enviarUsuario.innerHTML =" ¡Enviado! *" // // ... y una vez "enviado", cambiar la etiqueta
+                });
+            }
+
+        }
+
+
+    </script>
+
+    <h2> Ejercicio 3 </h2>
+
+    <p id="estadoDOM"> DOM: Cargando </p> 
+
+    <script> 
+
+        let DOMCargado = new Promise (function (resolve, reject)  {
+
+            document.addEventListener ("DOMContentLoaded", function () {
+                resolve ("DOM: Listo para actuar"); 
+            })
+        });
+
+        DOMCargado.then (function () {
+            estadoDOM.innerHTML="El DOM ha sido cargado."
+        })
+
+    </script> 
+
+    <h2> Ejercicio 4 </h2>
+
+    <p> Pulsa el botón y luego pulsa ENTER.</p>
+    <button id="botonPatron" onclick="botonPulsado = true"> ¡Clickame!</button>
+
+    <script> 
+        
+        let botonPulsado = false;
+        let enterPulsado = false; 
+
+        let patronEncontrado = new Promise (function (resolve, reject) {
+
+            document.addEventListener ("keydown", function () {     
+            if (event.key=="Enter") {
+                enterPulsado = true;
+            }
+
+            if (enterPulsado == true && botonPulsado == true) {
+                resolve ("Detectado patrón")
+                enterPulsado = false; 
+                botonPulsado = false; 
+            }
+        })})
+
+        patronEncontrado.then (function () {
+            alert ("Patrón encontrado: CLICK + ENTER")
+        })
+
+    </script> 
+
+    <h2> Ejercicio 5 </h2>
+
+    <p> Véase en la consola del navegador</p>
+
+    <script> 
+        // Debemos ir "pasando la pelota" de una promesa a otra, por medio de returns. La "ignición" de esta cadena se dispara con el resolve
+        let promesaEncadenada = new Promise (function (resolve, reject) {
+                setTimeout (function () {
+                    resolve (1) // Empezamos con un resolve de 1 
+                },1000)
+            }).then (function (result) {
+                console.log ("(EJERCICIO 5) "+result); 
+                return result*2;  // Depositamos el 2 en el return, haciendo que el result sea 2
+            }).then (function (result) {
+                console.log ("(EJERCICIO 5) "+result);
+                return result*2; // 2 
+            }).then (function (result) {
+                console.log ("(EJERCICIO 5) "+result);
+                return result*2; // 4 
+        })
+
+    </script>
+
+    <h2> Ejercicio 6 </h2>
+
+    <button onclick="cargarRecurso('https://jsonplaceholder.typicode.com/posts')"> Cargar recurso </button> 
+    <p> Ver el recurso cargado en la consola (se trata de un archivo JSON) </p>
+    <script> 
+
+        function cargarRecurso (enlace) {
+            const Http = new XMLHttpRequest(); // Llamamos al objeto
+            let url= enlace; // Guardamos la URL con un JSON
+
+            Http.open("GET", url); // Especificamos  URL y método
+            Http.send(); // Y enviamos
+
+            // Cuando el enlace esté listo... 
+            Http.onreadystatechange = (evento) => {
+                console.log(Http.responseText) // mostrarlo en consola
+            }
+        }
+
+    </script>
+
+    <h2> Ejercicio 7 </h2>
+
+    
+    <table border="1" >
+        <tbody id="tablaStarWars">
+            <tbody> 
+
+                <tr>
+                    <td id="tablaStarWars_col1" ></th>
+                    <td id="tablaStarWars_col2"></th>
+                    <td id="tablaStarWars_col3"></th>
+                </tr>
+
+            </tbody>
+        
+        </tbody>
+    </table>
+
+    <script> 
+        // Función para cargar varios recursos provenientes de uno o varios enlaces. 
+        
+        async function cargarJsonURLs (arrayEnlaces) {
+            // Array vacío donde se guardarán los objetos
+            let arraySalida = []; 
+
+            // Creamos una cola de promesas, "map" iterará sobre el arrayEnlaces, e irá depositando cada promesa realizada en "promesas". 
+            // -> ¿Como se depositan las promesas? En realidad, es un comportamiento natural de .map cuando se usan funciones asíncronas :D 
+            //A cada fetch le sigue un "await" que espera a que se cargue, y a cada carga de la información proveniente de la respuesta, también le sigue un "await". La carga resultante se deposita en el array de salida; finalmente, esperamos a que todas las promesas incrustadas en el array se cumplen, y después retornamos el resultado
+            
+            let promesas = arrayEnlaces.map (async function (enlace) {
+                let respuesta = await fetch (enlace); 
+                let archivojson = await respuesta.json(); 
+                arraySalida.push (archivojson)
+            })
+
+            await Promise.all (promesas);
+
+            return arraySalida;
+        };
+
+        let origenAPI = "https://swapi.dev/api/";
+
+        cargarJsonURLs([origenAPI+"people/1", origenAPI+"planets/1", origenAPI+"starships/9"]).then (function (salida) {
+            
+            //Iterar sobre todos los objetos del array
+            for (let i=0; i<salida.length; i++) {
+                let columnaActual = "tablaStarWars_col"+(i+1);
+                
+                // Para cada objeto...
+                Object.keys(salida[i]). forEach (function (clave) {
+                    let valor = salida[i][clave]; 
+                    enContenedor (`${clave} || ${valor}`, "tr", columnaActual, [["id","fila"+i]])
+                    
+                })
+            }
+
+        })
+
+    </script> 
+
+    <h2> Ejercicio 8 </h2>
+
+    <div id="curriculum"></div>
+
+    <script> 
+
+        cargarJsonURLs (["fuenteEjercicio8/curriculum.json"]).then (function (salida) {
+            let iterador =0; 
+            Object.keys(salida[0]). forEach (function (clave) {
+                    iterador++; 
+
+                    let valor = salida[0][clave]; 
+
+                    enContenedor ("", "p", "curriculum", [["id","dato"+iterador]])
+                        enContenedor (clave+": ", "b", "dato"+iterador )
+
+                    if (Array.isArray (valor)) {
+                        valor.map (function (objeto) {
+                            Object.keys(objeto).forEach (function (clave){
+                                let valorObj = objeto [clave]; 
+                                enContenedor ("","br", "dato"+iterador)
+                                enContenedor ("....-  "+clave+": ", "code", "dato"+iterador )
+                                enContenedor (valorObj, "code", "dato"+iterador )
+                            })
+                            enContenedor ("", "br", "dato"+iterador )
+                        })
+                    }
+                    else {
+                       enContenedor (valor, "i", "dato"+iterador )
+                    }
+                })
+        })
+       
+    </script> 
+
+    <h2> Ejercicio 10 </h2>
+
+    <fieldset>
+        <legend>Búsqueda en Mercado Libre:</legend>
+        <label for="nombre">Introduzca las palabras clave separadas por comas ",":</label>
+        <input type="text" id="palabrasClave" name="palabrasClave" placeholder="libros, muebles, ropa" required>         
+        <button onclick="consultarInfo(palabrasClave.value)"> Consultar</button>
+        
+        <div id="resultadoBusqueda"></div>
+        
+       
+    </fieldset>
+        
+    <script> 
+
+        function consultarInfo (info) {
+            resultadoBusqueda.innerHTML=""
+            // INTERPRETAR LA INFORMACIÓN PROVISTA POR EL USUARIO
+
+            // Quitar todos los espacios, pasar todo a minúscula y separar en base a coma.
+            info = info.replaceAll (" ", "").toLowerCase().split(",")
+
+            // Hacer de las etiquetas solicitadas un array de enlace
+            function enlazar (etiqueta) {
+                return "https://api.mercadolibre.com/sites/MLA/search?q="+etiqueta+"#json"
+            }
+
+            // Map en el array retornando para cada elemento procesado su forma en formato de enlace. 
+            infoURL = info.map (function (etiqueta) {return enlazar (etiqueta)}); 
+
+            // PROCESAR LA INFORMACIÓN PROVISTA POR EL USUARIO
+
+            let iterador =0; 
+
+            cargarJsonURLs(infoURL).then (function (salida) {
+
+                salida.map (function (objeto) {
+                    // Para cada una de las etiquetas consultadas, crear un fieldset con su correspondiente ID a partir de la etiqueta consultada, que se recibe del array "info"
+                    enContenedor ("", "fieldset", "resultadoBusqueda", [["id", "busqueda"+info [iterador]]])
+                        enContenedor ("Búsqueda para "+info[iterador], "legend", "busqueda"+info[iterador])
+                        
+                    // Recoger para las 3 primeras consultas
+                    for (let i=0; i<3; i++) {
+                        // Título 
+                        enContenedor (objeto.results[i].title, "h4", "busqueda"+info[iterador] )
+
+                        console.log (objeto.results[i])
+
+
+                    }
+                    iterador++;
+                    
+                })
+
+            })
+
+
+        }
+
+        
+    </script>
+
+    <h2> Ejercicio 11</h2>
+
+    <p> Estos cafés son un poco <i> tímidos </i> y tardarán en cargarse.</p>
+    
+    <style> 
+        /*Estilo de la cuadrícula*/
+
+        .galeria {
+        display: grid;
+        grid-template-columns: repeat(3, 250px);
+        gap: 5px;
+
+        }
+
+        .galeria-item img {
+        width: 150px;
+        height: 150px;
+        display: block;}
+
+        .descripcion {
+
+
+        }
+    </style>
+
+    <div class="galeria"> </div>
+
+    
+        <div class="galeria">
+            <div class="galeria-item">
+                <img class="galeria-imagen">
+                <div class="descripcion">Café con chocolate</div>
+            </div>
+
+            <div class="galeria-item">
+                <img class="galeria-imagen">
+                <div class="descripcion">Café americano</div>
+            </div>
+
+            <div class="galeria-item">
+                <img class="galeria-imagen">
+                <div class="descripcion">Café divertido</div>
+            </div>
+
+            <div class="galeria-item">
+                <img class="galeria-imagen">
+                <div class="descripcion">Café aburrido</div>
+            </div>
+
+            <div class="galeria-item">
+                <img class="galeria-imagen" >
+                <div class="descripcion">Café caro</div>
+            </div>
+
+            <div class="galeria-item">
+                <img class="galeria-imagen" >
+                <div class="descripcion">Café barato</div>
+            </div>
+
+            <div class="galeria-item">
+                <img class="galeria-imagen" >
+                <div class="descripcion">Café benigno</div>
+            </div>
+
+
+            <div class="galeria-item">
+                <img class="galeria-imagen">
+                <div class="descripcion">Café maligno</div>
+            </div>
+
+            <div class="galeria-item">
+                <img class="galeria-imagen">
+                <div class="descripcion">Café neutral</div>
+            </div>
+            
+        </div>
+
+   
+    <script>
+
+        // ¡Atención! No he usado la API directamente, solo remito la imagen que proporciona la web de la API (http://coffee.alexflipnote.dev/random) sobre la fuente de las nueve imagenes, sin importar mediante fetch. 
+
+        // Por defecto, los recursos extraidos de http://coffee.alexflipnote.dev/random se almacenarán en el caché, haciendo imposible la generación varias imágenes diferentes. Este proceso se puede evitar usando un timestamp aleatorio, que permita acceder al mismo enlace un tiempo antes o después aleatoriamente, margen suficiente como para retornar imagenes distintas. El nivel de variabilidad depende, en este caso, del numero aleatorio que queramos asignarle al timestamp
+
+        function cafeAleatorio() {
+            let timestamp = Math.floor(Math.random() * (99999 - 0 + 1) + 199).toString(); // 
+            let enlace = "https://coffee.alexflipnote.dev/random"+"?timestamp="+timestamp
+            return enlace; 
+        }   
+
+        let imagenes = document.getElementsByClassName('galeria-imagen');
+
+        for (let i=0; i<imagenes.length; i++) {
+            imagenes[i].src= cafeAleatorio() 
+        }
+
+    
+    </script>
+
+    <h2> Ejercicio 12</h2>
+    <p> A lo largo de todo este ejercicio, he usado la función <code> cargarJsonURLs () </code>, una espléndida demostración de cómo combinando promesas, async y fetch puedo facilitar una carga segura de los recursos justo cuando estos son recibidos por el cliente. </p>
+
+ 
+
+
+</body>
+</html>
+

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script> 
+    
+        // Los programas informáticos convencionales se desarrollan sincrónicamente, es decir, instrucción tras instrucción. La asincronía de javascript implica que la reproducción del código NO siempre sigue un orden secuencial, sino cuando un determinado recurso está disponible.
+        
+        //Por ejemplo, al descargar una imagen e imprimirla en pantalla llamandola como variable, si esta no ha sido descargada completamente antes, estará indefinida hasta quue se haya bajado. 
+
+        // Supóngase la siguiente función que carga un script
+/*
+        function cargarScript (src) {
+            let script = document.createElement ("script"); 
+            script.src = src; 
+            document.head.append (script);
+
+        cargarScript ("script.js"); // -> script.js tiene la función "decirHola()" declarada, pero no la encuentra. 
+
+        decirHola (); // ¡Pero esta no se carga! No le ha dado tiempo a cargar el script , ¿qué podemos hacer? La asincronía tiene este defecto.
+
+        // Es el momento de poner en funcionamiento el CALLBACK
+        // -> el callback nos permirá ejecutar una función que introduzcamos por parámetro JUSTO cuando se ha cargado,
+
+
+        function cargarScript (src, funcion) {
+            let script = document.createElement ("script"); 
+            script.src = src; 
+
+            // ¡Ejem!  Cuando se carga (evento onload), realizar la función indicada por parámetro. 
+
+            script.addEventListener ("load", function () {
+                funcion(script); // El parámetro "script" es opcional
+            })
+
+            document.head.append (script);
+        }
+
+        // Uso 
+
+        cargarScript ("script.js", function (script) {
+            // Cargando un script secuencialmente
+            console.log (`Reproduciendo el ${script.src}, ¿ves?`)
+            decirHola ();
+
+            cargarScript ("script2.js", function (script) {
+                // Cargando otro script secuencialmente... (callback hell o "pirámide infernal" lo llaman)
+                console.log (`Reproduciendo el ${script.src}, ¿ves?`)
+                decirAdios (); 
+
+            })
+
+
+        })
+*/
+        // Corrección de errores
+/*
+        function cargarScript (src, funcion) {
+            let script = document.createElement ("script"); 
+            script.src = src; 
+
+            // ¡Ejem!  Cuando se carga (evento onload), realizar la función indicada por parámetro. 
+
+            script.addEventListener ("load", function () {
+                funcion(null,script); // El parámetro "script" es opcional
+            })
+
+            script.addEventListener ("error", function () {
+                funcion (new Error ("Imposible acceder al script"), null)
+            })
+
+            document.head.append (script);
+        }
+/*
+        cargarScript ("script2.js", function (error, script) {
+            if (error) {
+                console.log (`Ha ocurrido un error en la carga del script`)
+            }
+            else {
+                console.log ("El código se ha cargado correctamente.")
+            }
+    
+        })
+
+        // Evitar callback hells 
+        /*
+        loadScript('1.js', step1);
+
+        function step1(error, script) {
+        if (error) {
+            handleError(error);
+        } else {
+            // ...
+            loadScript('2.js', step2);
+        }
+        }
+
+        function step2(error, script) {
+        if (error) {
+            handleError(error);
+        } else {
+            // ...
+            loadScript('3.js', step3);
+        }
+        }
+
+        function step3(error, script) {
+        if (error) {
+            handleError(error);
+        } else {
+            // ...continua después de que se han cargado todos los scripts (*)
+        }
+        }
+        */
+
+        // PROMESAS 
+
+        // En programación existen dos partes:
+        // -> El código productor: tareas que requieren algo de tiempo en procesarse, denminadas "asíncronas", porque tienden a desacompasar la sincronía
+        // -> El código consumidor: que se encarga de procesar la exportación del código productor, y se mantiene a la espera hasta recibirlo. 
+        // -> Como uno - código productor - requiere más tiempo que el otro - código consumidor -, debe haber alguna forma de conectarlos a ambos para mantener una sincronía: esto se llama "promesa". La promesa está entre medias de estos dos códigos, garantizando un puente de información entre ambas. 
+
+        // ¿Cómo se hace una promesa?
+        // Los parámetros "resolve",  "reject" y "result" son propios de javascript, y manejan el estado. Resolve es el equivalente a "return" y reject se debería usar también como un "return" solo para errores
+/*
+        // Al cabo de un segundo, ajustamos el "resolve" a "terminado" - o lo que sea -, dando por terminado el proceso
+        let promesa1 = new Promise (function (resolve, reject)  {
+            setTimeout (function () { 
+                resolve("Código productor finalizado. ");
+            }, 1000)
+        });
+
+        // O bien podemos responder con un error haciendo un "reject" devolviendo un error
+
+        let promesa2 = new Promise (function (resolve, reject)  {
+            setTimeout (function () { 
+                reject(new Error ("¡Código productor con errores!"));
+            }, 1000)
+        });
+*/
+        // ¡Atención! No  podemos hacer varias llamadas a resolve o reject: solo una de cada (debemos recordar que son callback)
+
+        let promesaCadenaHola = new Promise (function (resolve, reject) {
+            setTimeout (function () { 
+                resolve("¡Hola!");
+            }, 1000)
+        })
+
+        promesaCadenaHola.then (
+            function (result) {
+                console.log (`Dato recibido: ${result}`)
+            },
+            function (error) {
+                // Codigo de ocurrir algún error
+            }
+        )
+
+        let promesaError = new Promise (function (resolve, reject) {
+            setTimeout (function () { 
+                reject(new Error ("¡Código productor con errores!"));
+            }, 1000)
+        })
+
+        promesaError.then (
+            function (result) {
+                // Código de funcionar correctamente
+            },
+            function (error) {
+                console.log (`Error al recibir los datos: ${error}`)
+            }
+        )
+
+        // Aunque si solo interesan los errores...
+
+        promesaError.catch (function (error) {
+            console.log (error)
+        })
+
+        // Podemos concatenar las promesas - incluso... podemos añadirle una cláusula "finally" que se ejecutará siempre. 
+
+        let promesaFinally = new Promise (function (resolve, reject) {
+            setTimeout (function () { 
+                resolve("Concatenando la promesa");
+            }, 1000)
+        })
+        .then (
+            function (result) {
+                console.log (`Recibiendo datos: ${result}`)
+            }, 
+            function (error) {
+                // Codigo de ocurrir algún error
+            }
+        )
+        .then (
+            function () {
+                console.log ("Cosilla intermedia")
+            }
+        )
+        .finally (
+            function () {
+                console.log ("Fin de la concatenación")
+            }
+        )
+
+            
+        // Más encadenamiento de promesas. Se empieza con resolve, pero se continua con returns que representan el result
+
+        let promesaEncadenada = new Promise (function (resolve, reject) {
+            setTimeout (function () {
+                resolve (1) // Empezamos con un resolve de 1 
+            },1000)
+        }).then (function (result) {
+            console.log (result); 
+            return result*2;  // Depositamos el 2 en el return, haciendo que el result sea 2
+        }).then (function (result) {
+            console.log (result);
+            return result*2; // 2 
+        }).then (function (result) {
+            console.log (result);
+            return result*2; // 4 
+        })
+
+        // Ejemplo con cargarScript
+        // Creamos una función con la que solo tengamos que hacer un "then", cambiando la forma de callback a promise 
+        function cargarScript (src) {
+            return new Promise (function (resolve, reject) {
+                let script = document.createElement ('script'); 
+                script.src = src; 
+
+                script.addEventListener ("load", function () {
+                    resolve (script) // Al cargarse,informamos al sistema de éxito ("resolve"), y adjuntamos en script
+                })
+
+                script.addEventListener ("error", function () {
+                    funcion (reject (new Error ("Imposible acceder al script"))) // De lo contrario, anunciamos el error
+                })
+                document.head.append(script);  // FInalmente, incrustamos el script  
+            })
+        }
+
+        
+        cargarScript ("script.js").then (function () {
+            decirHola (); 
+            return cargarScript ("script2.js")
+        }).then (
+            function () {
+                decirAdios ()
+            }
+            
+        )
+
+        // Promise all permite realizar promesas en paralelo
+        // .> Rechaza como un todo si alguna de sus promesas es errónea
+
+        Promise.all([
+            new Promise(resolve => setTimeout(() => resolve(1), 3000)), // 1
+            new Promise(resolve => setTimeout(() => resolve(2), 2000)), // 2
+            new Promise(resolve => setTimeout(() => resolve(3), 1000))  // 3
+        ]).then(function(resultado) {
+            console.log(resultado); // Esto arroja el resultado, un array con todos los elementos procesados
+        })
+        
+        // Probemos con un error
+
+        Promise.all([
+            new Promise(resolve => setTimeout(() => resolve(1), 3000)), // 1
+            new Promise((resolve,reject) => setTimeout(() => reject(new Error("Error en la promesa con all")), 2000)), // 2
+            new Promise(resolve => setTimeout(() => resolve(3), 1000))  // 3
+        ]).catch(function(error) {
+            console.log(error); // Esto arroja el resultado, un array con todos los elementos procesados
+        });
+
+        // Funciones async: permite crear funciones asíncronas, es decir, que pueden contener promesas internamente.  
+
+        // "Que tal" es asíncrono, se ejecuta paralelamente al tronco secuencual al código
+        async function decirQueTal () {
+            return "'quetal' se está ejecutando asíncronamente"; 
+        }
+
+        decirQueTal().then (quetal=> console.log (quetal))
+
+        //  Promesas dentro de funciones asíncronas
+
+        async function pasaTiempo () {
+            let promesa = new Promise ((resolve, reject)=> {
+                setTimeout (()=> resolve ("Hecho"), 1000)
+            })
+
+            let result = await promesa; 
+
+            console.log (result + " : pasatiempo se ejecuta despues de 1000ms"); 
+
+        }
+
+        pasaTiempo ();
+        
+    </script>
+
+</body>
+</html>
+

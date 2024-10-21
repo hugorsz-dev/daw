@@ -1,0 +1,27 @@
+{
+    "nombre": "hugo", 
+    "email": "hugoelmejor@losmejores.com",
+    "telefono": "+34 900 20 20 10", 
+    "resumen": "Soy probablemente el mejor de todo en todo.",
+    "educacion": [
+        {
+            "titulo": "Tecnico general en todología mejórica",
+            "institucion": "Real Politécnica de Mejores de España", 
+            "fecha": "2091 - 2100"
+        }, 
+        {
+            "titulo": "Especialista en Gestión de Energías Renovables para Naves Espaciales",
+            "institucion": "Academia Interplanetaria de Sostenibilidad Energética",
+            "fecha": "2250 - 2255"
+        }
+    
+    ],
+    "experiencia" :  [
+        {
+            "puesto": "Todólogo Senior de lo Mejor", 
+            "empresa": "La mejor empresa", 
+            "fecha": "2101", 
+            "descripcion":"Me dediqué a hacer de todo, y de todo, lo mejor. "
+        }
+    ]
+}

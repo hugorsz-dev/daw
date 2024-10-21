@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funciones flecha</title>
+</head>
+<body>
+
+    <h1> Funciones flecha </h1>
+
+    <script> 
+
+        function enDocumento (texto, estilo) {
+                
+            // VARIABLES POR DEFECTO 
+            texto = texto || "false"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+
+        }
+
+        // Las funciones flecha son expresiones de función escritas de una manera resumida, para sintetizar el código. 
+                // ARGUMENTO   =>  RETURN 
+        let decirAlgo = (algo) => enDocumento (algo); 
+
+        decirAlgo ("a"); 
+
+        // El "=>" funciona como un return o una expresión. 
+
+        let sum = (a,b) => a+b; 
+
+        enDocumento (sum (2,2)); 
+
+        // Se puede usar como un solo argumento, sin necesidad de ()
+
+        let doble = n => n*2;
+
+        enDocumento (doble(3)); 
+
+        // O sin argumento, pero con paréntesis
+
+        let decirHola = () => enDocumento ("Jola"); 
+
+        decirHola (); 
+
+        // Esto resulta de utilidad si se quiere realizar, por ejemplo, lo siguiente:
+        edad = 12; 
+        
+        let bienvenido = (edad < 18) ? 
+        () => alert("Tienes mas de 18") : 
+        () => alert("Tienes menos de 18"); 
+
+        bienvenido () // Bienvenido es una función. Segun el valor de la variable, se le cargará una funcion u otra. Esta forma de escribirlas las hace más breves. 
+
+        // Funciones de flecha multilínea.
+        // -> Estas sí que necesitan un resultado.
+        
+        sum = (a,b) => {
+            let resultado = a+b; 
+            return resultado; 
+        }
+
+
+
+
+
+
+
+
+
+
+
+    </script> 
+    
+</body>
+</html>

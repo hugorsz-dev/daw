@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Índice de páginas</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <h1> Lista de páginas de Hugo </h1>
+
+    <div id="paginas"> </div>
+    
+    <script> 
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "false"; 
+    
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+    
+        }
+
+        /*
+            Añade una etiqueta a un contenedor existente (en base a ID), debe indicarse el texto, el estilo y el contenedor.
+            Como elemento opcional, los atributos, que deben introducirse en un array bidimensional relacionandose unos con otros. 
+        */
+        // enContenedor ("prueba","p", "info", [["id","miId"],["class","miClase"])
+
+        function enContenedor (texto, tipo, container, atributos=false) {
+
+            // Define el contenedor existente donde se introducirá la etiqueta
+
+            let contenedor = document.getElementById(container); 
+
+            // Crea un elemento con la etiqueta definida definido
+
+            let nuevaEtiqueta = document.createElement(tipo); 
+
+            // Introduce el texto dentro de la etiqueta
+
+            nuevaEtiqueta.textContent = texto;
+
+            // Incrusta la etiqueta en el contenedor previamente definido.
+
+            contenedor.appendChild (nuevaEtiqueta); // Indicando así el contenido
+
+            if (atributos) {
+                for (let i=0; i<atributos.length; i++) {
+                    nuevaEtiqueta.setAttribute (atributos[i][0], atributos [i][1] )
+                }
+            }
+
+        }
+
+        // Crea un botón.
+        
+        function crearBotonFuncion (id, texto="default", funcion) {
+
+            document.write (`<button id=${id}> ${texto} </button> `);
+
+            let boton = document.getElementById(id);
+
+            boton.addEventListener("click", funcion); 
+
+        }
+
+        /* Cada direccion contiene una url, una descripcion y una "preferencia" que indica el orden en que tiene que ser impreso en pantalla */
+
+        class Direccion {
+
+            // CONSTRUCTOR 
+
+            constructor (url, abreviatura, descripcion, pref) {
+                this.abreviatura = abreviatura; 
+                this.url = url; 
+                this.descripcion = descripcion; 
+                this.pref = pref;  // Escala de preferencia numérica 
+                
+            }
+
+        }
+
+        /* Cada sección cuenta con un nombre de sección y un array de direcciones */
+
+        class Seccion {
+            
+            // CONSTRUCTOR 
+
+            constructor (nombre, direcciones) {
+                this.nombre = nombre; 
+                this.direcciones = direcciones; 
+            }
+
+        }
+
+
+        fetch ("paginas.json").then (respuesta => { //  Según la respuesta que de la funcion...
+
+            // Si no tiene respuesta (no está el archivo), interrumpimos el flujo.
+
+            if (!respuesta.ok) {
+                throw new Error ("¡El archivo JSON de lucas.json no está en la carpeta!")
+            }
+
+            // De lo contrario, devolver el objeto JSON
+
+            return respuesta.json();  // Esto devuelve el objeto JSON correspondiente a javascript a partir de la respuesta del fetch, para poder trabajar con él. 
+            }).then (datos => {   // CON FETCH TAMBIÉN PUEDE ACCEDERSE A LAS PROPIEDADES DE UN OBJETO USANDO "datos.propiedad"
+
+            // En los datos se encuentra contenida la información
+                
+            // INICIO PROCESAMIENTO DATOS
+                for (let i=0; i<datos.secciones.length; i++) {
+
+                    // SECCIÓN 
+                    // Creación de un div asociado al número de sección
+
+                    enContenedor (" ", "div","paginas", [["class","seccion"],["id",`seccion${i}`]]);
+
+                    // Nombre de la sección
+                    enContenedor (datos.secciones[i].nombre, "h2",`seccion${i}`, [["class","seccion"]]);
+
+                    // DIRECCIONES 
+                    
+                    for (let j=0; j<datos.secciones[i].direcciones.length; j++) {
+
+                        // Creación de un div asociado a la direccion (puesto que los "j" se repiten, las id deben contener el identificador de seccion (i) junto al identificador de posicion (j))
+
+                        enContenedor (" ", "div", `seccion${i}`, [["class","direccion"],["id",`direccion${i}${j}`]] )
+
+                        enContenedor (datos.secciones[i].direcciones[j].abreviatura,"a",`direccion${i}${j}`, [["href", datos.secciones[i].direcciones[j].url],["class","url"]]);
+                        enContenedor (datos.secciones[i].direcciones[j].descripcion,"p",`direccion${i}${j}`,[["class","descripcion"]]);
+                    }
+
+                }
+            // FIN PROCESAMIENTO DATOS 
+
+            }).catch(error => {
+            console.error("Error al cargar el archivo JSON:", error);
+        });
+
+
+        /*
+
+        // Array de cargaSecciones, que almacenará todas las secciones junto a sus correspondientes direcciones. 
+        
+        let cargaSecciones = new Array (); 
+
+        cargaSecciones.push (new Seccion ("Buscadores", [
+            new Direccion ("https://whoogle.io", "Whoogle", "Alternativa front-end a Google", 1),
+            new Direccion ("https://duckduckgo.es", "DuckDuckGo", "Buscador web enfocado en la privacidad", 2),
+        ]));
+
+        cargaSecciones.push (new Seccion ("Enciclopedias", [
+            new Direccion ("https://wikipedia.es", "Wikipedia en Español", "Enciclopedia en línea poco fiable", 1),
+            new Direccion ("https://es.metapedia.org/wiki/P%C3%A1gina_principal", "Metapedia en Español", "Enciclopedia disidente")
+        ]));
+
+        // Depositar las secciones en un objeto "páginas"
+
+        paginas = {
+            secciones: cargaSecciones,
+        };
+
+        // Ver el archivo JSON resultante.  
+
+        crearBotonFuncion ("verJSON","Ver archivo JSON", function () {
+            let paginasJSON = JSON.stringify(paginas);
+            enDocumento (paginasJSON,"code");
+        })
+
+        // -> Plasmar el objeto en el archivo paginas.json
+
+        */
+
+
+        
+
+
+
+
+    </script> 
+
+</body>
+
+</html>

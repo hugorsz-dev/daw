@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento modificando</title>
+</head>
+<body>
+
+    
+
+    <div> Inicio </div>
+
+    <ul> 
+        <li> Información </li>
+        <li> Acerca de </li>
+    </ul>
+
+    <div> Final </div>
+    <script>
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "undefined"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+
+        }
+        /* Los scripts insertados no podrán acceder a las partes del 
+        documento HTML que no han sido declaradas.*/
+
+        // Accedemos a las partes del documento a traves de document
+
+        // document.body -> Funciones 
+
+        // CHILD NODES -> Recorrerlos de, por ejemplo, el body
+
+        for (let i=0; i<document.body.childNodes.length; i++) {
+            console.log(document.body.childNodes[i])
+        }
+
+        // En realidad, se trata de una colección, así que puede ser recomendable iterarla con un foreach
+
+        for (let nodo of document.body.childNodes) {
+            console.log (nodo)
+        }
+
+        // Cada uno de los nodos hijos es... hermano de un mismo padre. 
+        
+        document.head.parentElement.nextElementSibling // esto pasaria al hermano body
+        document.body.parentElement 
+        
+
+        
+
+        
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+
+Nombre de los ciclos que incluyen el módulo "Lenguajes de marcas y sistemas de gestión de información":
+
+ies/modulos/modulo[nombre="Lenguajes de marcas y sistemas de gestión de información"]/ciclo/text()
+
+Nombre de los módulos de ciclos de Grado Superior:
+
+/ies/modulos/modulo[ciclo=//ciclo[grado="Superior"]/@id]/nombre/text()
+
+    Nombre de los módulos de ciclos cuyo título se aprobó en 2008:
+
+/ies/modulos/modulo[ciclo=//ciclo[decretoTitulo/@año<2008]/@id]/nombre/text()
+
+Grado de los ciclos con módulos de primer curso:
+
+ies/ciclos/ciclo[@id=//modulo/ciclo [curso="1"]]/grado/text()
+//ciclo[@id=//modulo[curso=1]/ciclo]/grado/text()

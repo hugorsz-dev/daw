@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        // Podemos, sin refrescar la página, recibir info del servidor para 
+        // -> Crear órdenes
+        // -> Cargar info de usuario
+        // -> Recibir actualizaciones 
+
+        // La sintaxis es fetch (url, [opciones]) e internamente funciona como una promesa, por eso puede usarse el await 
+        // -> las opciones son ... opcionales jeje
+
+        // Devuelve un objeto RESPUESTA, cuya información puede consultarse en forma de: 
+        // response.text() / response.json () / response.formData() / response.blob () / response.arrayBuffer () / response. body 
+
+        // MÉTODOS HTTP GET 
+
+        // Hay dos fases: RECIBIR INFORMACIÓN Y PROCESAR INFORMACIÓN; ambas deben estar conectadas por promesas o formas asíncronas de 
+
+        let urlCommit = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits';
+
+        // Cadena de promesas 
+        // En la primera promesa, recibimos respuesta de la URL y depositamos todo en el JSON
+
+        fetch(urlCommit).then(function(response) {
+            return response.json();
+        })
+        // Cumplida la anterior promesa, procesamos el json retornado y lo mostramos en pantala
+        .then(function(commits) {
+            console.log(commits[0].author.login);
+        });
+
+        //  Probemos importando imagenes . En este caso, usaremos una imagen alojada en el local
+
+        let urlImagen = 'logo.svg';
+
+        // Como en el caso anterior, improtamos el recurso de la imagen usando una promesa, pero esta vez lo procesamos como "blob" (fichero sin formato javascript, una svg es ideal)
+
+        fetch (urlImagen).then (function (response) {
+            return response.blob()
+        })
+        .then (function (blob) {
+            // Insertar una nueva imagen en el documento
+            let img = document.createElement ("img"); 
+            img.style = 'position:fixed;top:10px;left:10px;width:100px';
+            document.body.append(img);
+
+            // Con la funcion createObjetUrl adaptamos la fuente de la imagen segun el parametro de la callback
+            img.src = URL.createObjectURL (blob); 
+        })
+
+        // MÉTODOS HTTP - POST 
+
+        // Objeto que se convertirá a formato JSON para ser almacenado en el servidor 
+        let usuario = {
+            nombre: 'Hugo', 
+            apellido: 'Ruiz'
+        }
+        
+        // Configuramos el fetch en método POST, siendo el primer
+        fetch ("direccion/al/servidor", {method: "POST", headers: { 'Content-Type': 'application/json;charset=utf-8'}, body: JSON.stringify (usuario)}). then (function (resultado) {
+            return resultado
+        }).then (function (datos) {
+            console.log(datos);
+        })
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+    </script>
+    
+</body>
+</html>

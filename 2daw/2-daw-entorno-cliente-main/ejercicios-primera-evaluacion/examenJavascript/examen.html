@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen</title>
+</head>
+<body>
+
+    <h1> Examen de la primera evaluación </h1>
+
+	<p> <b> Alumno: </b> Hugo Ruiz Sánchez</p>
+	<p> <b> Docente: </b> Enrique Diego Alfonso  </p>	
+
+    <p>  A fin de mejorar la legibilidad de los resultados, usaré la función enDocumento () en lugar de las alert () o los console.log (). </p>
+		
+	<hr/> 
+
+    <script> 
+
+        // DESARROLLO DE LAS FUNCIONES 
+
+        /**
+        * Imprime en el documento el texto introducido, con estilo a preferencia. 
+        * Si no se especifica tipo, el tipo es 0 o el tipo es erróneo, es un párrafo. 
+        * Caso contrario, cada número corresponde hasta el límite de los 6 títulos 
+        **/ 
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "0"; 
+
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+
+        }
+
+
+        // Datos de las mesas 
+        datosMesas = 
+            [{Municipio: "La Acebeda", Mesa: "1-001-U", Censo: 64, Votos: [31, 6, 9, 1, 6, 0, 1]},
+            {Municipio: "Ajalvir", Mesa: "1-001-A",Censo: 859, Votos: [285, 105, 62, 57, 24, 11, 11]},
+            {Municipio: "Ajalvir", Mesa: "1-001-B",Censo: 863, Votos: [311, 92, 48, 53, 31, 6, 3]},
+            {Municipio: "Ajalvir", Mesa: "1-002-A",Censo: 766, Votos: [271, 98, 81, 71, 30, 2, 9]},
+            {Municipio: "Ajalvir", Mesa: "1-002-B",Censo: 871, Votos: [320, 100, 89, 79, 19, 14, 5]},
+            {Municipio: "Alameda del Valle", Mesa: "1-001-U", Censo: 194, Votos: [74, 27, 31, 18, 14, 1, 3]}];
+        // ------------------------ PP,MM,PSOE,VOX,Otros Blancos,Nulos
+
+        // Recorrer los datos y visualizar su contenido (voluntario)
+
+        function mostrarDatos () {
+            for (let i = 0; i < datosMesas.length; i++) {
+            enDocumento ("Municipio: "+datosMesas[i].Municipio, "h4");
+            enDocumento ("Mesa: "+datosMesas[i].Mesa, "p");
+            enDocumento ("Censo: "+datosMesas[i].Censo, "p");
+            enDocumento ("Votos: "+datosMesas[i].Votos, "p");
+
+            }
+        }
+
+        // Añadir datos de las mesas. 
+
+        function anadirDatos (municipio, mesa, censo=null, votos=null) {
+   
+            // Comprobar mesa en base al número indicado 
+            // -> Retorna true si la mesa existe; si la mesa no existe, retorna false. 
+            function comprobarMesa (numeroMesa) {
+
+                for (let i = 0; i < datosMesas.length; i++) {
+                    
+                    if (datosMesas[i].Mesa==numeroMesa) {
+                        return true;
+                    }
+
+                }
+
+                return false;
+
+            }
+
+            if (comprobarMesa (mesa)) return false; 
+
+            let nuevoRegistro = {
+            Municipio: municipio,
+            Mesa: mesa,
+            Censo: censo,
+            Votos:votos
+            };
+
+            datosMesas.push (nuevoRegistro); 
+
+        }
+
+        // Suma los números de un array determinado.
+
+        function sumarArray (array) {
+            let suma =0; 
+            for (let i=0; i<array.length; i++) {
+                suma = array[i]+suma 
+            }
+            return suma; 
+        }
+
+        // Calcular abstencion en base a la mesa introducida 
+
+        function calcularAbstencion (mesa) {
+            return  mesa.Censo - sumarArray (mesa.Votos);
+    
+        }
+
+        // Calcular el sumatorio de los censos censo compuestos en un array de mesas. 
+
+        function calcularTotalCenso (datosMesas) {
+            let suma =0; 
+            for (let i=0; i<datosMesas.length; i++) {
+                suma = datosMesas[i].Censo + suma; 
+            }
+            return suma; 
+        }
+
+        // Calcular el sumatorio de los votos censo compuestos en un array de mesas. 
+
+        function calcularTotalVotos (datosMesas){
+            let suma =0; 
+            for (let i=0; i<datosMesas.length; i++) {
+                suma = sumarArray (datosMesas[i].Votos) + suma; 
+            }
+
+            return suma; 
+        }
+
+        // Calcular el porcentaje de abstención en función de un array de datosMesas
+
+        function calcularAbstencionTotalEnPorcentaje (datosMesas) {
+            let diferencia =  calcularTotalCenso (datosMesas) - calcularTotalVotos (datosMesas);
+            return diferencia/calcularTotalCenso (datosMesas)*100; 
+        }
+
+        // Contar los votos por municipio y partido en base a un  array de mesas
+
+        function contarVotosPorMunicipio (datosMesas, municipio, partido) {
+
+            let suma =0; 
+
+            for (let i = 0; i < datosMesas.length; i++) {
+
+                if (datosMesas[i].Municipio === municipio) {
+                    suma = datosMesas[i].Votos[partido] + suma;
+                }
+            }
+
+            return suma; 
+
+        }
+
+        // Contar los votos totales de un determinado partido en base a un array de datosmesa
+
+        function contarVotosTotales (datosMesas,partido) {
+
+            let suma =0; 
+
+            for (let i=0; i<datosMesas.length; i++) {
+                suma = suma + datosMesas[i].Votos[partido];
+            }
+
+            return suma; 
+
+        }
+
+        // DESARROLLO DEL CÓDIGO. 
+
+        // Exposición de la resolución del primer ejercicio
+
+        enDocumento ("Array propuesto:","h2");
+        mostrarDatos ();
+        enDocumento ("Array después de añadir el municipio de Ejemplo","h2"); 
+        anadirDatos ("Ejemplo","1-AAA",800,[45,23,12,56,24,75,99]); 
+        mostrarDatos (); 
+        enDocumento ("Array después de intentar el municipio de AlgunLugar con una mesa electoral ya registrada","h2"); 
+        anadirDatos ("AlgunLugar", "1-001-U"); 
+        mostrarDatos ();
+
+        // Exposición de la resolución del segundo ejercicio 
+
+        enDocumento ("Abstención en cada mesa", "h2"); 
+
+        for (let i=0; i<datosMesas.length; i++) {
+            enDocumento (`${datosMesas[i].Mesa} ---- ${calcularAbstencion(datosMesas[i])}`); 
+        }
+
+        // Exposición de la resolución del tercer ejercicio
+
+        enDocumento ("Abstención total en forma de porcentaje", "h2");
+        
+        enDocumento (calcularAbstencionTotalEnPorcentaje (datosMesas)); 
+
+        // Exposición de la resolución para el cuarto ejercicio 
+
+        enDocumento ("Total de votos para cada partido en Ajalvir", "h2"); 
+
+        for (let i=0; i<7; i++) {
+          enDocumento (i+") "+contarVotosPorMunicipio (datosMesas, "Ajalvir", i));     
+        }
+
+        // Exposición de la resolución para el quinto ejercicio 
+
+        enDocumento ("Total de votos para cada partido en la totalidad de los sitios", "h2"); 
+
+        for (let i=0; i<7; i++) {
+            enDocumento (i+") "+contarVotosTotales (datosMesas, i));  
+        }
+
+
+
+
+        
+
+
+        
+
+
+   
+
+       
+    
+
+
+
+
+
+
+    </script> 
+    
+</body>
+</html>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="2">
+            <File firstVisibleLine="18" xOffset="0" scrollWidth="1" startPos="0" endPos="0" selMode="0" offset="0" wrapCount="1" lang="PHP" encoding="-1" userReadOnly="no" filename="\\wsl.localhost\Ubuntu\home\equipolinux\copiaseguridadpendaw2\entorno-servidor\Aprendizaje PHP\11formularios\get\5operacionesaritmeticas-input-output.php" backupFilePath="" originalFileLastModifTimestamp="363615586" originalFileLastModifTimestampHigh="31064118" tabColourId="-1" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="512" mapWrapIndentMode="-1" mapIsWrap="no" />
+            <File firstVisibleLine="117" xOffset="0" scrollWidth="1824" startPos="5752" endPos="5831" selMode="0" offset="0" wrapCount="1" lang="PHP" encoding="-1" userReadOnly="no" filename="\\wsl.localhost\Ubuntu\home\equipolinux\copiaseguridadpendaw2\entorno-servidor\Aprendizaje PHP\11formularios\post\pagina.php" backupFilePath="" originalFileLastModifTimestamp="-1738154407" originalFileLastModifTimestampHigh="31065527" tabColourId="-1" mapFirstVisibleDisplayLine="-1" mapFirstVisibleDocLine="-1" mapLastVisibleDocLine="-1" mapNbLine="-1" mapHigherPos="-1" mapWidth="-1" mapHeight="-1" mapKByteInDoc="512" mapWrapIndentMode="-1" mapIsWrap="no" />
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>

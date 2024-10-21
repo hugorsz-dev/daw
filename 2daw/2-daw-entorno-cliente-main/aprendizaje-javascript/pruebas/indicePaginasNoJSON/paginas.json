@@ -1,0 +1,37 @@
+{
+    "secciones": [
+        {
+            "nombre": "Buscadores",
+            "direcciones": [
+                {
+                    "abreviatura": "Whoogle",
+                    "url": "https://whoogle.io",
+                    "descripcion": "Alternativa front-end a Google",
+                    "pref": 1
+                },
+                {
+                    "abreviatura": "DuckDuckGo",
+                    "url": "https://duckduckgo.es",
+                    "descripcion": "Buscador web enfocado en la privacidad",
+                    "pref": 2
+                }
+            ]
+        },
+        {
+            "nombre": "Enciclopedias",
+            "direcciones": [
+                {
+                    "abreviatura": "Wikipedia en Español",
+                    "url": "https://wikipedia.es",
+                    "descripcion": "Enciclopedia en línea poco fiable",
+                    "pref": 1
+                },
+                {
+                    "abreviatura": "Metapedia en Español",
+                    "url": "https://es.metapedia.org/wiki/P%C3%A1gina_principal",
+                    "descripcion": "Enciclopedia disidente"
+                }
+            ]
+        }
+    ]
+}

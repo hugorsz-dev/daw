@@ -1,0 +1,184 @@
+<!-- DTD - Ejercicio 1-1 --> 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE numeros [
+  <!ELEMENT numeros (numero)>
+  <!ELEMENT numero (#PCDATA)>
+
+]>
+<numeros>
+ 25
+</numeros>
+
+<!-- DTD - Ejercicio 1-2 --> 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE letras [
+  <!ELEMENT letras (letra)>
+  <!ELEMENT letra (#PCDATA)>
+
+]>
+<letras>
+<!-- <letra> uve doble </letra>  -- > ERROR: CUANDO NO TIENE EL ASTERISCO, solo alberga 1.  --> 
+  <letra>m</letra>
+</letras>
+
+<!-- DTD - Ejercicio 1-3 - Colores --> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE colores [
+  <!ELEMENT colores (color*)>
+  <!ELEMENT color (#PCDATA)>
+]>
+
+<colores>
+  <color>azul marino</color>
+  <!-- negro -- > ERROR --> 
+  <color>amarillo</color>
+</colores>
+
+<!-- DTD - Ejercicio 1-4 - Flores --> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE flores [
+  <!ELEMENT flores (flor+)>
+  <!ELEMENT flor (#PCDATA)>
+]>
+
+<flores>
+<!-- ERROR: UN elemento con "+" debe tener uno o mas elementos --> 
+<flor> Margarita </flor> 
+
+</flores>
+
+<!-- DTD - Ejercicio 1-5 - Animales --> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE animales [
+  <!ELEMENT animales (animal*)>
+  <!ELEMENT animal (#PCDATA)>
+]>
+
+<animales>
+
+<!-- Los elementos perro y gato NO están registrados 
+  <perro>Caniche</perro>
+  <gato>Siamés</gato>
+  --> 
+  
+  <animal> Perro caniche </animal> 
+  <animal> Gato siamés </animal>
+  
+  
+</animales>
+
+DTD - Ejercicio 1-6 - Escritores
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE escritores [
+  <!ELEMENT escritores (escritor*)>
+  <!ELEMENT escritor (nombre, nacimiento)>
+  <!ELEMENT nombre (#PCDATA)>
+  <!ELEMENT nacimiento (#PCDATA)>
+]>
+
+<escritores>
+  <escritor>
+    <nombre>Mario Vargas Llosa</nombre>
+    <nacimiento>28 de marzo de 1936</nacimiento>
+  </escritor>
+  <escritor>
+  <!-- ERROR: Los elementos deben organizarse en el mismo orden que en el DTD 
+  
+    <nacimiento>1 de abril de 1929</nacimiento>
+    <nombre>Milan Kundera</nombre>
+	--> 
+	<nombre>Milan Kundera</nombre>
+	<nacimiento>1 de abril de 1929</nacimiento>
+	
+  </escritor>
+</escritores>
+
+<!-- DTD - Ejercicio 1-7 - Músicos --> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE musicos [
+  <!ELEMENT musicos (musico*)>
+  <!ELEMENT musico ((nombre | apodo), fechaNacimiento)>
+  
+  <!-- EL "nombre | apodo" significa "ó": nombre o apodo, puede ser uno u otro, pero no ambos -->
+  
+  <!ELEMENT nombre (#PCDATA)>
+  <!ELEMENT apodo (#PCDATA)>
+  <!ELEMENT fechaNacimiento (#PCDATA)>
+]>
+
+<musicos>
+  <musico>
+    <nombre>Antonio Vivaldi</nombre>
+	
+	<!-- ERROR: omitimos el apodo, ya que ya existe el nombre, 
+	
+    <apodo>El cura pelirrojillo</apodo>
+	
+	-->
+	
+    <fechaNacimiento>4 de marzo de 1678</fechaNacimiento>
+  </musico>
+  <musico>
+  
+	<!-- ERROR: omitimos el nombre, ya que ya existe el apodo , 
+    <nombre>Johann Sebastian Bach</nombre>
+	-->
+    <apodo>El viejo peluca</apodo>
+    <fechaNacimiento>21 de marzo de 1685</fechaNacimiento>
+  </musico>
+</musicos>
+
+DTD - Ejercicio 1-8 - Teléfonos de emergencia
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE agenda [
+  <!ELEMENT agenda (contacto*)>
+  <!ELEMENT contacto (nombre, telefonoFijo*, telefonoMovil+)>
+  <!ELEMENT nombre (#PCDATA)>
+  <!ELEMENT telefonoFijo (#PCDATA)>
+  <!ELEMENT telefonoMovil (#PCDATA)>
+]>
+
+<agenda>
+  <contacto>
+    <nombre>Ayuntamiento</nombre>
+    <telefonoFijo>010</telefonoFijo>
+	<!-- Falta el teléfonoMóvil - que es "+" , obligatoriamente debe tener uno --> 
+	<telefonoMovil> 123-456-789 </telefonoMovil>
+  </contacto>
+  <contacto>
+    <nombre>Emergencias</nombre>
+	<telefonoFijo>911 (Estados Unidos)</telefonoFijo>
+    <telefonoFijo>112 (Unión Europea)</telefonoFijo>
+    <telefonoMovil>Desconocido</telefonoMovil>
+	<!-- LA ETIQUETA debe estar en orden, es decir, arriba 
+    <telefonoFijo>911 (Estados Unidos)</telefonoFijo>
+	-->
+  </contacto>
+</agenda>
+
+<!-- DTD - Ejercicio 1-9 - El sistema solar --> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sistemaSolar [
+  <!ELEMENT sistemaSolar (cuerpo*)>
+  <!ELEMENT cuerpo (planeta|satelite|asteroide)>
+  <!ELEMENT planeta (#PCDATA)>
+  <!ELEMENT satelite (#PCDATA)>
+  <!ELEMENT asteroide (#PCDATA)>
+]>
+
+<sistemaSolar>
+  <cuerpo>
+  <!-- Dado que tiene "|" solo puede ser uno de los tres. Eliminaré una entrada 
+    <planeta>Tierra</planeta> --> 
+    <satelite>Luna</satelite>
+  </cuerpo>
+  <!-- Asteroide NO es una entidad raíz 
+  <asteroide>Ceres</asteroide>
+</sistemaSolar>

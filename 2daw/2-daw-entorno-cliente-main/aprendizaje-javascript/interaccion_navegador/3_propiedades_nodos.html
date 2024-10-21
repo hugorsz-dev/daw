@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    <script>
+        
+        /* 
+        Cada nodo está identificado en muchos escalafones, son capas de profundidad que iremos atravesando segun los llamemos., 
+        --> EventTarget: maximo nivel de abstraccion, poco que hacer con esto. 
+        --> Node: el orden entre las etiquetas, es decir, representa las relaciones "filiales" entre las etiquetas, siendo algunas padres, otras hijos... (parentNode, nextSibling, childNodes). Cuando hablamos de nodo, estamos hablando de las RELACIONES ESTRUCTURALES EXISTENTES EN EL HTML: si una etiqueta está dentro de la otra, etc....
+        --> Document: el documento general. A partir de esta capa trabajaremos
+        --> CharacterData: contenido de los datos de una etiqueta
+        --> Element: Es el elemento HTML propiamente, lo que DEVUELVE el queryselector o los metodos getElementsBy*
+        --> HTMLElement Por ultimo, los metodos asociados al cada uno de los elementos, por ejemplo, para el body: HTMLBodyElement, o para el <input>, HTMLInputElement. ç
+        */
+
+        console.log (document.body.constructor.name) // Lo que construye al document body es, como vemos, el HTMLElement 
+        tabla = document.getElementById('tabla'); 
+
+
+        
+
+
+
+
+        
+        
+
+
+        
+
+
+
+
+
+
+
+
+        
+    </script>
+
+
+</body>
+</html>

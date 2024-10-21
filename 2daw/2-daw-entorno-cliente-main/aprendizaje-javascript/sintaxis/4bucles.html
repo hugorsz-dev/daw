@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabajando con bucles</title>
+</head>
+<body>
+
+    <h1> Bucles </h1>
+
+    <script>
+
+        function enTitulo (texto) {
+
+        document.write ("<h2>");
+            document.write (texto);
+        document.write ("</h2>");
+
+        }
+
+        function enParrafo (texto) {
+        document.write ("<p>");
+            document.write (texto);
+        document.write ("</p>");
+        }
+
+        // WHILE
+        // -> Un consejito es no usar un condicional ? en los while, aparecen errores de sintaxis. 
+
+        enTitulo ("Bucle while");
+
+        let i =0; 
+
+        while (i<3) {
+
+            enParrafo (i);
+            i++;
+            
+        }
+
+
+        // -> A la inversa
+        enTitulo ("While a la inversa");
+
+        i=3;
+
+        while (i!=0) {
+
+            enParrafo (i);
+            i--;
+            
+        }
+
+        // -> Si en vez de eso ponemos simplemente "i", el 0 se detecta como booleano falso y se detiene
+        enTitulo ("Descubriendo que al llegar a 0, es booleano");
+        i=3;
+
+        while (i) {
+
+            enParrafo (i);
+            i--;
+            
+        }
+
+        // -> Puede expresarse en línea
+        enTitulo ("En una línea");
+
+        i=0; 
+
+        while (i<3) enParrafo (i++); 
+
+        // BUCLE DOWHILE
+        // -> Este ejecuta el código, y luego comprueba la condición. 
+
+        enTitulo ("Bucle doWhile");
+
+        i=0;
+
+        do {
+            enParrafo (i); 
+            i++; 
+        }
+        while (i < 3); 
+
+        // BUCLE FOR 
+        // -> El clásico bucle for para iterar rápidamente. 
+        // -> ORDEN: si condición correcta -> ejecutar código 
+
+        enTitulo ("Bucle for");
+
+        for (i=0; i<3; i++) {
+            enParrafo (i); 
+        }
+
+        // -> Puede omitirse cualquier parte  del for: 
+
+        /**
+         * for (;;) {}
+         * crea un bucle infinito. 
+         * for (; i<3; i++) {}
+         * no es necesario declarar la variable. 
+         * for (;i<3;)
+         * Con esto un for se parece a un while
+        **/
+
+        // ROMPER BUCLES 
+        // -> El bucle es infinito, lo rompemos introduciendo "Manzana"
+        
+        for (;;) {
+
+            if ( prompt ("Fruta favorita", "Manzana") == "Manzana") {
+                break;
+            }
+
+        }
+
+        enTitulo ("Breaks nombrados");
+
+        // -> Cuando estamos en un bucle dentro de otro, entonces es necesario identificar los bucles para ejecutar los breaks. 
+
+        externo: for (i=0; i<3; i++) {
+
+            for (let j=0; j<3; j++) {
+
+                enParrafo (`Coordenada ${i} - ${j}`);
+
+                if (i==1 && j==1)  break externo; // Detenemos al llegar a las coordenadas 1 - 1 
+
+            }
+        }
+
+        // CONTINUAR BUCLES
+        // -> El continue retorna directamente al inicio del bucle. 
+
+        enTitulo ("Usando el continue");
+
+        i=0; 
+
+        for (i=0; i<10; i++) {
+
+            if (i%2 == 0) continue; // Si es un número PAR, vuelve al inicio y lo omite
+
+            enParrafo (i); 
+
+        } 
+
+
+
+    </script>
+    
+</body>
+</html>

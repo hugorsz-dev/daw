@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Manejo de errores en javascript</h1>
+
+    <script> 
+        // La sintaxis try catch permite la prevención de errores y permitir la continuación del código a pesar de los mismos
+
+        console.log ("- - - - - ERROR GENÉRICO - - - - - ")
+        try {
+            console.log ("Esto es una prueba"); 
+            
+            jejeje-esto-es-un-error; 
+
+            console.log ("No se ejecutará esta línea si suede un error") 
+        }
+        catch (errorcillo) { // Introducimos por parametro un objeto, este es el que contendrá la información del error: nuestro "errorcillo" puede mostrarse
+            console.log ("Pero esta línea sí se ejecutara")
+            console.log ("EL error es: "+errorcillo)
+            console.log ("EL nombre del error es: "+errorcillo.name)
+            console.log ("EL mensaje del error es: "+errorcillo.message)
+            console.log ("La pila del error es: "+errorcillo.stack)
+        }
+
+        // -> Try Catch no funcionará sincrónicamente, es decir, en bloques setTimeOut
+        // -> Tampoco funciona con errores de lenguaje, sino errrores en tiempo de ejecución 
+        console.log ("- - - - - ERROR SIN CATCH - - - - - ")
+        try {
+            console.log ("Esto es una segunda prueba prueba"); 
+            
+            jejeje-esto-es-un-error; 
+
+            console.log ("No se ejecutará esta línea si suede un error") 
+        }
+        catch { // Catch puede ser omitido si queremos
+        }
+
+        console.log ("- - - - - ERRORRES AL LEER JSON (Por ejemplo) - - - - - ");
+
+        let json = '{"nombre":"Hugo", "edad": 20}'; // datos del servidor
+
+        try {
+            let usuario = JSON.parse(son)
+            console.log (usuario.nombre);
+        }
+        catch (error) {
+            console.log ("Ha ocurrido un error en el analisis del javascript"); 
+            console.log ("Cuerpo del error: "+error)
+        }
+
+        // ¿Pero y qué pasa si todo es correcto, pero en nuestro JSON falta un dato que nuestro programa exige?
+        // Para eso, tendríamos que crear nuestros propios errores. 
+
+        console.log ("- - - - - ERRORRES PROPIOS - - - - - ")
+
+        try {
+            let usuario = JSON.parse(json)
+            if (!usuario.dni) 
+                throw new SyntaxError ("¡Tu perfil de usuario no contiene DNI!")
+            console.log (usuario.dni);
+        }
+        catch (error) {
+            console.log ("Ha ocurrido un error en el analisis del javascript"); 
+            console.log ("Cuerpo del error: "+error)
+        }
+
+        let errorNoDNI = new Error ("Error: no has introducido el DNI dentro del JSON de usuario"); 
+
+        // Si suceden más errores, puede ser conveniente introducir la cláusula "finally" para terminar con todo riesgo
+        
+
+        try {
+            alert( 'intenta (try)' );
+            if (confirm('¿Cometer un error?')) BAD_CODE();
+            } catch (err) {
+            alert( 'atrapa (catch)' );
+            } finally {
+            alert( 'finalmente (finally)' );
+        }
+
+
+        
+    </script>
+</body>
+</html>

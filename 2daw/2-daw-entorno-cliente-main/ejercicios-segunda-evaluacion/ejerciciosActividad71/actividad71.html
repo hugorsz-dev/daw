@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1> Ejercicios actividad 7 - 1 </h1>
+	<h2> Ejercicio propuesto en Desarrollo Entorno - Servidor </h2>
+
+	<p> <b> Alumno: </b> Hugo Ruiz Sánchez</p>
+	<p> <b> Docente: </b> Enrique Diego Alfonso  </p>	
+		
+	<hr/> 
+
+    <script> 
+
+        // FUNCIONES PRELIMINARES
+
+        // Sirve para apilar unos contenedores sobre otros
+
+        function enContenedor (texto, tipo, container, atributos=false) {
+
+            // Define el contenedor existente donde se introducirá la etiqueta
+
+            let contenedor = document.getElementById(container); 
+
+            // Crea un elemento con la etiqueta definida 
+
+            let nuevaEtiqueta = document.createElement(tipo); 
+
+            // Introduce el texto dentro de la etiqueta
+
+            nuevaEtiqueta.textContent = texto;
+
+            // Incrusta la etiqueta en el contenedor previamente definido.
+
+            contenedor.appendChild (nuevaEtiqueta); // Indicando así el contenido
+
+            // Asociar los atributos
+
+            if (atributos) {
+                for (let i=0; i<atributos.length; i++) {
+                    nuevaEtiqueta.setAttribute (atributos[i][0], atributos [i][1] )
+                }
+            }
+
+        }
+
+        // Permite controlar el movimiento de un objeto 
+        
+        class movimientoElemento {  
+
+            // La clase partirá con el elemento HTML ("elemento") y lo ubicará en 0px 0px
+            constructor (idElemento) {
+                this.elemento = document.getElementById (idElemento);
+                    this.elemento.style.top="0px"
+                    this.elemento.style.left="0px"           
+                this.x = "0px";
+                this.y = "0px";
+            }
+
+            // Arroja la "coordenada" X en forma de número entero, sin el "px"
+
+            getX () {
+                let cadena = this.elemento.style.left;
+                return parseInt (cadena.replace(/\D/g, ""));
+            }
+
+            // Arroja la "coordenada" Y en forma de número entero, sin el "px"
+
+            getY () {
+                let cadena = this.elemento.style.top;
+                return parseInt (cadena.replace(/\D/g, ""));
+            }
+
+            // Actualiza la posición X del elemento junto con las referencias internas de la clase this.x
+
+            setX (pixeles) {
+                this.x = pixeles; 
+                this.elemento.style.left=pixeles+"px"
+            }
+
+            // Actualiza la posición Y del elemento junto con las referencias internas de la clase this.y
+
+            setY (pixeles) {
+                this.y = pixeles; 
+                this.elemento.style.top=pixeles+"px"
+            }
+
+            // Movimiento a la derecha en base a la posicion actual
+
+            haciaDerecha (pixeles) {
+                let posicionDefinida = this.getX() + pixeles
+                this.setX(posicionDefinida)
+            }
+
+            // Movimiento a la izquierda en base a la posicion actual
+
+            haciaIzquierda (pixeles) {
+                let posicionDefinida = this.getX() - pixeles
+                this.setX(posicionDefinida)
+            }
+
+            // Movimiento hacia arriba en base a la posicion actual
+
+            haciaArriba (pixeles) {
+                let posicionDefinida = this.getY() - pixeles
+                this.setY(posicionDefinida)
+            }
+
+            // Movimiento hacia abajo en base a la posicion actual
+
+            haciaAbajo (pixeles) {
+                let posicionDefinida = this.getY() + pixeles
+                this.setY(posicionDefinida)
+            }
+
+        }
+
+        class arrastreObjeto {
+            // Constructor 
+
+            constructor (idElemento) {
+                this.stringElemento = idElemento; 
+                this.elemento = document.getElementById (this.stringElemento);
+                this.elemento.style.cursor = "grab"; 
+                this.elemento.style.position ="absolute"; 
+                this.originalX =this.elemento.offsetLeft
+                this.originalY =  this.elemento.offsetTop 
+            }
+
+            habilitarArrastre () {
+                // Reconocimiento del elemento
+                var arrastrable = document.getElementById(this.stringElemento);
+                var arrestaArrastrando = false;
+                var offset = { x: 0, y: 0 };
+                var posicionOriginalX = this.originalX;
+                var posicionOriginalY = this.originalY;
+
+                function iniciarArrastre (e){
+                    arrestaArrastrando = true;
+                    offset.x = e.clientX - arrastrable.getBoundingClientRect().left;
+                    offset.y = e.clientY - arrastrable.getBoundingClientRect().top;
+                    arrastrable.style.cursor = 'grabbing';
+                }
+
+                function actualizarPosicion (e) {
+                    if (arrestaArrastrando) {
+                    arrastrable.style.left = e.clientX - offset.x + 'px';
+                    arrastrable.style.top = e.clientY - offset.y + 'px';
+                    
+                    }
+                }
+
+                function finalizarArrastre () {
+                    arrestaArrastrando = false;
+                    arrastrable.style.cursor = 'grab';
+                    deshabilitarArrastre ()
+                }
+
+                function  deshabilitarArrastre () {
+
+                    // Eliminar apariencia movible del elemento
+                    arrastrable.style.position = "relative"
+                    arrastrable.style.cursor = "default"; 
+
+                    // Deshabilitar todos sus eventos asociados
+                    arrastrable.outerHTML = arrastrable.outerHTML;
+
+                    // Mover a donde estaba antes 
+                    let mover = new movimientoElemento (arrastrable.id)
+                    mover.setX (posicionOriginalX)
+                    mover.setY (posicionOriginalY)
+                }
+
+                // Evento para iniciar el arrastre
+                arrastrable.addEventListener('mousedown', iniciarArrastre);
+
+                // Evento para actualizar la posición durante el arrastre
+                document.addEventListener('mousemove', actualizarPosicion);
+
+                // Evento para finalizar el arrastre
+                document.addEventListener('mouseup', finalizarArrastre);
+
+               
+            } 
+        }
+        
+
+    </script> 
+
+    <h3> Ejercicio 1</h3>
+
+    <img id="imagen" style="width: auto; height: 200px;" src="img/paisaje0.gif"> 
+
+    <script> 
+
+        // Función que retorna el nombre de la imagen conforme a su situación relativa en el directorio, según un parámetro numérico
+        function numeroImagen (num) {
+            return `img/paisaje${num}.gif`
+        }
+
+        // Cuando en todo el documento se pulsa una tecla entre 0 y 10, se 
+        document.addEventListener ("keydown", function () {
+            if (event.key<10 && event.key >= 0 && event.key != " ") {
+                imagen.src= numeroImagen(event.key);
+            }
+        }); 
+
+    </script>
+
+    <h3> Ejercicio 2 </h3>
+
+    <p> <i> La posición de nuestra "cajaRoja" es relativa, es decir, su situación vertical (top) y horizontal (left) está definida sobre el elemento que le precede. Por consiguiente, su desplazamiento hacia arriba y hacia la izquierda está delimitado en los márgenes fijados por su "contenedorGris. Esto es una excusa para el ejercicio 4.</i></p>
+    <div id="contenedorGris"  style="background-color:gainsboro; height: 150px; width: 100%; position: relative;"> 
+        <div id="cajaRoja" style="background-color:red; height: 50px; width: 50px; position: relative;">  </div>  
+    </div>
+    
+    <script>
+        
+        moverCajaRoja = new movimientoElemento ("cajaRoja");
+
+        document.addEventListener ("keydown", function ()  {
+            switch (event.key) {
+                // Flecha arriba
+                case "ArrowUp":
+                    moverCajaRoja.haciaArriba (10)
+                break; 
+
+                // Flecha abajo
+                case "ArrowDown":
+                    moverCajaRoja.haciaAbajo (10)
+                break; 
+
+                //Flecha izquierda
+                case "ArrowLeft":
+                    moverCajaRoja.haciaIzquierda (10)
+                break; 
+
+                // Flecha derecha
+                case "ArrowRight":
+                    moverCajaRoja.haciaDerecha (10)
+                break; 
+            }
+
+        })
+
+    </script> 
+
+    <h3> Ejercicio 3</h3>
+
+    <ul id="lista"> 
+        
+    </ul>
+    
+    <input type="text" id="inputAnadirLista" placeholder="Introduce un nuevo elemento en la lista" size="50" />
+    <button onclick="anadirElementoLista(inputAnadirLista.value)"> Añadir elemento a la lista </button>
+
+    <script>
+
+        let elementosLista = new Array ();  
+
+        anadirElementoLista ("Elemento de ejemplo")
+        anadirElementoLista ("¡La lista se ordena automáticamente!")
+
+        function actualizarLista () {
+            // Por cada elemento introducido, se limpia la lista anterior y se itera nuevamente sobre el array para introducir los elementos ordenados
+            lista.innerHTML = ""
+            for (let i=0; i<elementosLista.length; i++) {
+                enContenedor (elementosLista[i], "li", "lista", [["id", "elementoLista"+i]])
+                    enContenedor ("x", "button", "elementoLista"+i, [["id", "botonLista"+i]] )
+            }
+
+            // Acto seguido, se procede a recibir información sobre los clicks en las "x"
+            for (let i = 0; i < elementosLista.length; i++) {
+                // Para todos los botones
+                let boton = document.getElementById("botonLista" + i);
+                // Si el botón determinado existe
+                if (boton) {
+                    // Programar el evento
+                    boton.addEventListener("click", function () {
+                        // El número del elemento (id) se determina en base al numero de su id
+                        numElemento = parseInt(boton.id.replace(/\D/g, ""));
+                        // El elemento, por tanto, anexo al boton comparte el numero
+                        elementoLista = document.getElementById ("elementoLista"+numElemento);
+                        // Para eliminar el contenido, solo tenemos que saber el contenido que guarda
+                        elementoLista = elementoLista.innerHTML;
+                        // Y eliminarlo del array
+                        eliminarElementoLista (elementoLista.substring(0, elementoLista.indexOf("<")))
+                        
+                    });
+                }
+            }   
+        }
+
+        function anadirElementoLista (elemento) {
+            // Si no hay nada en el campo de texto, arroja una alerta y detiene la función
+            if (!elemento) {alert ("No has introducido ningún valor"); return 0;} 
+            
+            // Se añade el texto del "li" en un array para ser ordenado
+            elementosLista.push (elemento); 
+            elementosLista.sort ()
+
+            // Actualización de la lista
+            actualizarLista ();
+
+        }
+
+        function eliminarElementoLista (elemento) {
+            
+            elementosLista.splice (elementosLista.indexOf (elemento),1)
+            actualizarLista ();
+
+        }
+        
+    </script> 
+
+    <h3> Ejercicio 4</h3>
+
+    <p id="parrafo_letras" style="background-color:gainsboro; height: 150px; width: 100%; position: relative;"> </p>
+    <button id="limpiar_parrafo_letras" onclick="limpiarParrafo()"> Limpiar el párrafo </button>
+
+    <script> 
+
+        function limpiarParrafo () {
+            parrafo_letras.innerHTML =""
+        }
+        /* Al tocar cualquier letra del documento.
+        document.addEventListener ("click", function (){
+            let sel = getSelection();
+            if (sel.rangeCount) {
+                const range = sel.getRangeAt(0);
+                const targetedNode = range.startContainer;
+                const clickedLetter = targetedNode.textContent.substr(range.startOffset, 1);
+                parrafo_letras.innerHTML = parrafo_letras.innerHTML+ clickedLetter
+            }
+        })
+        */ 
+
+        // Al escribir, 
+        acento = false;
+        document.addEventListener ("keydown", function () {
+
+            
+            function letraAcento(letra) {
+                const vocalesConAcento = {
+                    'A': 'Á', 'E': 'É', 'I': 'Í', 'O': 'Ó', 'U': 'Ú',
+                    'a': 'á', 'e': 'é', 'i': 'í', 'o': 'ó', 'u': 'ú'
+                };
+                console.log (vocalesConAcento[letra] || letra)
+                return vocalesConAcento[letra] || letra;
+            }
+            
+            switch (event.key) {
+                case "Enter": 
+                    parrafo_letras.innerHTML = parrafo_letras.innerHTML+"<br>"
+                break;
+                case "Backspace": 
+                    parrafo_letras.innerHTML = parrafo_letras.innerHTML.substring (0, parrafo_letras.innerHTML.length-1 )
+                break;
+
+                case "Dead": 
+                    acento = true;
+                break
+
+                default: 
+
+                    if (event.key.length == 1) {
+                        if (!acento) parrafo_letras.innerHTML = parrafo_letras.innerHTML+event.key;
+                        else parrafo_letras.innerHTML = parrafo_letras.innerHTML+letraAcento(event.key);
+                        acento = false;
+                    }
+                    
+                break;
+                
+            }
+             
+        }); 
+
+    </script>
+
+    <h3> Ejercicio 5 </h3>
+    <p> <i>La posicióna aquí sigue siendo relativa: si se cambiase a absoluta, la caja azul se movería libremente por toda la pantalla. </i> </p>
+    
+    <div id="cajaAzul" onmouseover="desplazarCaja()" style="background-color:aqua; height: 100px; width: 100px; position: relative;">  </div>  
+    
+    <script>
+
+        function desplazarCaja () {
+            // Reaprovechamos la clase anterior para mover objetos
+            moverCajaAzul = new movimientoElemento ("cajaAzul");
+
+            // Saber ancho y alto para ajustar valores aleatorios
+            let anchoPagina = document.documentElement.clientWidth;
+            let altoPagina = document.documentElement.clientHeight;
+
+            // Ajustar los valores aleatoriamente en relación al ancho y alto actual
+
+            moverCajaAzul.setX (Math.floor(Math.random() *anchoPagina ));
+            moverCajaAzul.setY (Math.floor(Math.random() * altoPagina  ));
+        }
+
+
+    </script>
+
+    <h3> Ejercicio 6 </h3>
+
+    <p id="parrafo_1984"> ¿No ves que la finalidad de la neolengua es limitar el alcance del pensamiento, estrechar el radio de acción de la mente? Al final, acabamos haciendo imposible todo crimen del pensamiento. En efecto, ¿cómo puede haber crimental si cada concepto se expresa claramente con una sola palabra, una palabra cuyo significado esté decidido rigurosamente y con todos sus significados secundarios eliminados y olvidados para siempre? Y en la onceava edición nos acercamos a ese ideal, pero su perfeccionamiento continuará mucho después de que tú y yo hayamos muerto. Cada año habrá menos palabras y el radio de acción de la conciencia será cada vez más pequeño. Por supuesto, tampoco ahora hay justificación alguna para cometer crimen por el pensamiento. Sólo es cuestión de autodisciplina, de control de la realidad. Pero llegará un día en que ni esto será preciso. La revolución será completa cuando la lengua sea perfecta. Neolengua es Ingsoc e Ingsoc es neolengua -añadió -con una satisfacción mística-. ¿No se te ha ocurrido pensar, Winston, que lo más tarde hacia el año 2050, ni un solo ser humano podrá entender una conversación como esta que ahora sostenemos?</p>
+    <p> <b> Eliminar vocales:</b> </p>
+    <button onclick="eliminar_letra(this.innerHTML)"> Aaá </button> 
+    <button onclick="eliminar_letra(this.innerHTML)"> Eeé </button> 
+    <button onclick="eliminar_letra(this.innerHTML)"> Iií </button> 
+    <button onclick="eliminar_letra(this.innerHTML)"> Ooó </button> 
+    <button onclick="eliminar_letra(this.innerHTML)"> Uuú </button>
+
+    <script> 
+
+        // Las letras introducidas por parámetros se eliminan del string que se cargará sobre el párrafo
+
+        function eliminar_letra (letra) {
+            salida ="";
+            letra = letra.replaceAll (" ", "");
+            cadena = parrafo_1984.innerHTML
+
+            for (let i=0; i<cadena.length; i++) {
+                if ( !letra.includes(cadena[i])) {
+                    salida = salida + cadena[i];
+                }
+            }
+         
+           parrafo_1984.innerHTML=salida;
+        }
+    </script> 
+
+    <h3> Ejercicio 7 </h3>
+
+    <div id="cajaVerde" style="background-color: yellowgreen; height: 40px; width: 10px; float: right; border: 0px solid red; position: relative;"></div>
+    <div id="cajaVioleta" style="background-color: violet; height: 40px; width: 10px; float: left; border: 0px solid red; text-align: right;  position: relative;" ></div>
+
+    
+
+    <script> 
+
+        let clicksIzquierda =0; 
+        let clicksDerecha =0;
+        let ganador = false; 
+        document.addEventListener ("keydown", function () {
+            if (!ganador) { 
+                if (cajaVerde.clientWidth>500) {
+                    ganador = true;
+                    alert ("La mano derecha es más rápida. ")
+                }
+                else if (cajaVioleta.clientWidth>500) {
+                    ganador = true;
+                    alert ("La mano izquierda es más rápida. ")
+                }
+            }
+
+            if (!ganador) {
+                if (event.key=="ñ" || event.key=="Ñ") {
+                    cajaVerde.style.width = cajaVerde.clientWidth +5 +"px"
+                    cajaVerde.innerHTML = ++clicksDerecha
+                }
+                if (event.key=="a" || event.key=="A"){
+                    cajaVioleta.style.width = cajaVioleta.clientWidth +5 +"px"
+                    cajaVioleta.innerHTML = ++clicksIzquierda
+                }
+            }
+            
+            
+        }); 
+
+    </script> 
+
+    <br><br>
+
+    <h3> Ejercicio 8</h3>
+
+    <style> .fila { display: flex;} .fila > div { width: 60px; height: 60px; margin: 2px; border: 2px solid gainsboro; box-sizing: border-box;   }  </style>
+    <style> #casilla-movible { display: flex; position: absolute; visibility: hidden;  } #casilla-movible { width: 60px; height: 60px; margin: 2px; border: 2px solid gainsboro; box-sizing: border-box; }  </style>
+
+    <button id="boton_empezar" onclick ="empezarJuego()"> Empezar juego </button>
+    <button id="boton_finalizar" onclick ="location.reload();" onclick ="location.reload();"style="visibility: hidden;"> Finalizar juego </button>
+
+    <!-- La "casilla-movible" es un elemento invisible, cuya única función es clonar las propiedades de la casilla sobre la que hace click, y posicionarse en todo momento bajo el puntero del ratón -->
+
+    <div id="casilla-movible"> </div>
+
+    <!-- La tabla de 6x5, siuendo cada div una fila con cada una de las casillas representadas de izquierda a derecha. La ID representa la fila y la columna-->
+
+    <div id="tablero-juego-parejas"> 
+
+        <div class="fila"> 
+            <div id="juego-parejas00"></div> 
+            <div id="juego-parejas01"></div> 
+            <div id="juego-parejas02"></div> 
+            <div id="juego-parejas03"></div> 
+            <div id="juego-parejas04"></div> 
+        </div>
+        
+        <div class="fila"> 
+            <div id="juego-parejas10"></div> 
+            <div id="juego-parejas11"></div> 
+            <div id="juego-parejas12"></div> 
+            <div id="juego-parejas13"></div> 
+            <div id="juego-parejas14"></div> 
+        </div>
+        
+        <div class="fila"> 
+            <div id="juego-parejas20"></div> 
+            <div id="juego-parejas21"></div> 
+            <div id="juego-parejas22"></div> 
+            <div id="juego-parejas23"></div> 
+            <div id="juego-parejas24"></div> 
+        </div>
+        
+        <div class="fila"> 
+            <div id="juego-parejas30"></div> 
+            <div id="juego-parejas31"></div> 
+            <div id="juego-parejas32"></div> 
+            <div id="juego-parejas33"></div> 
+            <div id="juego-parejas34"></div> 
+        </div>
+        
+        <div class="fila"> 
+            <div id="juego-parejas40"></div> 
+            <div id="juego-parejas41"></div> 
+            <div id="juego-parejas42"></div> 
+            <div id="juego-parejas43"></div> 
+            <div id="juego-parejas44"></div> 
+        </div>
+        
+        <div class="fila"> 
+            <div id="juego-parejas50"></div> 
+            <div id="juego-parejas51"></div> 
+            <div id="juego-parejas52"></div> 
+            <div id="juego-parejas53"></div> 
+            <div id="juego-parejas54"></div>    
+        </div>
+        
+    </div>
+
+    <script> 
+
+        // Evento de seguimiento de la casilla movible, que permanece constantemente bajo el ratón
+
+        document.addEventListener('mousemove', function(e) {
+            let body = document.querySelector('body');
+            let casillaDeslizante = document.getElementById('casilla-movible');
+            
+            let left = e.pageX; // Usar pageX en lugar de offsetX para obtener la posición en la página
+            let top = e.pageY; // Usar pageY en lugar de offsetY para obtener la posición en la página
+            casillaDeslizante.style.position = 'absolute'; // o 'fixed' según tus necesidades
+            casillaDeslizante.style.left = left + 'px';
+            casillaDeslizante.style.top = top + 'px';
+        });
+
+        // Deshabilitar el efecto deslizante, es decir, ocultando la casilla movible
+
+        function deshabilitarEfectoCasillaDeslizante () {
+            let elemento = document.getElementById('casilla-movible');
+            elemento.style.visibility = "hidden"
+        }
+
+        // Deshabilitar el efecto deslizante, es decir, mostrando la casilla movible
+
+        function habilitarEfectoCasillaDeslizante () {
+            let elemento = document.getElementById('casilla-movible');
+            elemento.style.visibility = "visible"
+        }
+
+        // Función que asigna un color determinado a la casilla deslizante
+
+        function setColorCasillaDeslizante (color) {
+            let elemento = document.getElementById('casilla-movible');
+            elemento.style.backgroundColor = color
+
+        }
+
+        // Asigna un color determinado a una casilla indicada por columna y fila
+
+        function setColorCasilla (fila, columna, color="black") {
+            casilla = document.getElementById ("juego-parejas"+fila+""+columna)
+            casilla.style.backgroundColor = color
+        }
+
+        // Retorna el color asociado a una columna indicada por columna y fila 
+
+        function getColorCasilla (fila, columna) {
+            casilla = document.getElementById ("juego-parejas"+fila+""+columna)
+            return (casilla.style.backgroundColor)
+        }
+
+        // Asigna un color aleatorio a todos los elementos de la casilla, cuenta con un parametro opcional (true, false) para saber si se ilustrará una transición
+        // Retorna un array bidimensional con el tablero de juego, que se comporobará durante la partida. 
+
+        function setColorAleatorioTodos (transicion) {
+
+            // Colores que tendrán que adivinarse, repetidos 1 vez 
+            let colores = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF", "#FFA500", "#800080", "#800000", "#008000", "#000080", "#FFC0CB", "#F08080", "#00CED1", "#9400D3", "#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF", "#FFA500", "#800080", "#800000", "#008000", "#000080", "#FFC0CB", "#F08080", "#00CED1", "#9400D3"];
+            
+            // Desordenar array
+            // Math random genera un numero positivo o negativo aleatorio. 
+                // Sort necesita usa parametro un numero positivo si quiere ordenar los elementos inversos o no
+                // Si intercambiamos positivo y negativo aleatoriamente, logramos arrojar un conjunto aleatorio de colores
+            // 
+
+            colores = colores.sort(function () {return Math.random() - 0.5 }); 
+
+            // Introducir array en uno con forma de tabla 6x5 
+            
+            // Creación del array
+            let tableroJuego = new Array (6)
+
+            for (let i = 0; i < tableroJuego.length; i++) {
+                tableroJuego[i] = new Array(5);
+            }
+
+            let numColor =0;
+            // Creación de la tabla
+            for (let i=0; i<tableroJuego.length; i++) {
+                for (let j=0; j<tableroJuego[i].length; j++) {
+                    tableroJuego [i] [j] = colores [numColor++];
+                    
+                }
+            }
+            // Muestreo de la tabla
+            numColor =0;
+            for (let i=0; i<6; i++) {
+                for (let j=0; j<5; j++) {
+                    if (transicion) setTimeout (function () {setColorCasilla (i,j,colores[numColor++])}, 100 * (i * 5 + j))
+                    else  setColorCasilla (i,j,colores[numColor++] )
+
+                }
+            }
+
+            return tableroJuego;
+
+        }
+
+        // Asignación de un color determinado a todos los elementos del tablero 
+
+        function setColorTodos (color, transicion) {
+            for (let i=0; i<6; i++) {
+                for (let j=0; j<5; j++) {
+                    if (transicion)setTimeout (function () {setColorCasilla (i,j,color )}, 100 * (i * 5 + j));// Necesita ajustarse el retraso por cada acumulación del bucle.
+                    else setColorCasilla (i,j,color )
+                }
+            }
+        }
+
+        // Dibujar una línea horizontal de un color determinado en el tablero
+
+        function dibujarLineaHorizontal (x,color) {
+            for (let i=0; i<5; i++) {
+                setColorCasilla (x,i, color)
+            }
+        }
+
+        // Dibujar una línea vertical de un color determinado en el tablero
+
+        function dibujarLineaVertical (x,color) {
+            for (let i=0; i<6; i++) {
+                setColorCasilla (i,x,color)
+            }
+        }  
+
+        // Comprueba el ganador de la partida verificando que todas las casillas NO sean de color negro
+
+        function comprobarGanador () {
+            ganador = true;
+
+            for (let i=0; i<6; i++) {
+                for (let j=0; j<5; j++) {
+                    if (getColorCasilla (i,j)=="black") return false;
+                }
+            }
+
+            return ganador;
+        }
+
+
+
+        // Inicia el juego al pulsarf sobre el botón
+       
+        function empezarJuego () {
+
+            // Eliminamos el botón de empezar y mostramos el de finalizar
+
+            boton_empezar.style.visibility ="hidden"
+            boton_finalizar.style.visibility ="visible"
+
+            // Al empezar el juego, desplegamos una secuencia de inicio: 
+            setColorTodos ("white") 
+            // 3 
+            
+                dibujarLineaHorizontal (2)
+                dibujarLineaHorizontal (0)
+                dibujarLineaHorizontal (5)
+                dibujarLineaVertical (4)
+   
+            
+            // 2 
+
+            setTimeout (function () {
+                setColorTodos ("white") 
+                dibujarLineaHorizontal (0)
+                dibujarLineaHorizontal (2)
+                dibujarLineaHorizontal (5)
+                setColorCasilla (1,4)
+                setColorCasilla (3,0)
+                setColorCasilla (4,0)
+            },1500)
+
+            // 1
+            
+            setTimeout (function () {
+                setColorTodos ("white") 
+                dibujarLineaVertical (3)
+                setColorCasilla (1,2)
+                setColorCasilla (2,1)
+            },3000)
+
+            setTimeout (function () {
+                setColorTodos ("white") 
+                tablero = setColorAleatorioTodos(true)
+            },4000)
+
+            setTimeout (function () {
+                setColorTodos ("black",true) 
+            },10000)
+
+            // 
+
+            let casillaAnterior = undefined;
+            let casillaPosterior =undefined;
+
+            setTimeout (function () {
+                for (let i=0; i<6; i++) {
+                    for (let j=0; j<5; j++) {
+                        let casilla = document.getElementById("juego-parejas"+i+""+j);
+                        if (casilla) {
+                            casilla.addEventListener("click", function () {
+                                // Para cada casilla, depositar la información de utilidad dentro de variables, para acceder más comodamente a su información
+                                filaCasilla = casilla.id.replace(/[^0-9]/g, '')[0]
+                                columnaCasilla = casilla.id.replace(/[^0-9]/g, '')[1]
+                                colorCasilla = tablero [filaCasilla] [columnaCasilla]; 
+
+                                // Siempre que hagamos click sobre una casilla de color negro . . . 
+
+                                if (getColorCasilla (filaCasilla, columnaCasilla) == "black") {
+
+                                    // Si la casilla anterior NO existe, depositamos el valor en este espacio
+                                    if (!casillaAnterior) {
+                                        casillaAnterior = [filaCasilla,columnaCasilla]
+                                        // Colocamos la casilla en el color blanquecino original
+                                        casilla.style.backgroundColor = "white"  ; 
+                                        // Y visualizamos el efecto con el color original de la casilla 
+                                        habilitarEfectoCasillaDeslizante ();
+                                        setColorCasillaDeslizante (colorCasilla);
+                                    }
+                                    // De lo contrario, la casilla posterior se introducirá en su lugar y se realizará la comparación 
+                                    else if (!casillaPosterior) {
+                                        
+                                        casillaPosterior = [filaCasilla,columnaCasilla]
+
+                                        // Comparación 
+
+                                        if (casillaPosterior[0] == casillaAnterior[0] && casillaPosterior[1]== casillaAnterior [1]) {
+                                            alert ("No puedes pulsar dos veces la misma casilla")
+                                            casillaPosterior = undefined
+                                        }
+                                        else {
+                                            casilla.style.backgroundColor = colorCasilla;
+                                            setTimeout (function () {
+                                                if (tablero[casillaAnterior[0]] [casillaAnterior[1]] != tablero[casillaPosterior [0]][casillaPosterior[1]]) {
+                                                    setColorCasilla(casillaAnterior[0],casillaAnterior[1],"black")
+                                                    setColorCasilla(casillaPosterior [0],casillaPosterior[1],"black")
+                                                }
+                                                else {
+                                                    setColorCasilla(casillaAnterior[0],casillaAnterior[1],colorCasilla)
+                                                }
+
+                                                if (comprobarGanador()){
+                                                    alert ("Has ganado. Enhorabuena.")
+                                                    location.reload()
+                                                }
+                                                else {
+                                                    console.log ("No ganador todavía")
+                                                }
+
+                                                casillaAnterior = undefined;
+                                                casillaPosterior =undefined;
+                                                deshabilitarEfectoCasillaDeslizante ();
+                                            },1000)
+                                            
+                                        }
+                                }
+                                }
+                                else {
+                                    alert ("Casilla seleccionada ya ha sido descubierta")
+                                }
+
+                            })
+                        }
+                    }
+                }
+            },14000)
+
+
+        }
+        
+    </script>
+
+</body>
+</html>
+

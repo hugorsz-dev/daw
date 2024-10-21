@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funciones en Javascript</title>
+</head>
+<body>
+
+    <h1> Funciones en Javascript </h1>
+
+    <script>
+
+        // Las funcionnes permiten la sintetización del código en bloques a los que podemos llamar. 
+
+        // FUNCIONES SENCILLAS. 
+
+        function decirHola () {
+            alert ("Hola..."); 
+        }
+
+        // CON PARÁMETROS 
+
+        function enTitulo (texto) {
+            document.write ("<h2>");
+                document.write (texto);
+            document.write ("</h2>");
+
+        }
+
+        function enParrafo (texto) {
+            document.write ("<p>");
+                document.write (texto);
+            document.write ("</p>");
+        }
+
+        function iterar (inicio, fin) {
+
+            fin++;
+
+            if (inicio < fin ) {
+
+                for (let i=inicio; i<fin; i++) {
+                enParrafo (i); 
+                }
+            }
+
+        }
+
+        // CON VALORES POR DEFECTO. 
+        // -> Si se omite un valor, la variable equivaldrá al indicado
+        // -> Se recomienda poner al final
+
+        function mensajear (mensaje, autor="Desconocido") {
+            enParrafo (`Mensaje de ${autor}: ${mensaje}`);
+        }
+
+        // -> Puede hacerse de manera más versátil así: 
+
+        function mensajear2 (mensaje, autor) {
+
+            if (autor === undefined) { // Si autor es exactamente indefinido... 
+                autor = "Desconocido";
+            }
+
+            enParrafo (`Mensaje de ${autor}: ${mensaje}`);
+        }
+
+        // O con el condicional ??
+
+        function mensajear3 (mensaje, autor) {
+
+            autor = autor ?? "Desconocido";
+            enParrafo (`Mensaje de ${autor}: ${mensaje}`);
+        }
+
+        // O con  ||
+
+        function mensajear4 (mensaje, autor) {
+
+            autor = autor || "Desconocido" // Como el OR elige la primera condición verdadera...
+            enParrafo (`Mensaje de ${autor}: ${mensaje}`);
+        }
+
+
+        // RETORNAR VALORES
+        // -> Con el retorno de valores, la función pasará a tomar el valor indicado en el return
+        // -> EL valor return puede ser ninguno. Al ejecutar return, el  resto de la función se ignorará.
+        // -> Un return vacío es equivalente a undefined. 
+        
+        function sumar (a,b) {
+            return a+b;
+        }
+
+        function restar (a,b) {
+            return (
+                a-b // Es conveniente introducir el return entre paréntesis si ocupa más de una línea, si no, javascript interpretará los espacios como pto y coma.
+            )
+        }
+
+
+
+        // VARIABLES LOCALES
+        // -> Ha de saberse que las variables LET permanecen en los bloques en que se crean, no son capaces de salir.
+        // -> Estas son denominadas variables locales 
+
+        function decirAdios () {
+            let mensaje ="Adios..."; 
+            alert (mensaje); 
+        }
+        
+        alert (mensaje); // mensaje NO existe, porque no está en el bloque. Solo existe en la función decirAdios. 
+
+        // VARIABLES EXTERNAS. 
+
+        let nombre = "Hugo"; 
+
+        function decirQueTal () {
+            nombre = "Óscar"; 
+            alert (`¿Qué tal ${nombre}?`);
+        }
+
+
+
+        
+
+
+
+
+
+
+
+
+
+    </script>
+
+</body>
+</html>

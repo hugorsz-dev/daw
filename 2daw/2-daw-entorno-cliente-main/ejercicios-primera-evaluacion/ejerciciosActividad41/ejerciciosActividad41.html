@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios actividad 4 - 1 </title>
+</head>
+<body>
+
+    <h1> Ejercicios actividad 4 - 1 </h1>
+	<h2> Ejercicio propuesto en Desarrollo Entorno - Servidor </h2>
+
+	<p> <b> Alumno: </b> Hugo Ruiz Sánchez</p>
+	<p> <b> Docente: </b> Enrique Diego Alfonso  </p>	
+
+    <p>  A fin de mejorar la legibilidad de los resultados, usaré la función enDocumento () en lugar de las alert () o los console.log (). </p>
+		
+	<hr/> 
+
+    <script>
+        
+        /**
+        * Imprime en el documento el texto introducido, con estilo a preferencia. 
+        * Si no se especifica tipo, el tipo es 0 o el tipo es erróneo, es un párrafo. 
+        * Caso contrario, cada número corresponde hasta el límite de los 6 títulos 
+        **/   
+
+        function enDocumento (texto, estilo) {
+            
+            // VARIABLES POR DEFECTO 
+            texto = texto || "0"; 
+    
+            // EJECUCIÓN
+            if (!estilo) {
+                document.write (`<p>  ${texto} </p>`);
+            }
+            else {
+                document.write (`<${estilo}>  ${texto}  </${estilo}>`);  
+            }
+    
+        }
+
+        // EJERCICIO 1
+
+        enDocumento ("Ejercicio 1", "h2");
+        
+        function fahrenheitACelsius (grados) {
+            return ((grados-32)/1.8); 
+        }
+
+        // -> Demostración 
+        
+        enDocumento (fahrenheitACelsius(32)); 
+        enDocumento (fahrenheitACelsius(3)); 
+
+        // EJERCICIO 2 
+
+        enDocumento ("Ejercicio 2", "h2");
+
+        function jugar (cantidadRondas=5) {
+
+            // DECLARACIÓN DE VARIABLE DE PTOS. DE JUGADOR
+
+            let puntosJugador1 = 0; 
+            let puntosJugador2= 0; 
+            
+
+            // FUNCIÓN DE TIRAR DADOS 
+
+            let tirarDados = function  () {
+                return Math.floor(Math.random()*6)+1;
+            }
+
+            // BUCLE QUE COMPARA LAS TIRADAS Y ASIGNA PUNTUACIONES
+
+            for (let i=0; i<cantidadRondas; i++) {
+
+                enDocumento (`- - - RONDA ${i+1} - - -`, "h3");
+
+                let dadoJugador1 = tirarDados (); 
+                let dadoJugador2 = tirarDados (); 
+
+                enDocumento (`El jugador 1 tira los dados: ${dadoJugador1}`);
+                enDocumento (`El jugador 2 tira los dados: ${dadoJugador2}`);
+
+                if (dadoJugador1==dadoJugador2) {
+                    enDocumento ("Empate."); 
+                }
+                else if (dadoJugador1>dadoJugador2) {
+                    enDocumento ("Victoria para el jugador 1"); 
+                } 
+                else if (dadoJugador2>dadoJugador1) {
+                    enDocumento ("Victoria para el jugador 2"); 
+                }
+
+                puntosJugador1 = puntosJugador1+  dadoJugador1; 
+                puntosJugador2=  puntosJugador2+ dadoJugador2;
+            }
+
+            // RESULTADO DE LA FUNCIÓN
+
+            enDocumento ("Resultados del juego", "h3");  
+
+            enDocumento (`Puntos acumulados del jugador 1: ${puntosJugador1} `);
+            enDocumento (`Puntos acumulados del jugador 2: ${puntosJugador2} `);
+
+
+            if (puntosJugador1==puntosJugador2) {
+                enDocumento ("Empate."); 
+            }
+            else if (puntosJugador1>puntosJugador2) {
+                enDocumento ("Victoria para el jugador 1"); 
+            } 
+            else if (puntosJugador2>puntosJugador1) {
+                enDocumento ("Victoria para el jugador 2"); 
+            }
+        }
+
+        jugar ();
+        jugar (3);
+        jugar (10); 
+
+       // Ejercicio 3
+
+       enDocumento ("Ejercicio 3","h2"); 
+
+       function ahorcado (palabra, letras) {
+        
+        // Conversión a array. 
+        // -> Para mayor compatibilidad, transforma todo a mayusculas.
+
+        palabra = palabra.toUpperCase().split(""); 
+        letras = letras.toUpperCase().split("");
+
+        // Salida: todos los caracteres son "-" y se convierten en un array.
+
+        let salida = "-".repeat(palabra.length).split("");
+
+        // Detectar letras correctas.
+        // -> Se depositan en un conjunto, pues los valores son susceptibles de repetirse. 
+
+        let letrasCorrectas = new Set (); 
+
+        for (let i=0; i<letras.length; i++) {
+            
+            if (palabra.includes(letras[i])) {
+                letrasCorrectas.add(letras[i]);
+            }
+
+        }
+
+        // Devolver una salida con todos los caracteres contenidos en letrasCorrectas en las ubicaciones correspondientes.
+
+        for (let i=0; i<palabra.length; i++) { // Para cada letra de la palabra.. 
+            
+            letrasCorrectas.forEach (letra => { // Comprobar si coincide con alguna de las letras coincidentes
+                if (palabra[i]==letra) {
+                    salida[i] = letra; // ... si es así, depositar la letra en su posicion dentro de la salida. 
+                }
+            })
+
+        }
+
+        salida = salida.toString().replaceAll(",",""); // La salida pasa a string y se le quitan las ","
+
+        return salida;
+        
+    }
+
+    enDocumento (ahorcado ("Esternocleidomastoideo","iemcstNA")); 
+
+    // Ejercicio 4
+
+    enDocumento ("Ejercicio 4","h2"); 
+
+    function invertirCadena (cadena) {
+
+        cadena = cadena.split("");
+        
+        salida = new Array (cadena.length); 
+
+        for (let i=0; i<cadena.length; i++) {
+            salida [cadena.length-i] = cadena[i]; 
+        }
+
+        return salida.toString().replaceAll(",","");
+
+    }
+
+    enDocumento (invertirCadena("Hola")); 
+
+    // Ejercicio 5
+
+    enDocumento ("Ejercicio 5","h2");
+
+    (function() {
+        const fechaActual = new Date(); // Objeto date, al que se tomarán los métodos:
+
+        const dia = fechaActual.getDate(); // Día
+        const mes = fechaActual.getMonth() + 1; // Los meses empiezan desde 0, por lo que se suma 1
+        const año = fechaActual.getFullYear(); // Año
+
+        const hora = fechaActual.getHours(); // Hora
+        const minutos = fechaActual.getMinutes(); // Minuto
+        const segundos = fechaActual.getSeconds(); // Segundo
+
+        console.log(`La fecha actual es: ${dia}/${mes}/${año}`);
+        console.log(`La hora actual es: ${hora}:${minutos}:${segundos}`);
+        enDocumento (`La fecha actual es: ${dia}/${mes}/${año}`);
+        enDocumento (`La hora actual es: ${hora}:${minutos}:${segundos}`);
+    })();
+
+    // Ejercicio 6 
+
+    enDocumento ("Ejercicio 6", "h2") 
+
+    function masVocales (cadena1, cadena2) {
+
+        let contarVocales  =  function (cadena) {
+            salida =0;
+            cadena = cadena.toUpperCase().split(""); 
+
+            for (let i=0; i<cadena.length; i++) {
+                switch (cadena[i]) {
+                    case "A": 
+                        salida++; 
+                    break;
+                    case "E": 
+                        salida++;
+                    break;
+                    case "I": 
+                        salida++
+                    break; 
+                    case "O": 
+                        salida++; 
+                    break; 
+                    case "U": 
+                        salida++; 
+                    break;
+                    default: 
+                    break;
+                }
+            }
+            return salida;
+
+        }
+
+        if (contarVocales(cadena1)==contarVocales(cadena2)) enDocumento (`La cadena " ${cadena2} " tiene las mismas vocales que ${cadena1}.`);
+        else if (contarVocales(cadena1)> contarVocales(cadena2))  enDocumento (`La cadena " ${cadena1} " tiene más vocales que ${cadena2}.`);
+        else  enDocumento (`La cadena " ${cadena2} " tiene más vocales que ${cadena1}.`);
+
+
+    }
+
+    masVocales ("a","a"); 
+
+    // Ejercicio 7
+
+    enDocumento ("Ejercicio 7", "h2");
+
+    function esPalindroma (palabra) {
+
+        palabra = palabra.replaceAll(" ","").toUpperCase(); 
+        
+        if (palabra.length == 1) {
+            return true
+        }
+        
+        else if (palabra.charAt(0)== palabra.charAt(palabra.length-1)) {
+            palabra = palabra.substring (1, palabra.length-1); 
+            console.log (palabra);
+            return esPalindroma (palabra); 
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    enDocumento (esPalindroma ("aviva"));
+    enDocumento (esPalindroma ("sagas"));
+    enDocumento (esPalindroma ("amo la paloma"));
+
+
+    // EJERCICIO 8 
+
+    enDocumento ("Ejercicio 8","h2"); 
+
+    function palabrasSinTildes (array) {
+
+        let sinTildes = function (palabra) {
+            let regex = /[\u00C0-\u017F]+/ // Palabras entre los caracteres ascii registrados con tildes
+            return !regex.test(palabra);
+        }
+        var salida = array.filter(sinTildes); 
+
+        return salida;
+    }
+
+
+    enDocumento (palabrasSinTildes (["camion","ostión","esternocleidomastoideo", "Intención"]));
+
+    // Ejercicio 9
+
+    enDocumento ("Ejercicio 9", "h2") 
+
+    function palabrasNoSpanish (array) {
+
+        let notSpanish = function (palabra) {
+            let regex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+$/; // Cualquier palabra que contenga letras de la a-z A-> que además contengan los caracteres con acentos
+            return !regex.test(palabra);
+        }
+
+        var salida = array.filter(notSpanish); 
+        return salida;
+    }
+
+    enDocumento (palabrasNoSpanish (["Hola","jejeje","слово"]));
+
+    // Ejercicio 10 
+
+    enDocumento ("Ejercicio 10", "h2"); 
+
+
+    /**
+     * Genera un número aleatorio del 1 al 90
+    **/ 
+
+    function asignacionNumeroBingo () {
+        return Math.floor(Math.random()*90)+1; 
+    }
+
+    /**
+     * Devuelve un array bidimensional con elementos del 1 al 90, 
+     * verificando en la iteración de asignación que los números aleatorios NO SE REPITEN
+    **/
+
+    function crearCarton () {
+
+        let numerosAsignados = new Set ();  // Los números aleatorios se guardan en un conjunto para no volver a repetirse.  
+
+        let arrayCartones = []; 
+        
+        // ASIGNAR NUMEROS
+
+        for (let i=0; i<4; i++) {
+            arrayCartones [i] = []; // Crear array bidimensional 
+
+            for (let j=0; j<8; j++) {
+
+                let aleatorio = asignacionNumeroBingo(); 
+                
+                while (numerosAsignados.has(aleatorio)){
+                    aleatorio = asignacionNumeroBingo();
+                } 
+
+                arrayCartones [i] [j] = aleatorio;
+
+                numerosAsignados.add (aleatorio);
+            }
+        }
+
+        // QUITAR TRES ESPACIOS ALEATORIOS (Para que solo queden 5 en cada fla)
+
+        numerosAsignados = new Set (); 
+
+        for (let i=0; i<4; i++) {
+
+            for (let j=0; j<3; j++) {
+
+                do {
+                    aleatorio = Math.floor(Math.random() * 8);
+                } 
+                while (numerosAsignados.has(aleatorio));
+
+                arrayCartones [i] [aleatorio] = "0";
+                  
+            }
+        }
+
+        return arrayCartones; 
+    }
+
+    /** 
+     * Muestra el cartón en forma de tabla html. 
+    **/ 
+
+    function mostarCarton (carton, num) {
+
+        if (num|| num==0)  enDocumento (`Cartón de bingo del jugador ${num}`, "h3"); 
+    
+        document.write (`<table border="2" >`); 
+            
+        for (let i=0; i<carton.length; i++) {
+            document.write ("<tr>"); 
+            for (let j=0; j<carton[0].length; j++) {
+                enDocumento (carton [i][j], "td"); 
+            }
+            document.write ("</tr>"); 
+        }
+    
+        document.write ("</table>"); 
+    }
+
+    /*
+    * Ejecuta una serie de funciones sobre los cinco cartones predeterminados, y devuelve al jugador ganador.
+    */
+
+    function sorteo () {
+
+        /* Función que iguala los aciertos de un determinado cartón a 0, de corresponderse al número indicado*/ 
+
+        let comprobarAcierto = function (carton, numero) {
+            
+            for (let i=0; i<carton.length; i++) {
+            
+                for (let j=0; j<carton[0].length; j++) {
+                    if (carton [i][j] == numero) {
+                        carton [i][j] = 0; 
+                    } 
+                }
+            }
+        }
+
+        /*Función que comprueba si todos los números corresponden a 0 (dígito de acierto)*/ 
+
+        let comprobarGanador = function (carton) {
+
+            for (let i=0; i<carton.length; i++) {
+            
+                for (let j=0; j<carton[0].length; j++) {
+
+                    if (carton [i][j] !=0) {
+                        return false; 
+                    } 
+                }
+            }
+
+            return true; 
+        }
+
+        numerosAsignados = new Set ();  // Los números aleatorios se guardan en un conjunto para no volver a repetirse. 
+
+        let hayGanador=false;
+
+        // Mientras no haya un ganador, se ejecutarán las funciones para cada uno de los cartones predeterminados. 
+
+        while (!hayGanador) {
+
+            aleatorio = asignacionNumeroBingo(); 
+                
+            while (numerosAsignados.has(aleatorio)){
+                aleatorio = asignacionNumeroBingo();
+            } 
+
+            numerosAsignados.add (aleatorio);
+
+            for (let i=0; i<5; i++) {
+                comprobarAcierto (carton[i], aleatorio); 
+            }
+
+            
+
+            for (let i=0; i<5;i++){
+                if (comprobarGanador (carton[i])) {
+                    return i;
+                }   
+            }
+
+        }
+
+    }
+
+    // PROGRAMA
+
+    // Cinco cartones. 
+
+    carton = new Array (5); 
+
+    // Introducimos en cada uno de los cinco el array bidimensional de un cartón. 
+
+    for (let i=0; i<5; i++) {
+        carton [i] = crearCarton (); 
+    }
+
+    // Luego, mostramos los cartones. 
+
+    for (let i=0; i<5; i++) {
+        mostarCarton (carton[i],i); 
+    }
+
+    // Efectuamos el sorteo.
+
+    enDocumento (`El ganador de la partida es el jugador ${sorteo()}`, "h3"); 
+
+    // Y mostramos los cartones. 
+
+    for (let i=0; i<5; i++) {
+        mostarCarton (carton[i],i); 
+    }
+
+</script>
+
+    
+</body>
+</html>

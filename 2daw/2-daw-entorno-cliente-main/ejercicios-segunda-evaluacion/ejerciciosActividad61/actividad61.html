@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1> Ejercicios actividad 5 - 1 </h1>
+	<h2> Ejercicio propuesto en Desarrollo Entorno - Servidor </h2>
+
+	<p> <b> Alumno: </b> Hugo Ruiz Sánchez</p>
+	<p> <b> Docente: </b> Enrique Diego Alfonso  </p>	
+		
+	<hr/> 
+    
+    <!-- Ejercicio 1 -->
+
+    <h3> Ejercicio 1 </h3>
+
+    <p class="parrafo"> Párrafo de ejemplo para la actividad 1, por defecto no tiene estilo ¡pero ahora le ponemos el color cyan por script! </p>
+
+    <!-- Ejercicio 2 -->
+
+    <h3> Ejercicio 2 </h3>
+
+    <p> En la consola se encuentran los resultados, correspondientes al primer y ultimo elemento de esta lista: </p>
+
+    <ul>
+        <li> Michael Jackson</li> 
+        <li> Joaquín Sabina</li>
+        <li> Enrique Iglesias </li> 
+    </ul>
+
+    <!-- Ejercicio 3 -->
+
+    <h3> Ejercicio 3 </h3>
+
+    <p> Esta tabla solo contiene el encabezado mediante HTML: todas sus filas han sido generadas por javascript.</p>
+
+    <table border="1" id="tabla">
+
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Profesión</th>
+            </tr>
+        </thead>
+
+    </table>
+
+    <!-- Ejercicio 4 -->
+
+    <h3> Ejercicio 4 </h3>
+
+    <p> Solución en la consola: agrego un "span" y un "a" para que registre el conteo. </p>
+
+    <!-- Ejercicio 5 -->
+
+    <h3> Ejercicio 5 </h3>
+
+    <p> Solución en la consola </p>
+
+    <!-- Ejercicio 6-->
+
+    <h3> Ejercicio 6 </h3>
+
+    <p> Solución en la consola </p>
+
+    <!-- Ejercicio 7-->
+
+    <h3> Ejercicio 7 </h3>
+
+    <div id="div-tabla-generada"></div>
+
+    <!-- Campo para filas  -->
+    <label for="filas">Filas:</label>
+    <input type="text" id="filas" name="filas">
+
+    <!-- Campo para columnas  -->
+    <label for="columnas">Columnas:</label>
+    <input type="text" id="columnas" name="columnas">
+
+    <!-- Botón de envío -->
+    <button id="enviar-creador-tablas"> Generar tabla </button>
+
+    <!-- Ejercicio 8--> 
+
+    <h3> Ejercicio 8 </h3>
+    <button id="boton-scroll"> Hacer scroll </button>
+
+    <!-- Distancia a recorrer por página -->
+    <div style="height: 1200px; width: 200px; background: yellow; border: 1px dashed black;"></div>
+
+    <!-- Ejercicio 9 -->
+
+    <h3> Ejercicio 9 </h3>
+
+    <div id="div-lista-desordenada"> 
+        <p> <i> Lista desordanada </i></p>
+    </div>
+    <button id="boton-ordenar-lista"> ¿Ordenar lista? </button>
+    <div id="div-lista-ordenada"> 
+        <p> <i> Lista ordenada </i></p>
+    </div>
+    <div id="div-lista-aleatoria"> 
+        <p> <i> Lista aleatoria </i></p>
+    </div>
+    
+
+    <script> 
+
+    // Funciones que emplearé: 
+
+    /*
+    Añade una etiqueta a un contenedor existente (en base a ID), debe indicarse el nombre, el tipo y el id.
+    Como elemento opcional, los atributos, que deben introducirse en un array bidimensional relacionandose unos con otros. 
+    */
+    // enContenedor ("prueba","p", "info", [["id","miId"],["class","miClase"])
+
+    function enContenedor (texto, tipo, container, atributos=false) {
+
+        // Define el contenedor existente donde se introducirá la etiqueta
+
+        let contenedor = document.getElementById(container); 
+
+        // Crea un elemento con la etiqueta definida 
+
+        let nuevaEtiqueta = document.createElement(tipo); 
+
+        // Introduce el texto dentro de la etiqueta
+
+        nuevaEtiqueta.textContent = texto;
+
+        // Incrusta la etiqueta en el contenedor previamente definido.
+
+        contenedor.appendChild (nuevaEtiqueta); // Indicando así el contenido
+
+        // Asociar los atributos
+
+        if (atributos) {
+            for (let i=0; i<atributos.length; i++) {
+                nuevaEtiqueta.setAttribute (atributos[i][0], atributos [i][1] )
+            }
+        }
+
+    }
+
+    // Ejercicio 1: Escribe un programa que permita modificar el estilo de un párrafo cuyo identificador es “párrafo”
+
+    function modificarParrafo (estilo, valor) {
+        let parrafoEnDocumento = document.querySelector('.parrafo'); 
+        parrafoEnDocumento.style[estilo] = valor;
+    }
+
+    modificarParrafo ("background", "cyan"); 
+    modificarParrafo ("color", "darkred"); 
+
+    // Ejercicio 2: Crea un programa que, partiendo de un código HTML con una lista ordenada de ersonas, devuelva los nombres de la primera y de la última persona de la lista
+
+    let elementoFinalLista = document.querySelectorAll ('ul > li:last-child')
+    let elementoInicialLista =  document.querySelectorAll ('ul > li:first-child')
+
+    console.log ("------------- EJERCICIO 2 --------------")
+
+    console.log ("Primer elemento de la lista")
+    for (let elemento of elementoInicialLista) {
+        console.log(elemento.innerHTML) // Recorrer cada elemento 
+    }
+
+    console.log ("Último elemento de la lista")
+    for (let elemento of elementoFinalLista) {
+        console.log(elemento.innerHTML) // Recorrer cada elemento 
+    }
+
+    // Ejercicio 3: Elabora un programa que permite añadir filas a una tabla HTML 
+
+    function introducirFilaEnTabla (elementos) {
+ 
+        // Saber cuantas filas tiene para determinar el id 
+
+        tabla = document.getElementById ("tabla"); 
+
+        let noFila =  tabla.rows.length;
+
+        // Crear nueva fila
+
+        enContenedor("", "tr", "tabla", [["id",noFila]]);
+
+        // Introducir los elementos de cada columna
+      
+        for (let i=0; i<elementos.length; i++) {
+            enContenedor (elementos[i], "td", noFila);
+        }
+    
+    } 
+    
+    introducirFilaEnTabla (["Francisco","de Quevedo","Escritor"]);
+    introducirFilaEnTabla (["Salvador","Dalí","Pintor"]);
+    introducirFilaEnTabla (["Hugo","Ruiz","Sin oficio ni beneficio"]);
+    introducirFilaEnTabla (["Michael","Jackson","Cantante"]);
+
+    // Ejercicio 4: 
+
+    console.log ("------------- EJERCICIO 4 --------------")
+
+    function contarEtiquetaHTML (etiqueta) {
+        let salida = document.querySelectorAll (etiqueta); 
+        return salida.length; 
+    }
+
+    console.log("Numero total de 'a', 'p' y 'span': "); 
+    console.log (contarEtiquetaHTML("p")+contarEtiquetaHTML("a")+contarEtiquetaHTML("span"));  
+
+    // Ejercicio 5 
+
+    console.log ("------------- EJERCICIO 5 --------------");
+
+    // Asignar valor a una cookie
+
+    function setCookie(nombre, valor, minutosCaducidad) {
+        
+        var fechaExpiracion = new Date();
+        fechaExpiracion.setDate(fechaExpiracion.getDate() + minutosCaducidad*60000); // Conversión de la fecha a minutos
+
+        var cookieString = encodeURIComponent(nombre) + "=" + encodeURIComponent(valor); // String para crear una cookie
+        
+        if (minutosCaducidad) {
+            cookieString += "; expires=" + fechaExpiracion.toUTCString(); // Añadir al string la fecha de expiracion 
+        }
+
+        document.cookie = cookieString; // Introducir la cookie en el documento
+    }
+
+    // Extraer la cookie en función del nombre. 
+
+    function getCookie(nombre) {
+
+        let nombreCodificado = encodeURIComponent(nombre) + "="; // Determinar el nombre, que pasará al formato deseado para ser interpretado dentro de la cadena 
+        let cookiesArray = document.cookie.split(';'); // Segmentar las cookies en base a ";" para facilitar su lectura 
+
+        for (let i = 0; i < cookiesArray.length; i++) { // Recorrer las cookies
+            let cookie = cookiesArray[i]; 
+
+            while (cookie.charAt(0) === ' ') { // Recortamos la información inútil (si es un espacio vacio, pasamos al siguiente caracter)
+            cookie = cookie.substring(1, cookie.length);
+            }
+
+            if (cookie.indexOf(nombreCodificado)=== 0) { // Si el nombre corresponde al indice actual (0)...
+            return decodeURIComponent(cookie.substring(nombreCodificado.length, cookie.length)); // Devolver el procesamiento de la cookie. 
+            }
+        }
+
+        return null;
+    }
+
+    // Asignación de dos valores que se almacenarán en un array. 
+
+    let valor1 = "Hugo"; 
+    let valor2 = "Ruiz"; 
+
+    // Introducir la cookie en forma de array, guardando lso dos valores
+
+    setCookie ("nombre-apellido",[valor1, valor2],30); 
+
+    // Asignando a la variable 'miCookie' el valor obtenido mediante la función getCookie
+
+    micookie = getCookie("nombre-apellido"); 
+
+    // Impresión de los resultados. 
+    console.log ("La cookie guardada tiene un valor de: ")
+    console.log (micookie);
+
+    // Ejercicio 6 
+
+    console.log ("------------- EJERCICIO 6 --------------");
+
+    // Elimina todas las cookies de un documento 
+    
+    function eliminarCookiesTodas () {
+        // Extraer las cookies - listado de todas las cookies separadas por ";". 
+        let cookies = document.cookie.split(";"); 
+
+        for (let i=0; i<cookies.length; i++) { 
+
+            let cookie = cookies [i];  // Asociar para cada cookie, su correspondiente índice dentro del array
+            posicionCookie = cookie.indexOf("=");  // y su posicion dentro de la lista teniendo en cuenta la locaslizacion de su indice "="
+
+            if (posicionCookie >=0) { // Si existe (es decir, su indice es mayor o igual a 0)
+                document.cookie = cookie + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";  // Establecer fecha de caducidad 
+            }
+            else {
+                cookie.substr(0, posicionCookie); // Si no, recortamos el string 
+            }
+
+        }
+    }
+
+    // Demostración de funcionamiento: 
+
+    eliminarCookiesTodas (); // Eliminamos todas las cookies
+
+    micookie = getCookie("nombre-apellido"); // Comprobamos recibiendo la cookie anteriormente declarada
+    console.log ("La cookie guardada tiene un valor de: ");
+    console.log (micookie); // null 
+
+    // La función se ejecuta correctamente; comprobado esto, la introducimos en un intervalo.
+    
+    setInterval(function() {
+        eliminarCookiesTodas();
+    }, 10000); // Se ejecutará cada 10000 milisegundos, 10 segundos en total
+
+    // Ejercicio 7 
+
+    // Función que crea un numero aleatorio en funcion del rango. 
+
+    function crearAleatorio (rangoA, rangoB) {
+        return Math.floor(Math.random()*rangoB)+rangoA; 
+    }
+
+    // Desarrollo de la función. 
+    
+    let botonGenerarTabla = document.getElementById ("enviar-creador-tablas");
+
+    // Al pulsar el botón. 
+
+    botonGenerarTabla.addEventListener("click", function () {
+
+        // Borrar todo el contenido del div de la tabla, para evitar que se acumulen los resultados.    
+
+        document.getElementById ("div-tabla-generada").innerHTML=""
+
+        // Asignar las variables correspondientes a los campos.
+
+        let columnas = document.getElementById("columnas").value; 
+        let filas = document.getElementById("filas").value;
+
+        // Crear la tabla 
+
+        enContenedor ("", "table", "div-tabla-generada",[["border","1"],["id","table-tabla-generada"]])
+        
+        for (let i=0; i<filas; i++) {
+            enContenedor ("","tr","table-tabla-generada",[["id","fila"+i]])
+            for (let j=0; j<columnas; j++) {
+                enContenedor (crearAleatorio(0,90), "td","fila"+i);
+            }
+        }
+        
+    }); 
+
+    // Ejercicio 8
+
+    let botonScroll = document.getElementById ("boton-scroll");
+
+    botonScroll.addEventListener("click", function () {
+
+        // Subir al top de la mágina. 
+        window.scroll (0,0);
+
+        // Al cabo de 10 segundos, efectuar un scroll suavizado
+        setTimeout(function () {
+            window.scroll({
+            top: 999999999999, // Indica el tamaño en píxeles de la página. He indicado una unidad muy alta.
+            behavior: 'smooth'  // Agrega esta línea para un desplazamiento suave (opcional)
+            });
+        }, 1000);
+
+    }); 
+
+    // Ejercicio 9 
+
+    // Creación de la lista 
+
+    let listaDesordenada = [ "Gavin Newsom", "Ron DeSantis",
+    "Greg Abbott","J.B. Pritzker","Jay Inslee","Kay Ivey", "Charlie Baker",
+    "Gretchen Whitmer", "Doug Ducey","Andrew Cuomo"]; 
+
+    // Asociación de los elementos necesarios en el documento
+    let botonOrdenarLista = document.getElementById ("boton-ordenar-lista")
+    let campoListaDesordenada = document.getElementById ("div-lista-desordenada");
+    let campoListaOrdenada = document.getElementById ("div-lista-ordenada"); 
+    let campoListaAleatoria = document.getElementById ("div-lista-aleatoria"); 
+
+    // Eliminar la visibilidad de las listas por defecto 
+
+    campoListaOrdenada.style["display"] = "none";
+    campoListaAleatoria.style["display"] = "none";
+
+    // Mostrar la lista desordenada, por defecto 
+    
+    enContenedor ("", "ul", "div-lista-desordenada", [["id","lista-desordenada"]])
+    for (let i=0; i<listaDesordenada.length; i++) {
+        enContenedor (listaDesordenada[i], "li", "lista-desordenada")
+    }
+
+    // Programar funcionalidad del botón
+
+    botonOrdenarLista.addEventListener("click", function () {
+        if (confirm ("¿Ordenar lista?  'Aceptar' para SÍ. 'Cancelar' para NO ")){
+            
+            // Vaciar contenido de la lista dentro del campo  - por si ya se había introducido información, de lo contrario, saltamos el typerror- 
+            try {document.getElementById ("lista-ordenada").innerHTML ="" } catch (error) {}
+            
+            // Ordenar lista
+            let listaOrdenada = listaDesordenada.sort()
+
+            // Mostrar lista ordenada por pantalla
+            enContenedor ("", "ul", "div-lista-ordenada", [["id","lista-ordenada"]])
+            for (let i=0; i<listaDesordenada.length; i++) {
+                enContenedor (listaDesordenada[i], "li", "lista-ordenada")
+            }
+
+            campoListaOrdenada.style["display"] = "block";
+
+        }
+        else {
+
+            function arrayAleatorio (array) {
+
+                // Variables
+
+                let salida = [];
+                let numerosUsados = [];
+                let indiceAleatorio;
+                
+                for (let i=0; i<array.length; i++){
+
+                    // Asignar valor aleatorio al indice
+
+                    indiceAleatorio = crearAleatorio (0,array.length);
+
+                    // Mientras el número aleatorio corresponda a los ya introducidos, seguir arrojando
+
+                    while (numerosUsados.includes(indiceAleatorio)){
+                        indiceAleatorio = crearAleatorio (0,array.length)
+                        
+                    }
+
+                    // Añadir el indice aleatorio no usado a la salida, y añadir el indice aleatorio a los numeros ya usados
+
+                    numerosUsados.push (indiceAleatorio);
+                    salida.push  (array[indiceAleatorio]) ;
+ 
+                }
+
+                return salida; 
+
+            }
+
+            // Vaciar contenido del campo - por si ya se había introducido información - 
+
+            try {document.getElementById ("lista-aleatoria").innerHTML ="" } catch (error) {}
+
+            let listaAleatoria = arrayAleatorio(listaDesordenada); 
+
+            enContenedor ("", "ul", "div-lista-aleatoria", [["id","lista-aleatoria"]])
+            for (let i=0; i<listaAleatoria.length; i++) {
+                enContenedor (listaAleatoria[i], "li", "lista-aleatoria")
+            }
+
+            campoListaAleatoria.style["display"] = "block";
+
+
+        }
+
+    });
+
+
+
+</script> 
+</body>
+</html>
+

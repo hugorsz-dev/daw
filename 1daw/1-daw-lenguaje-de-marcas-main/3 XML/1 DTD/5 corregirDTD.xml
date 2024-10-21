@@ -1,0 +1,112 @@
+<!-- 
+
+
+ANOTACIONES AL MARGEN: 
+-> EMPTY hace referencia a que el elemento concreto debe ser: <Hola />, no se cierra. 
+-> NMTOKENS hace referencia a que el atributo ha de ser una sola palabra 
+-> ATTLIST: indica que ese elemento tiene ATRIBUTOS
+-> REQUIRED -> Es OBLIGATORIO introducir una serie de atributos 
+-> IMPLIED -> NO ES OBLIGATORIO introducir una serie de atributos 
+-> ID -> Es un código de identificación
+-> IDREFS -> Sirve para referenciar el codigo introducido previamente 
+<!-- DTD - Ejercicio 3-1 - Datos personales 
+ERROR: ATRIBUTO DNI NO DEFINIDO: CAMBIAR POR NOMBRE--> 
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE persona [
+  <!ELEMENT persona EMPTY>
+  <!ATTLIST persona nombre CDATA #IMPLIED>
+]>
+
+<persona nombre="Perro Sanchez" />
+
+<!-- DTD - Ejercicio 3-2 - Película 
+ERROR: ATRIBUTO NO DEFINIDO--> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pelicula [
+  <!ELEMENT pelicula EMPTY>
+  <!ATTLIST pelicula titulo CDATA #IMPLIED>
+]>
+
+<pelicula titulo="La diligencia"  />
+
+<!-- DTD - Ejercicio 3-3 - Cuadros 
+ERROR: NO SE PERMITEN VARIOS ELEMENTOS EN EL ATRIBUTO, CAMBIAR ESPACIOS POR "_"
+Esto es debido a que el atributo "titulo" es un ID, por lo que NO puede 
+repetirse, ni tampoco encontrarse separado--> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE cuadros [
+  <!ELEMENT cuadros (cuadro*)>
+  <!ELEMENT cuadro EMPTY>
+  <!ATTLIST cuadro titulo ID #REQUIRED>
+  <!ATTLIST cuadro autor CDATA #REQUIRED>
+]>
+
+<cuadros>
+  <cuadro titulo="Adán_y_Eva" autor="Alberto_Durero" />
+  <cuadro autor="Lucas_Cranach,_el_viejo" titulo="Adána_y_Eva" />
+</cuadros>
+
+
+<!-- DTD - Ejercicio 3-4 - Lista de la compra 
+ELEMENTOS MAL ASIGNADOS --> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE listaCompra [
+  <!ELEMENT listaCompra (item*)>
+  <!ELEMENT item EMPTY>
+  <!ATTLIST item nombre CDATA #REQUIRED>
+  <!ATTLIST item cantidad CDATA #REQUIRED>
+]>
+
+<listaCompra>
+  <item nombre = "leche" cantidad="12 litros" />
+  <item nombre = "pan" cantidad="3 barras de cuarto" />
+</listaCompra>
+
+<!-- DTD - Ejercicio 3-5 - Jugadores de fútbol --> 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE futbol [  
+  <!ELEMENT futbol (jugador*)>
+  <!ELEMENT jugador EMPTY>
+  <!ATTLIST jugador nombre NMTOKENS #REQUIRED>
+  <!ATTLIST jugador codigo ID #REQUIRED>
+]>
+
+<futbol>
+  <jugador nombre="Alfredo Di Stéfano" codigo="a"/>
+  <jugador nombre="Edson Arantes do Nascimento" codigo="b" />
+  <jugador nombre="Diego Armando Maradona" codigo="c" />
+  <jugador nombre="Johan Cruyff" codigo="d" />
+</futbol>
+
+DTD - Ejercicio 3-6 - Jugadores y equipos de fútbol
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE futbol [
+  <!ELEMENT futbol ((jugador|equipo)*)>
+  <!ELEMENT jugador EMPTY>
+  <!ATTLIST jugador nombre NMTOKENS #REQUIRED>
+  <!ATTLIST jugador codigo ID #REQUIRED>
+  <!ELEMENT equipo EMPTY>
+  <!ATTLIST equipo nombre CDATA #REQUIRED>
+  <!ATTLIST equipo jugadores IDREFS #IMPLIED>
+]>
+
+<futbol>
+  <jugador nombre="Alfredo Di Stéfano" codigo="ads"/>
+  <jugador nombre="Edison Arantes do Nascimento" codigo="ean" />
+  <jugador nombre="Diego Armando Maradona" codigo="dam" />
+  <jugador nombre="Johan Cruyff" codigo="jc" />
+  <jugador nombre = "Maradona" codigo ="mar" />
+  <equipo nombre="Società Sportiva Calcio Napoli" jugadores="jc" />
+  <equipo nombre="Futbol Club Barcelona" jugadores="mar" />
+
+</futbol>
+
+
+
